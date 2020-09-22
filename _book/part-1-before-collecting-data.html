@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Intro | Marketing Research Design &amp; Analysis 2020</title>
+  <title>Part 1: Before collecting data | Marketing Research Design &amp; Analysis 2020</title>
   <meta name="description" content="An Introduction to Data Analytics Using R" />
   <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Intro | Marketing Research Design &amp; Analysis 2020" />
+  <meta property="og:title" content="Part 1: Before collecting data | Marketing Research Design &amp; Analysis 2020" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Intro | Marketing Research Design &amp; Analysis 2020" />
+  <meta name="twitter:title" content="Part 1: Before collecting data | Marketing Research Design &amp; Analysis 2020" />
   
   <meta name="twitter:description" content="An Introduction to Data Analytics Using R" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-<link rel="prev" href="introduction-to-r-markdown.html"/>
-<link rel="next" href="part-1-before-collecting-data.html"/>
+<link rel="prev" href="intro.html"/>
+<link rel="next" href="part-2-after-collecting-data.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -369,69 +369,514 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="intro" class="section level1 unnumbered">
-<h1>Intro</h1>
-<p>Welcome to the introduction to the group project!</p>
+<div id="part-1-before-collecting-data" class="section level1 unnumbered">
+<h1>Part 1: Before collecting data</h1>
 <div style="text-align: justify">
-<p>Here you will find all important points related to the group project. In the following subchapters, you can find explanations for each step you should take in your group project. Generally, the group project comprises two parts. In the first part, you will work with your group on creating and conducting a survey. Once you have created a draft of your questionnaire, you will receive a feedback from us. After implementing the feedback, you will be ready to start collecting data! In the second part, you will have a chance to apply statistical knowledge acquired in the class and from online script. In fact, you will analyze the collected data, present your findings and finally submit your final report (R code and presentation).</p>
+<p>An aim of this course is to develop your ability to translate business problems into actionable research questions and to design an adequate research plan to answer these questions. Therefore, you need to be equiped with knowledge on how to create a survey and properly conduct a research.</p>
+<p>Generally, what you can expect from the survey design is similar to what one experiences in a relationship. If you try to take more than you commit, it doesn’t work out. Now on a serious note, if you follow guidelines mentioned here, you will certainly avoid usual traps your fellow collegues were caught in.</p>
+<p>In a research process, conducting a survey is a part of (primary) data collection. Before we collect data, we have to make sure that preceding steps are correctly done. However, in the following sections we will focus on the process of designing a questionnaire. Eventually, you will be able to collect relevant data and apply appropriate statistical tests.</p>
 </div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-2"></span>
-<img src="images/group_project.PNG" alt="Structure of the group project" width="70%" />
-<p class="caption">
-Figure 10.1: Structure of the group project
+<p><img src="research-process.PNG" width="70%" style="display: block; margin: auto;" /></p>
+<div id="research-design" class="section level2">
+<h2><span class="header-section-number">10.1</span> Research design</h2>
+<div style="text-align: justify">
+<p>As you aim to conduct a real marketing research, before you start writing down questions for a questionnaire, you need to come up with a research design. In particular, you should review the research questions, hypotheses and characteristics that influence the research design.</p>
+<p>If you are interested in the causal effect of one particular (independent) variable on another (dependent) variable, think about an experimental design that might allow you to manipulate this variable. In this case, you particularly have to decide on the following:</p>
+<ul>
+<li>Which variable to manipulate?<br />
+</li>
+<li>Whether to use a between-subjects or within-subjects design?<br />
+</li>
+<li>The cause-effect sequence (the cause must occur before the effect)<br />
+</li>
+<li>The number of experimental conditions<br />
+</li>
+<li>Potential interactions and relationships with other variables (does the effect depend on another variable?)</li>
+</ul>
+<p>What you need to be careful about is the effect of <strong>reversed causation</strong>. The effect refers to the situation where the causal relationship could possible have an opposite direction from what we assumed at the first place. For instance, it is often assumed that an increase in individual income leads to increase in well-being (happiness). However, some <a href="https://www.ncbi.nlm.nih.gov/pubmed/16949692">researches</a> suggest that this causation could have an opposite direction, i.e. that actually increase in well-being of an individual leads to an increase in income.</p>
+<p>Here are some examples of causal research design applications:</p>
+<ul>
+<li>To assess how a product’s country-of-origin impacts attractiveness across different countries.<br />
+</li>
+<li>To analyse the effects of rebranding on customer loyalty.</li>
+</ul>
+<p><img src="causation-effect.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>If you would like to analyze the effects of multiple categorical or continuous (independent) variables on one continuous (dependent) variable, you might use a regression model. When doing this, you particularly have to decide on:</p>
+<ul>
+<li><p>How to measure <strong>the dependent variable (DV)</strong>. This is particularly important, since you need a variable that is powerful in uncovering variation between subjects (e.g., open-ended questions, such as “How much are you willing to pay for this product” are good candidates). Moreover, you also need to consider the nature of your DV,i.e. whether it is an interval variable, ordinal or categorical variable. The nature of your DV will heavily influence your choice of a correct statistical test.</p></li>
+<li><p>How to measure <strong>the independent variables (IV)</strong> (single-item vs. multi-item scales, categorical vs. continuous). Bear in mind that the nature of the IV, together with DV, affects your choice of a statistical test as well.</p></li>
+<li><p>What other variables might cause the effect that you would like to investigate (to prevent omitted variable bias, i.e. variables that are not part of your model but still influence the dependent variable).</p></li>
+<li><p>Potential interactions (e.g., is the effect of variable X stronger for group A vs. B?)</p></li>
+</ul>
+</div>
+<p><img src="mlp-regression.png" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="interviewing-method" class="section level2">
+<h2><span class="header-section-number">10.2</span> Interviewing method</h2>
+<p>In the next step you should review the type of interviewing method you will use.</p>
+<p>At this point you need to think in which setting you aim to conduct your survey. For instance, should you do it in a face-to-face setting or rather online. Here you can find some advantages and disadvantages of online surveys:</p>
+<p><img src="adv-disadv-online-questionnaire.png" width="50%" style="display: block; margin: auto;" /></p>
+<p>Here is the list of the online tools you can use to conduct an online survey (usually for free):</p>
+<ul>
+<li><a href="http://www.qualtrics.com/free-account/">Qualtrics</a></li>
+<li><a href="https://www.google.com/forms/about/">Google form</a></li>
+<li><a href="https://www.surveymonkey.com/">Survey monkey</a></li>
+<li><a href="http://freeonlinesurveys.com/">Free online surverys</a></li>
+<li><a href="http://kwiksurveys.com/">Kwik surveys</a></li>
+</ul>
+<p>For the purpose of this course, we suggest to use <strong>Qualtrics</strong>.</p>
+<p>A questionnaire creation in Qualtrics starts with creation of a Qulatrics project. Each project consists of a survey, distribution record, and collection of responses and reports. There are three ways to create a questionnaire.First, you can create a new survey project from scratch. Second, you can create a new questionnaire from a copy of an existing questionnaire. Eventually, you can create from a template in your Survey Library, or from an exported QSF file.</p>
+<p>In order to create a completely new questionnaire, you need to do the following:</p>
+<p>Go to the Projects page by clicking the Qualtric XM logo or clicking Projects on the top-right.</p>
+<p><img src="create-new-project.png" width="72%" style="display: block; margin: auto;" /></p>
+<p>Create new project by clicking the blue button on the right side.<br />
+In the “Create your own” section click on the survey button.</p>
+<p><img src="create-new-project-2.png" width="72%" style="display: block; margin: auto;" /></p>
+<p>Enter a name for your survey and get started with a survey creation.</p>
+<p><img src="new-survey.png" width="72%" style="display: block; margin: auto;" /></p>
+<p>If you would like to create a new questionnaire on a basis of an already existing one, then you choose “From a Copy”. Subseqeuntly, you need to indicate the questionnaire you would like to copy. Now you are good to go!</p>
+<p><img src="survey-copy.png" width="72%" style="display: block; margin: auto;" /></p>
+<p>If there is a questionnaire in the Qualtrics Library you would like to use, then you need to choose “From Library”, and indicate one library name in the dropdown menu.</p>
+<p><img src="library-survey.png" width="72%" style="display: block; margin: auto;" /></p>
+<div class="infobox_orange hint">
+<p>Some useful tips when creating a questionnaire in Qualtrics:</p>
+<ul>
+<li><p>Add a progress bar so that respondents know how many pages are left (see “Look &amp; Feel” menu in Qualtrics).</p></li>
+<li><p>Remember to activate the “Force Response” field under “Validation Options” if you don’t want to allow respondents to skip questions.</p></li>
+<li><p>Check the usability on mobile devices using the preview option (make sure the “Mobile frinedly” option is checked).</p></li>
+</ul>
+</div>
+</div>
+<div id="questionnaire" class="section level2">
+<h2><span class="header-section-number">10.3</span> Questionnaire</h2>
+<p>The questionnaire design should be aligned with the research design! Therefore, in the following sections we will explain some suggested steps on how to approach questionnaire creation.</p>
+<p>Let’s start with what is a questionnaire. A structured questionnaire is a research instrument designed to elicit specific information from a sample of a target population. Usually it is used in a standardized way with fixed-alternative questions (same questions and response options for all respondents).</p>
+<p>An objective of a questionnaire is threefold:</p>
+<ul>
+<li>to translate the information need into a set of specific questions that the respondent can and will answer,</li>
+<li>to motivate, and encourage respondents to become involved, to cooperate, and to complete the questionnaire,</li>
+<li>to minimize response error.</li>
+</ul>
+<div id="content-in-a-questionnaire" class="section level3 unnumbered">
+<h3>Content in a questionnaire</h3>
+<p>In this step you are starting to work on the content of you questions.</p>
+<p>At the beginning of the questionnaire you should give a brief introduction to your respondents in the context of your research and the content of the questionnaire. Try to use simple language and avoid technical terms. Additionally, in the introduction you should state how long the survey will approximately take.</p>
+<p>When you start thinking about the questions to ask, there are several points to consider:</p>
+<ul>
+<li>Is the question necessary?</li>
+<li>Will I obtain the needed information?<br />
+</li>
+<li>Are several questions needed instead of one?<br />
+</li>
+<li>What type of data can I collect by asking that question (categorical or continuious)?</li>
+</ul>
+<p>In your survey try to avoid asking <strong>double-barrelled questions.</strong>Those are
+a single question that attempts to cover two issues. Such questions can be confusing to respondents and result in ambiguous responses. Instead, you might ask multiple questions in order to obtain the inteded information.</p>
+<div class="incorrect">
+<p>
+Incorrect
 </p>
 </div>
-<div id="groups" class="section level2 unnumbered">
-<h2>Groups</h2>
+<p>Do you think Nike Town offers better variety and prices than other Nike stores?</p>
+<div class="incorrect">
+
 </div>
-<div id="topics-for-the-group-project" class="section level2 unnumbered">
-<h2>Topics for the group project</h2>
-<table>
-<thead>
-<tr class="header">
-<th align="center">Topic</th>
-<th align="center">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr class="even">
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr class="odd">
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr class="even">
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr class="odd">
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr class="even">
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr class="odd">
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr class="even">
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-<tr class="odd">
-<td align="center"></td>
-<td align="center"></td>
-</tr>
-</tbody>
-</table>
+<div class="correct">
+<p>
+Correct
+</p>
+</div>
+<p>Do you think Nike Town offers better variety than other Nike stores?<br />
+Do you think Nike Town offers better prices than other Nike stores?</p>
+<div class="correct">
+
+</div>
+</div>
+<div id="inability-and-unwillingness-to-answer" class="section level3 unnumbered">
+<h3>Inability and unwillingness to answer</h3>
+<p>The quality of collected data you highly depends on your ability to address correct participants. Therefore, you need to make sure that your respondents are able to meaningfully answer your questions.</p>
+<p>Examples:</p>
+<ul>
+<li>Not every household member might be informed about monthly expenses for groceries purchases if someone else makes these purchases.<br />
+</li>
+<li>Use filter questions that measure familiarity and product use.<br />
+</li>
+<li>Include a “don’t know” option.<br />
+</li>
+<li>If you ask participants for monteray values (e.g. how much are you ready to pay for the XY product?) across several EU, make sure you indicate correct currency (e.g. HRK for Croatia or HUF for Hungary).<br />
+</li>
+<li>Think about how mobile friendly is the layout of your survey (if it is an online survey).</li>
+<li>Good case practices suggest that there should not be more than 2 questions per page (for online surveys displayed on mobile phones).</li>
+</ul>
+<p>If you are asking participants to recall certain brands for instance, make sure you use <strong>unaided recall question:</strong></p>
+<div class="correct">
+<p>
+Correct
+</p>
+</div>
+<p>What brands of soft drinks do you remember being advertised on TV last night?</p>
+<div class="correct">
+
+</div>
+<div class="incorrect">
+<p>
+Incorrect
+</p>
+</div>
+<p>Which of these brands were advertised last night on TV?<br />
+a) Coca-Cola<br />
+b) Pepsi<br />
+c) Red Bull<br />
+d) Evian<br />
+e) Don’t know</p>
+<div class="incorrect">
+
+</div>
+<p>If you are asking participants to list something, the good case practice is <strong>to minimize the effort required by respondents:</strong></p>
+<div class="correct">
+<p>
+Correct
+</p>
+</div>
+<p>Please check all the departments from which you purchased merchandise on your most recent shopping trip to a department store:<br />
+a) Women’s dresses<br />
+b) Men’s apparel<br />
+c) Children’s apparel<br />
+d) Cosmetics<br />
+e) Jewelry<br />
+f) Other (please specify) ___________</p>
+<div class="correct">
+
+</div>
+<div class="incorrect">
+<p>
+Incorrect
+</p>
+</div>
+<p>Please list all the departments from which you purchased merchandise on your most recent shopping trip to department store X.</p>
+<div class="incorrect">
+
+</div>
+<p>In a case you are asking for information that could be considered sensitive (e.g. money, family life, political beliefs, religion), they should come at the end of the questionnaire. Moreover, it is recommendable to provide response categories rather than asking for specific figures:</p>
+<div class="correct">
+<p>
+Correct
+</p>
+</div>
+<p>Which one of the following categories best describes your household’s annual gross income?<br />
+a) under 25.001 €<br />
+b) 25.001€ to 50.000 €<br />
+c) 50.001€ to 75.000 €<br />
+d) 75.001€ to 100.000 €<br />
+e) over 100.000 €</p>
+<div class="correct">
+
+</div>
+<div class="incorrect">
+<p>
+Incorrect
+</p>
+</div>
+<p>What is your household’s exact annual income?</p>
+<div class="incorrect">
+
+</div>
+</div>
+<div id="decide-on-measurement-scales-and-scaling-techniques" class="section level3 unnumbered">
+<h3>Decide on measurement scales and scaling techniques</h3>
+<p>Every statistical analysis requires that variables have a specific levels of measurement. Measurement scales you choose for your questions in a survey will affect the answers you get and eventually statistical test you can apply.
+For instance, it would not make sense to compute an average of genders. An average of a categorical variable does not make much sense. Moreover, if you tried to compute the average of genders defined in numeric values (e.g. male=0, female=1), the output would be interpretable.</p>
+<div class="infobox_red caution">
+<p>It is crucial to become familiar with possibilities of each scale <strong>before</strong> you choose to add another question to your survey. Consequently, chances to obtain data you did not intend to collect and chances that you will not be able to apply tests you intended are significantly lower.</p>
+</div>
+<p>In the following table you can get a quick overview of possibilities per each measurement scale. :</p>
+<p><img src="measurement-scale.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>In the table below you can find general procedure for choosing a correct analysis based on the measurement scale of your data and number of variables. It shows statistical analyses we covered during the course and aims to help you choose among them based on the nature of dependent variables on the side, and the nature and the number of your independent variables on the other side:</p>
+<p><img src="overview-statistical-test.jpg" width="90%" style="display: block; margin: auto;" /></p>
+<div class="infobox_red caution">
+<p>It is highly recommandanded to think about what type of data you want to collect and what test to use, before you form a question and add to the survey. We highly recommend you NOT to add questions without thinking what type of data you are going to collect with it. If you do so, you may end up with data you did not want to collect, and moreover, with data unsuitable for the test you intended to use.</p>
+</div>
+<p>When it comes to scaling techniques, they are meant to study the relationship between objects. The basic scaling techniques classification is on <strong>comparative</strong> and <strong>non-comparative scales</strong>.</p>
+<p><img src="scales.png" width="90%" style="display: block; margin: auto;" /></p>
+<p><strong>The noncomparative scale</strong> each object is scaled independently of the other objects. The resulting data is supposed to be measured in an interval and ratio scaled.</p>
+<p><strong>Comparative scales (or nonmetric scaling)</strong> compare direclty the stimulus object. For example, the respondent might be asked directly about his preference between domestic and foreign beer brands. As a result, the comparative data collected can only be interpreted in relative terms. In the following sections we will walk through both types of comparative scales and briefly introduce them.</p>
+<div id="comparative-scale-paired-comparison" class="section level4 unnumbered">
+<h4>Comparative scale: Paired Comparison</h4>
+<ul>
+<li>Respondent is presented with two objects and asked to select one according to some criterion.</li>
+<li>The nature of resulting data is ordinal</li>
+<li>Assumption of transitivity (if X &gt; Y and Y &gt; Z, then X &gt; Z) enables the paired comparison data to be converted into a rank order. To do so, you need to indetify the number of times the object is preferred by adding up all the matrices.</li>
+<li>Effective when the number of objects is limited as it requires the direct comparison, and a bigger number of objects makes the comparison becomes unmanagable.</li>
+<li><em>Example:</em><br />
+For each pair, please indicate which of the two brands of beer in the pair you prefer.
+<img src="paired%20comparison.png" width="90%" style="display: block; margin: auto;" /></li>
+</ul>
+</div>
+<div id="comparative-scale-rank-order" class="section level4 unnumbered">
+<h4>Comparative scale: Rank Order</h4>
+<ul>
+<li>Allow a certain set of brands or products to be simultaneously ranked based upon a specific attribute or characteristic.</li>
+<li>The rank order scaling is a good proxy for to the shopping setting as there are simultanious comparisons of objects.</li>
+<li>The rank order scaling results in the data of ordinal nature.</li>
+<li><em>Example:</em><br />
+Rank the various brands of beer in order of preference. Begin by picking out the one brand that you like most and assign it a number 1. Then find the second most preferred brand and assign it a number 2. Continue this procedure until you have ranked all the brands of beer in order of preference.
+No two brands should received the same rank number.</li>
+</ul>
+<p><img src="rank-order-scale.png" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="comparative-scale-constant-sum" class="section level4 unnumbered">
+<h4>Comparative scale: Constant sum</h4>
+<ul>
+<li>Respondents allocate a constant sum of units (e.g., points, dollars) among a set of stimulus objects with respect to some criterion.<br />
+</li>
+<li>Constant sum is similar to rank order, but it carries specific units.<br />
+</li>
+<li>The resulting data does not just indicate important factors, but also by how much a factor supersedes another one.<br />
+</li>
+<li>Constant sum scaling can be used to observe the comparative significance respondents assigned to various factors of a subject.<br />
+</li>
+<li><em>Example:</em><br />
+There are 8 attributes of bottled beers. Please allocate 100 points among the attributes so that your allocation reflects the relative importance you attach to each attribute.</li>
+</ul>
+<p><img src="constant-sum-scale.png" width="80%" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Basic analysis of constant-sum data involves tabulation of responses and presenting them as either quantities (e.g., “on average, 7 points were allocated to”high alcohol level“), or, as proportions (”On average, 7% of points were allocated to “high alcohol level”).</li>
+</ul>
+</div>
+<div id="non-comparative-scales-continuous-rating-scales" class="section level4 unnumbered">
+<h4>Non-Comparative Scales: Continuous Rating Scales</h4>
+<ul>
+<li>Participants rate the objects by placing a mark at the appropriate position on a line that runs from one extreme of the criterion variable to the other.<br />
+</li>
+<li>One of the advantages of the continuous rating scale is that it is easy to administer.</li>
+</ul>
+<p><img src="continuous-rating-scale.png" width="70%" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Once the ratings are collected, you can splits up the obtained ratings into categories and then assign those depending on the category in which the ratings fall.</li>
+</ul>
+</div>
+<div id="non-comparative-scales-itemized-rating-scales" class="section level4 unnumbered">
+<h4>Non-Comparative Scales: Itemized Rating Scales</h4>
+<ul>
+<li>The respondents are provided with a scale that has a number or brief description associated with each category.<br />
+</li>
+<li>The categories are ordered in terms of scale position, and the respondents are required to select the specified category that best describes the object being rated.<br />
+</li>
+<li>The commonly used itemized rating scales are <strong>the Likert, semantic differential and Stapel scales.</strong></li>
+</ul>
+<div id="itemized-rating-scales-likert-scale" class="section level5 unnumbered">
+<h5>Itemized Rating Scales: Likert scale</h5>
+<ul>
+<li>Requires respondents to indicate their attitude towards the given object through the degree of agreement or disagreement with each of a series of statements within typically five or seven categories.<br />
+</li>
+<li>Reversed code of some items increases validity.<br />
+</li>
+<li>One limitation is time required to answer a question on a Likert scale. Compared to other itemized scaling techniques, Likert scale is more time consuming as each respondent is required to read every statement given in a questionnaire before assigning a numerical value to it.</li>
+</ul>
+<p><img src="likert.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>In the table below you can find a couple of commonly measured constructs in marketing research such as attitude, importance, purchase intention and similar.</p>
+<p><img src="likert-marketing-reserach.png" width="72%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="itemized-rating-scales-semantic-differential" class="section level5 unnumbered">
+<h5>Itemized Rating Scales: Semantic Differential</h5>
+<ul>
+<li><p>Typically, participants rate objects on a number of itemized, seven-point rating scales bounded at each end by one of two bipolar adjectives.</p></li>
+<li><p>Semantic differential can measure respondent attitudes towards something (products,concepts, items, people…).</p></li>
+<li><p>It helps you find the respondent’s position is on a scale between two bipolar adjectives such as “Sweet-Sour” or “Bright-Dark”. In comparison to Likert scale, which uses generic scales (e.g. extremely dissatisfied to extremely satisfied), semantic differential questions are posed within the context of evaluating attitudes.</p></li>
+<li><p>Widely used rating scale in marketing research due to its versatility</p></li>
+</ul>
+<p><img src="semantic-differential.png" width="72%" style="display: block; margin: auto;" /></p>
+<p>When creating a semantical difference question, you should consider the following:</p>
+<ul>
+<li><strong>Number of categories:</strong></li>
+</ul>
+<p><img src="semantic-differential-1.png" width="72%" style="display: block; margin: auto auto auto 0;" /></p>
+<ul>
+<li><strong>Balanced vs. unbalanced:</strong></li>
+</ul>
+<p><img src="semantic-differential-2.png" width="72%" style="display: block; margin: auto auto auto 0;" /></p>
+<ul>
+<li><strong>Odd/even number of categories:</strong></li>
+</ul>
+<p><img src="semantic-differential-3.png" width="72%" style="display: block; margin: auto auto auto 0;" /></p>
+<ul>
+<li><strong>Forced vs. non-forced response</strong></li>
+</ul>
+<p><img src="semantic-differential-4.png" width="72%" style="display: block; margin: auto auto auto 0;" /></p>
+<ul>
+<li><strong>Verbal description:</strong></li>
+</ul>
+<p><img src="semantic-differential-5.png" width="72%" style="display: block; margin: auto auto auto 0;" /></p>
+</div>
+</div>
+</div>
+<div id="questionnaire-structure" class="section level3 unnumbered">
+<h3>Questionnaire structure</h3>
+<p>The sequence of questions in a questionnaire could play important role. For instance, more sensitive questions (such as demographic-related questions) are usually placed at the end as they can trigger change in respondent’s behavior.</p>
+<p>If you plan to conduct an online survey, then you need to think about the respondent’s experience while doing your questionnaire. For instance, spread the content over more short pages and do not have fewer long pages. In online surveys, two questions on one page is a useful rule of thumb. Generally, respondents are reluctant to read and fill out long questionnaire pages. Hence, long pages will lead to a higher dropout rate.
+In order to reduce dropout rate state how long the survey will approximately take in the introduction of the questionnaire. Take into account that tools like Qualtrics provide the estimated response time in the survey overview.</p>
+<div class="infobox_red caution">
+<p>Consider that the most of people usually use their phones to fill it out. Think about how the questionnaire will appear on a phone screen too. In that regard, think of length of questions especially.</p>
+</div>
+<p>In the end, the questionnaire structure has to be aligned with the research design. For example, if your research design features an experiment, this needs to be reflected in the questionnaire (e.g., you need to assign the respondents randomly to the experimental conditions in case of a between-subjects comparison).</p>
+<div id="questionnaire-structure-for-a-between-subjects-design" class="section level4 unnumbered">
+<h4>Questionnaire structure for a between-subjects design</h4>
+<p>In a between-subject design you randomly assign each respondent to different experimental conditions. They would then complete tasks only in the condition to which they are assigned.</p>
+<p>For instance, we would like to test the effect of two advertisements on purchase intention. Therefore, one group of (randomly assigned) respondents will be exposed to one advertisement version while the other group (of randomly assigned respondents) will be exposed to another version. After that, both groups of respondents should express their willingness to buy the advertised product. Evenutally, if the dependent variable (e.g. willingness to buy) is measured on interval or ratio scale, then you can use independent t-test to compare group means. The whole experimental design should be organised as following:</p>
+<p><img src="between-subject-design.png" width="72%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="questionnaire-structure-for-a-within-subjects-design" class="section level4 unnumbered">
+<h4>Questionnaire structure for a within-subjects design</h4>
+<p>This type of experimental design involves exposing each respondent to all of the user experimental conditions you’re testing. This way, each respondent will test all of the conditions.</p>
+<p>For instance, we would like to test again the effect of two advertisements on purchase intentions, but this time in a within-subject design. First, each respondent will be exposed to the first version of advertisement and right after that asked to rate his/her willingness to buy the advertised product. Subsequently, each participant will be shown another version of advertisement and again rate his/her willingness to purchase the advertised product. Finally, we can compare group means with paired sample t-test (given that data is measured on interval or ratio scale).</p>
+<p><img src="within-subject-design.png" width="72%" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="question-wording" class="section level3 unnumbered">
+<h3>Question wording</h3>
+<p>Generally, question wording should enable each respondent to understand questions and to be able to answer them with reliability. Reliability means that, if a respondent was asked the same question again, he/she would give the same answer again. A number of common problems regarding the question wording have been identified, so we will address the most important ones.</p>
+<p>In order to ensure reliability, the issue in terms of <strong>who, what, when and where</strong> should be defined in each question.</p>
+<div class="incorrect">
+<p>
+Incorrect
+</p>
+</div>
+<em>Example:</em> Which brand of shampoo do you use?<br />
+<strong>Who (the respondent):</strong> It is not clear whether this question relates to the individual respondent or the respondent’s total household.<br />
+<strong>What (the brand of shampoo):</strong> It is unclear how the respondent is to answer this question if more than one brand is used.<br />
+<strong>When (unclear):</strong> The time frame is not specified in this question. The respondent could interpret it as meaning the shampoo used this morning, this week, or over the past year.<br />
+<strong>Where (not specified):</strong> At home, at the gym? Where?
+<div class="incorrect">
+
+</div>
+<div class="correct">
+<p>
+Correct
+</p>
+</div>
+<p><em>A more clearly defined question is:</em><br />
+Which brand or brands of shampoo have you personally used at home during the last month? In the case of more than one brand, please list all the brands that apply.</p>
+<div class="correct">
+
+</div>
+<p><strong>Use ordinary words.</strong> Words should match the vocabulary level of the participants.</p>
+<div class="incorrect">
+<p>
+Incorrect
+</p>
+</div>
+<p>“Do you think the distribution of soft drinks is adequate?”</p>
+<div class="incorrect">
+
+</div>
+<div class="correct">
+<p>
+Correct
+</p>
+</div>
+<p>“Do you think soft drinks are easily available when you want to buy them?”</p>
+<div class="correct">
+
+</div>
+<p><strong>Avoid double negative form</strong>. Double negative question forms can confuse respondents, especially when they need to answer with “Agree” or “Disagree”.</p>
+<div class="incorrect">
+<p>
+Incorrect
+</p>
+</div>
+<p>Do you think that it is not uncommon that boys play basketball?</p>
+<div class="incorrect">
+
+</div>
+<div class="correct">
+<p>
+Correct
+</p>
+</div>
+<p>In your opinion, is it common that boys play basketball?</p>
+<div class="correct">
+
+</div>
+<p><strong>Avoid leading questions.</strong>Leading questions clue the participant to what the answer should be. Such questions introduce a bias in a particular direction.</p>
+<div class="incorrect">
+<p>
+Incorrect
+</p>
+</div>
+<p>“Is Colgate your favorite toothpaste?”</p>
+<div class="incorrect">
+
+</div>
+<div class="correct">
+<p>
+Correct
+</p>
+</div>
+<p>“What is your favorite brand of toothpaste?”</p>
+<div class="correct">
+
+</div>
+<p><strong>Avoid ambiguous words.</strong> Words such as usually, normally, frequently, often, regularly, and other similar words, do not define frequency clearly enough.</p>
+<div class="incorrect">
+<p>
+Incorrect
+</p>
+</div>
+<p>“In a typically month, how often do you go to a movie theater to see a movie?”<br />
+a) Never<br />
+b) Occasionally<br />
+c) Sometimes<br />
+d) Often<br />
+e) Regularly</p>
+<div class="incorrect">
+
+</div>
+<div class="correct">
+<p>
+Correct
+</p>
+</div>
+<p>“In a typically month, how often do you go to a movie theater to see a movie?”<br />
+a) Less than once<br />
+b) 1 or 2 times<br />
+c) 3 or 4 times<br />
+d) More than 4 times</p>
+<div class="correct">
+
+</div>
+</div>
+<div id="choose-adequate-order" class="section level3 unnumbered">
+<h3>Choose adequate order</h3>
+<p>One of the last steps in a process of designing a questionnaire is choosing adequate order of questions and instructions for respondents.</p>
+<p>At the beginning, you should provide a short and easy-to-understand introduction to the topic. Use simple language and avoid technical terms (e.g., not many people will know the terms “manufacturer brand” and “store brand”). Additionally, in the introduction you should state how long the survey will approximately take.</p>
+<p>The opening questions should be interesting, simple and non-threatening.
+They are crucial because it is the respondent’s first exposure to the questionnaire and is likely to set the tone for the rest of questions in the questionnaire. If too difficult to understand, or sensitive in some way, respondents are likely to stop answering your questions. Qualifying questions (or screening questions) should serve as the opening questions (if applicable). Their purpose is to identify a potential respondent that is eligable to proceed with the research survey.</p>
+<p>After the opening part, you should establish an optimal question flow.
+General questions should precede the specific questions. Questions on one subject, or one particular aspect of a subject, should be grouped together. It may feel confusing to be asked to return to some subject they thought they already gave their opinions about.</p>
+<p>As respondents are moving towards the end of the questionnaire, they are likely to become increasingly indifferent and might give careless answers. Therefore, questions of special importance should ideally be included in the earlier part of the questionnaire.</p>
+<p>Finally, you should pay particular attention to provide all prescribed definitions and explanations before you ask a question. This ensures that the questions are undestood in consistent way by every respondent.</p>
+</div>
+<div id="test-your-questionnaire" class="section level3 unnumbered">
+<h3>Test your questionnaire</h3>
+<p>Finally, before you distribute the final questionnaire, there are some things to consider. First, you should always pretest your questionnaire before sharing it!
+Test all aspects of the questionnaire (content, wording, sequence, form &amp; layout, etc.). If possible, use respondents in the pretest that are similar to those who will be included in the actual survey. Ideally, the pretest sample size should be small (in a real scenario this could varyfrom 15 to 30 respondents; for the group project, a lower number will be sufficient). After each significant revision of the questionnaire, conduct another pretest, using a different sample of respondents. Eventually, code and analyze the responses obtained from the pretest so that you make sure that you collected information you intended to collect.</p>
+<p>After testing your questionnaire you should be able to determine whether:</p>
+<ul>
+<li>The questions are properly framed<br />
+</li>
+<li>The questions wording triggers any biases<br />
+</li>
+<li>The questions are placed in the optimal order<br />
+</li>
+<li>The questions are understandable<br />
+</li>
+<li>Specifying questions are needed or some need to be eliminated</li>
+</ul>
+</div>
+</div>
+<div id="pitch-revision-submission" class="section level2">
+<h2><span class="header-section-number">10.4</span> Pitch, revision &amp; submission</h2>
+<p>For pitching, revision and submission of your final questionnaire, please consult this section LINK @ref(tab:mytable_sub).</p>
 </div>
 </div>
             </section>
@@ -439,8 +884,8 @@ Figure 10.1: Structure of the group project
           </div>
         </div>
       </div>
-<a href="introduction-to-r-markdown.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="part-1-before-collecting-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="intro.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="part-2-after-collecting-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

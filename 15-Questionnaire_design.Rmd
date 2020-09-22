@@ -3,7 +3,7 @@ output:
   pdf_document:
     toc: yes
   html_notebook: default
-  html_document:
+  html_document: 
     toc: yes
     df_print: paged
 ---
@@ -49,7 +49,7 @@ knitr::include_graphics("images/group_project.PNG")
 
 
 
-# Part 1 {-}
+# Part 1: Before collecting data {-}
 
 <div style="text-align: justify">
 
@@ -68,7 +68,9 @@ knitr::include_graphics("research-process.PNG")
 
 ## Research design
 
-As you aim to conduct a real marketing research, before ypu start writing down questions for a questionnaire, you need to come up with a research design. In particular, you should review the research questions, hypotheses and characteristics that influence the research design.  
+<div style="text-align: justify">
+
+As you aim to conduct a real marketing research, before you start writing down questions for a questionnaire, you need to come up with a research design. In particular, you should review the research questions, hypotheses and characteristics that influence the research design.  
 
 If you are interested in the causal effect of one particular (independent) variable on another (dependent) variable, think about an experimental design that might allow you to manipulate this variable. In this case, you particularly have to decide on the following:  
 
@@ -99,6 +101,8 @@ If you would like to analyze the effects of multiple categorical or continuous (
 * What other variables might cause the effect that you would like to investigate (to prevent omitted variable bias, i.e. variables that are not part of your model but still influence the dependent variable).
 
 * Potential interactions (e.g., is the effect of variable X stronger for group A vs. B?)
+
+</div>
 
 
 ```{r, echo=FALSE, out.width = '70%',fig.align='center'}
@@ -161,6 +165,16 @@ If there is a questionnaire in the Qualtrics Library you would like to use, then
 knitr::include_graphics('library-survey.png')
 ```
 
+::: {.infobox_orange .hint data-latex="{hint}"}
+
+Some useful tips when creating a questionnaire in Qualtrics:
+
+* Add a progress bar so that respondents know how many pages are left (see "Look & Feel" menu in Qualtrics).
+
+* Remember to activate the "Force Response" field under "Validation Options" if you don't want to allow respondents to skip questions.
+
+* Check the usability on mobile devices using the preview option (make sure the "Mobile frinedly" option is checked).
+:::
 
 ## Questionnaire
 
@@ -176,7 +190,11 @@ An objective of a questionnaire is threefold:
 
 ### Content in a questionnaire {-}
 
-In this step you are starting to work on the content of you questions. There are several questions you should ask yourself when writing questions:  
+In this step you are starting to work on the content of you questions.
+
+At the beginning of the questionnaire you should give a brief introduction to your respondents in the context of your research and the content of the questionnaire. Try to use simple language and avoid technical terms. Additionally, in the introduction you should state how long the survey will approximately take. 
+
+When you start thinking about the questions to ask, there are several points to consider:  
 
 * Is the question necessary?
 * Will I obtain the needed information?  
@@ -340,7 +358,9 @@ What is your household’s exact annual income?
 Every statistical analysis requires that variables have a specific levels of measurement. Measurement scales you choose for your questions in a survey will affect the answers you get and eventually statistical test you can apply.
 For instance, it would not make sense to compute an average of genders. An average of a categorical variable does not make much sense. Moreover, if you tried to compute the average of genders defined in numeric values (e.g. male=0, female=1), the output would be interpretable.
 
-Therefore, it is crucial to become familiar with possibilities of each scale **before** you choose to add another question to your survey. Consequently, chances to obtain data you did not intend to collect and chances that you will not be able to apply tests you intended are significantly lower.
+::: {.infobox_red .caution data-latex="{caution}"}
+It is crucial to become familiar with possibilities of each scale **before** you choose to add another question to your survey. Consequently, chances to obtain data you did not intend to collect and chances that you will not be able to apply tests you intended are significantly lower.
+:::
 
 In the following table you can get a quick overview of possibilities per each measurement scale. :
 
@@ -353,6 +373,10 @@ In the table below you can find general procedure for choosing a correct analysi
 ```{r, echo=FALSE, out.width = '90%',fig.align='center'}
 knitr::include_graphics("overview-statistical-test.jpg")
 ```
+
+::: {.infobox_red .caution data-latex="{caution}"}
+It is highly recommandanded to think about what type of data you want to collect and what test to use, before you form a question and add to the survey. We highly recommend you NOT to add questions without thinking what type of data you are going to collect with it. If you do so, you may end up with data you did not want to collect, and moreover, with data unsuitable for the test you intended to use.
+:::
 
 When it comes to scaling techniques, they are meant to study the relationship between objects. The basic scaling techniques classification is on **comparative** and **non-comparative scales**. 
 
@@ -495,11 +519,13 @@ The sequence of questions in a questionnaire could play important role. For inst
 If you plan to conduct an online survey, then you need to think about the respondent's experience while doing your questionnaire. For instance, spread the content over more short pages and do not have fewer long pages. In online surveys, two questions on one page is a useful rule of thumb. Generally, respondents are reluctant to read and fill out long questionnaire pages. Hence, long pages will lead to a higher dropout rate.
 In order to reduce dropout rate state how long the survey will approximately take in the introduction of the questionnaire. Take into account that tools like Qualtrics provide the estimated response time in the survey overview.
 
+::: {.infobox_red .caution data-latex="{caution}"}
 Consider that the most of people usually use their phones to fill it out. Think about how the questionnaire will appear on a phone screen too. In that regard, think of length of questions especially.
+:::
 
 In the end, the questionnaire structure has to be aligned with the research design. For example, if your research design features an experiment, this needs to be reflected in the questionnaire (e.g., you need to assign the respondents randomly to the experimental conditions in case of a between-subjects comparison).
 
-#### Questionnaire structure for a between-subjects design
+#### Questionnaire structure for a between-subjects design {-}
 
 In a between-subject design you randomly assign each respondent to different experimental conditions. They would then complete tasks only in the condition to which they are assigned.
 
@@ -526,14 +552,36 @@ knitr::include_graphics('within-subject-design.png')
 Generally, question wording should enable each respondent to understand  questions and to be able to answer them with reliability. Reliability means that, if a respondent was asked the same question again, he/she would give the same answer again. A number of common problems regarding the question wording have been identified, so we will address the most important ones. 
 
 In order to ensure reliability, the issue in terms of **who, what, when and where** should be defined in each question.  
+
+```{block, type="incorrect", purl=FALSE}
+\vspace{-0.1in}
+Incorrect
+\vspace{-0.1in}
+```    
+
 *Example:* Which brand of shampoo do you use?  
 **Who (the respondent):** It is not clear whether this question relates to the individual respondent or the respondent’s total household.  
 **What (the brand of shampoo):** It is unclear how the respondent is to answer this question if more than one brand is used.  
 **When (unclear):** The time frame is not specified in this question. The respondent could interpret it as meaning the shampoo used this morning, this week, or over the past year.  
 **Where (not specified):** At home, at the gym? Where?
+```{block, type="incorrect", purl=FALSE}
+\vspace{-0.1in}
+\vspace{-0.1in}
+```    
+
+```{block, type="correct", purl=FALSE}
+\vspace{-0.1in}
+Correct
+\vspace{-0.1in}
+```  
 
 *A more clearly defined question is:*  
 Which brand or brands of shampoo have you personally used at home during the last month? In the case of more than one brand, please list all the brands that apply.
+
+```{block, type="correct", purl=FALSE}
+\vspace{-0.1in}
+\vspace{-0.1in}
+```
 
 **Use ordinary words.** Words should match the vocabulary level of the participants.
 
@@ -661,7 +709,7 @@ d) More than 4 times
 
 One of the last steps in a process of designing a questionnaire is choosing adequate order of questions and instructions for respondents. 
 
-At the begining, you should provide a short and easy-to-understand introduction to the topic. Use simple language and avoid technical terms (e.g., not many people will know the terms “manufacturer brand” and “store brand”). Additionally, in the introduction you should state how long the survey will approximately take.
+At the beginning, you should provide a short and easy-to-understand introduction to the topic. Use simple language and avoid technical terms (e.g., not many people will know the terms “manufacturer brand” and “store brand”). Additionally, in the introduction you should state how long the survey will approximately take.
 
 The opening questions should be interesting, simple and non-threatening.
 They are crucial because it is the respondent's first exposure to the questionnaire and is likely to set the tone for the rest of questions in the questionnaire. If too difficult to understand, or sensitive in some way, respondents are likely to stop answering your questions. Qualifying questions (or screening questions) should serve as the opening questions (if applicable). Their purpose is to identify a potential respondent that is eligable to proceed with the research survey.
@@ -688,10 +736,10 @@ After testing your questionnaire you should be able to determine whether:
 
 ## Pitch, revision & submission
 
-TO SEND THE QUESTIONNAIRE TOGETHER WITH THE POTENTIAL QUESTIONS.
+For pitching, revision and submission of your final questionnaire, please consult this section LINK \@ref(tab:mytable_sub).
 
 
-# Part 2 {-}
+# Part 2: After collecting data {-}
 
 ## Question types and data analysis {-}
 

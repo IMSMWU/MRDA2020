@@ -129,7 +129,11 @@ Here is the list of the online tools you can use to conduct an online survey (us
 
 For the purpose of this course, we suggest to use **Qualtrics**.
 
-A questionnaire creation in Qualtrics starts with creation of a Qulatrics project. Each project consists of a survey, distribution record, and collection of responses and reports. There are three ways to create a questionnaire.First, you can create a new survey project from scratch. Second, you can create a new questionnaire from a copy of an existing questionnaire. Eventually, you can create from a template in your Survey Library, or from an exported QSF file.
+A questionnaire creation in Qualtrics starts with creation of a Qulatrics project. Each project consists of a survey, distribution record, and collection of responses and reports. There are three ways to create a questionnaire. First, you can create a new survey project from scratch. Second, you can create a new questionnaire from a copy of an existing questionnaire. Eventually, you can create from a template in your Survey Library, or from an exported QSF file.
+
+::: {.infobox .download data-latex="{download}"}
+[Here you can find a template of a questionnaire in Qualtrics with guidelines and suggestions related to each question type.](./ExampleQuestionnaireQualtrics.qsf)
+:::
 
 
 In order to create a completely new questionnaire, you need to do the following:  
@@ -153,7 +157,7 @@ Enter a name for your survey and get started with a survey creation.
 knitr::include_graphics('new-survey.png')
 ```
 
-If you would like to create a new questionnaire on a basis of an already existing one, then you choose "From a Copy". Subseqeuntly, you need to indicate the questionnaire you would like to copy. Now you are good to go! 
+If you would like to create a new questionnaire on a basis of an already existing one, then you choose "From a Copy". Subsequently, you need to indicate the questionnaire you would like to copy. Now you are good to go! 
 
 ```{r, echo=F, fig.align='center',out.width='72%'}
 knitr::include_graphics('survey-copy.png')
@@ -173,7 +177,7 @@ Some useful tips when creating a questionnaire in Qualtrics:
 
 * Remember to activate the "Force Response" field under "Validation Options" if you don't want to allow respondents to skip questions.
 
-* Check the usability on mobile devices using the preview option (make sure the "Mobile frinedly" option is checked).
+* Check the usability on mobile devices using the preview option (make sure the "Mobile friendly" option is checked).
 :::
 
 ## Questionnaire
@@ -736,7 +740,7 @@ After testing your questionnaire you should be able to determine whether:
 
 ## Pitch, revision & submission
 
-For pitching, revision and submission of your final questionnaire, please consult this section LINK \@ref(tab:mytable_sub).
+At this stage, you should be ready for pitching your questionnaire. Please keep in mind timeline for pitches. After your pitch, you will have time to revise your questionnaire, the final version for grading and start sending ti out to participants.
 
 
 # Part 2: After collecting data {-}
@@ -762,10 +766,6 @@ colnames(qualtrics)<- new.colnames
 ```
 
 In this chapter we will encounter the nature of data you collect when conducting a survey. It will help you choose a type of a question depending on the nature of data you want to collect and on the type of statistical tests you want to apply.
-
-::: {.infobox .download data-latex="{download}"}
-[Here you can find an example of a questionnaire in Qualtrics with guidelines and suggestions related to each question type.](./ExampleQuestionnaireQualtrics.qsf)
-:::
 
 
 ### Multiple choice with a single answer {-}

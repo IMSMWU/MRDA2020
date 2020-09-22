@@ -7,15 +7,32 @@ output:
     toc: yes
     df_print: paged
 ---
+<link rel="stylesheet" type="text/css" media="all" href="style.css" />
 
-```{r, include=FALSE}
+```{r, include=FALSE, fig.cap="A structure of the group project"}
 knitr::opts_chunk$set(echo = TRUE, error = FALSE, warning = FALSE, message = FALSE)
 ```
 
 # (PART) Group project {-}
 
-# Questionnaire design
-Welcome to the questionnaire design guide!
+# Intro {-}
+
+Welcome to the introduction to the group project!
+
+<div style="text-align: justify">
+
+Here you will find all important points related to the group project. In the following subchapters, you can find explanations for each step you should take in your group project. Generally, the group project comprises two parts. In the first part, you will work with your group on creating and conducting a survey. Once you have created a draft of your questionnaire, you will receive a feedback from us. After implementing the feedback, you will be ready to start collecting data! In the second part, you will have a chance to apply statistical knowledge acquired in the class and from online script. In fact, you will analyze the collected data, present your findings and finally submit your final report (R code and presentation).
+
+</div>
+
+
+```{r,echo=FALSE,out.width = '70%',fig.align='center',eval=FALSE}
+knitr::include_graphics("images/group_project.PNG")
+```
+
+## Groups {-}
+
+# Part 1 {-}
 
 An aim of this course is to develop your ability to translate business problems into actionable research questions and to design an adequate research plan to answer these questions. Therefore, you need to be equiped with knowledge on how to create a survey and properly conduct a research. 
 
@@ -27,15 +44,19 @@ In a research process, conducting a survey is a part of (primary) data collectio
 knitr::include_graphics("research-process.PNG")
 ```
 
+## Research question and design
 
-## Questionnaire design process {-}
+## Creat a questionnaire
+
+### Questionnaire design process {-}
+
 A structured questionnaire is a research instrument designed to elicit specific information from a sample of a target population. Usually it is used in a standardized way with fixed-alternative questions (same questions and response options for all respondents).
 
 An objective of a questionnaire is threefold:
 
 * to translate the information need into a set of specific questions that the respondent can and will answer,
 * to motivate, and encourage respondents to become involved, to cooperate, and to complete the questionnaire,
-*  to minimize response error.
+* to minimize response error.
 
 In order to meet these objectives, a questionnaire design process suggests the following sequence of steps:
 
@@ -44,6 +65,7 @@ knitr::include_graphics("questionnaire-design-process.png")
 ```
 
 ### Specification of the information needed {-}
+
 The questionnaire design should be aligned with the research design!
 In order to do make it aligned, it is necessary to review components of the problem and the approach. In particular, you should review the research questions, hypotheses and characteristics that influence the research design.  
 
@@ -97,7 +119,8 @@ Additionally, here is the list of the online tools you can use to conduct an onl
 - [Free online surverys](http://freeonlinesurveys.com/)
 - [Kwik surveys](http://kwiksurveys.com/)
 
-### Determine the content of questions {-}
+### Content in a questionnaire {-}
+
 In this step you are starting to work on the content of you questions. There are several questions you should ask yourself when writing questions:  
 
 * Is the question necessary?
@@ -108,14 +131,37 @@ In this step you are starting to work on the content of you questions. There are
 In your survey try to avoid asking **double-barrelled questions.**Those are 
 a single question that attempts to cover two issues. Such questions can be confusing to respondents and result in ambiguous responses. Instead, you might ask multiple questions in order to obtain the inteded information.  
 
-<span style="color: red;"><B>Incorrect:</B></span>  
+
+```{block, type="incorrect", purl=FALSE}
+\vspace{-0.1in}
+Incorrect
+\vspace{-0.1in}
+```
+
 Do you think Nike Town offers better variety and prices than other Nike stores?    
 
-<span style="color: green;"><B>Correct:</B></span>  
+```{block, type="incorrect", purl=FALSE}
+\vspace{-0.10in}
+\vspace{-0.10in}
+```
+
+
+```{block, type="correct", purl=FALSE}
+\vspace{-0.1in}
+Correct
+\vspace{-0.1in}
+```    
+
 Do you think Nike Town offers better variety than other Nike stores?  
 Do you think Nike Town offers better prices than other Nike stores?
+
+```{block, type="correct", purl=FALSE}
+\vspace{-0.10in}
+\vspace{-0.10in}
+```
            
 ### Inability and unwillingness to answer {-}  
+
 The quality of collected data you highly depends on your ability to address correct participants. Therefore, you need to make sure that your respondents are able to meaningfully answer your questions.   
 
 Examples:  
@@ -131,9 +177,27 @@ Examples:
 
 If you are asking participants to recall certain brands for instance, make sure you use **unaided recall question:**  
 
-<span style="color: green;"><B>Example of unaided recall question:</B></span>  
+
+```{block, type="correct", purl=FALSE}
+\vspace{-0.1in}
+Correct
+\vspace{-0.1in}
+```    
+
 What brands of soft drinks do you remember being advertised on TV last night?  
-<span style="color: red;"><B>Example of aided recall question:</B></span>  
+
+```{block, type="correct", purl=FALSE}
+\vspace{-0.10in}
+\vspace{-0.10in}
+```
+
+
+```{block, type="incorrect", purl=FALSE}
+\vspace{-0.1in}
+Incorrect
+\vspace{-0.1in}
+```  
+
 Which of these brands were advertised last night on TV?  
 a) Coca-Cola  
 b) Pepsi  
@@ -141,13 +205,21 @@ c) Red Bull
 d) Evian     
 e) Don’t know
 
+```{block, type="incorrect", purl=FALSE}
+\vspace{-0.10in}
+\vspace{-0.10in}
+```
+
 
 
 If you are asking participants to list something, the good case practice is **to minimize the effort required by respondents:**  
 
-<span style="color: red;"><B>Incorrect:</B></span>     
-Please list all the departments from which you purchased merchandise on your most recent shopping trip to department store X.    
-<span style="color: green;"><B>Correct:</B></span>     
+```{block, type="correct", purl=FALSE}
+\vspace{-0.1in}
+Correct
+\vspace{-0.1in}
+```  
+
 Please check all the departments from which you purchased merchandise on your most recent shopping trip to a department store:    
 a) Women’s dresses  
 b) Men’s apparel  
@@ -156,12 +228,33 @@ d) Cosmetics
 e) Jewelry    
 f) Other (please specify) ___________
 
+```{block, type="correct", purl=FALSE}
+\vspace{-0.10in}
+\vspace{-0.10in}
+```
+
+```{block, type="incorrect", purl=FALSE}
+\vspace{-0.1in}
+Incorrect
+\vspace{-0.1in}
+```  
+
+Please list all the departments from which you purchased merchandise on your most recent shopping trip to department store X.    
+
+```{block, type="incorrect", purl=FALSE}
+\vspace{-0.10in}
+\vspace{-0.10in}
+```
+
 
 In a case you are asking for information that could be considered sensitive (e.g. money, family life, political beliefs, religion), they should come at the end of the questionnaire. Moreover, it is recommendable to provide response categories rather than asking for specific figures:  
 
-<span style="color: red;"><B>Incorrect:</B></span>         
-What is your household’s exact annual income?      
-<span style="color: green;"><B>Correct:</B></span>           
+```{block, type="correct", purl=FALSE}
+\vspace{-0.1in}
+Correct
+\vspace{-0.1in}
+```  
+
 Which one of the following categories best describes your household’s annual gross income?    
 a) under 25.001 €    
 b) 25.001€ to 50.000 €    
@@ -169,7 +262,27 @@ c) 50.001€ to 75.000 €
 d) 75.001€ to 100.000 €   
 e) over 100.000 €   
 
+```{block, type="correct", purl=FALSE}
+\vspace{-0.10in}
+\vspace{-0.10in}
+```
+
+
+```{block, type="incorrect", purl=FALSE}
+\vspace{-0.1in}
+Incorrect
+\vspace{-0.1in}
+```  
+
+What is your household’s exact annual income?
+
+```{block, type="incorrect", purl=FALSE}
+\vspace{-0.10in}
+\vspace{-0.10in}
+```
+
 ### Decide on measurement scales and scaling techniques {-}
+
 Every statistical analysis requires that variables have a specific levels of measurement. Measurement scales you choose for your questions in a survey will affect the answers you get and eventually statistical test you can apply.
 For instance, it would not make sense to compute an average of genders. An average of a categorical variable does not make much sense. Moreover, if you tried to compute the average of genders defined in numeric values (e.g. male=0, female=1), the output would be interpretable.
 
@@ -280,7 +393,7 @@ knitr::include_graphics('likert-marketing-reserach.png')
 
 * Semantic differential can measure respondent attitudes towards something (products,concepts, items, people...).
 
-* It helps you find the repondent's position is on a scale between two bipolar adjectives such as “Sweet-Sour” or “Bright-Dark”. In comparison to Likert scale, which uses generic scales (e.g. extremely dissatisfied to extremely satisfied), semantic differential questions are posed within the context of evaluating attitudes.
+* It helps you find the respondent's position is on a scale between two bipolar adjectives such as “Sweet-Sour” or “Bright-Dark”. In comparison to Likert scale, which uses generic scales (e.g. extremely dissatisfied to extremely satisfied), semantic differential questions are posed within the context of evaluating attitudes.
 
 * Widely used rating scale in marketing research due to its versatility
 
@@ -319,9 +432,6 @@ knitr::include_graphics('semantic-differential-4.png')
 ```{r, echo=F, fig.align='left',out.width='72%'}
 knitr::include_graphics('semantic-differential-5.png')
 ```
-
-
-
 
 
 ### Questionnaire structure {-}
@@ -371,30 +481,99 @@ In order to ensure reliability, the issue in terms of **who, what, when and wher
 *A more clearly defined question is:*  
 Which brand or brands of shampoo have you personally used at home during the last month? In the case of more than one brand, please list all the brands that apply.
 
-**Use ordinary words.** Words should match the vocabulary level of the participants.  
-<span style="color: red;"><B>Incorrect:</B></span>    
+**Use ordinary words.** Words should match the vocabulary level of the participants.
+
+```{block, type="incorrect", purl=FALSE}
+\vspace{-0.1in}
+Incorrect
+\vspace{-0.1in}
+```    
+
 “Do you think the distribution of soft drinks is adequate?”   
-<span style="color: green;"><B>Correct:</B></span>  
+
+```{block, type="incorrect", purl=FALSE}
+\vspace{-0.1in}
+\vspace{-0.1in}
+```    
+
+
+```{block, type="correct", purl=FALSE}
+\vspace{-0.1in}
+Correct
+\vspace{-0.1in}
+```    
+
 “Do you think soft drinks are easily available when you want to buy them?”
+
+```{block, type="correct", purl=FALSE}
+\vspace{-0.1in}
+\vspace{-0.1in}
+```
 
 **Avoid double negative form**. Double negative question forms can confuse respondents, especially when they need to answer with “Agree” or “Disagree”.
 
-<span style="color: red;"><B>Incorrect:</B></span>      
+```{block, type="incorrect", purl=FALSE}
+\vspace{-0.1in}
+Incorrect
+\vspace{-0.1in}
+```
+
 Do you think that it is not uncommon that boys play basketball?  
-<span style="color: green;"><B>Correct:</B></span>  
+
+```{block, type="incorrect", purl=FALSE}
+\vspace{-0.1in}
+\vspace{-0.1in}
+```
+
+```{block, type="correct", purl=FALSE}
+\vspace{-0.1in}
+Correct
+\vspace{-0.1in}
+```
+
 In your opinion, is it common that boys play basketball?
 
-
+```{block, type="correct", purl=FALSE}
+\vspace{-0.1in}
+\vspace{-0.1in}
+```
 
 **Avoid leading questions.**Leading questions clue the participant to what the answer should be. Such questions introduce a bias in a particular direction.  
-<span style="color: red;"><B>Incorrect:</B></span>    
+
+```{block, type="incorrect", purl=FALSE}
+\vspace{-0.1in}
+Incorrect
+\vspace{-0.1in}
+```
+
 “Is Colgate your favorite toothpaste?”  
-<span style="color: green;"><B>Correct:</B></span>       
+
+```{block, type="incorrect", purl=FALSE}
+\vspace{-0.1in}
+\vspace{-0.1in}
+```
+
+```{block, type="correct", purl=FALSE}
+\vspace{-0.1in}
+Correct
+\vspace{-0.1in}
+```
+
 “What is your favorite brand of toothpaste?”
+
+```{block, type="correct", purl=FALSE}
+\vspace{-0.1in}
+\vspace{-0.1in}
+```
 
 **Avoid ambiguous words.** Words such as usually, normally, frequently, often, regularly, and other similar words, do not define frequency clearly enough.
 
-<span style="color: red;"><B>Incorrect:</B></span>      
+```{block, type="incorrect", purl=FALSE}
+\vspace{-0.1in}
+Incorrect
+\vspace{-0.1in}
+```
+
 “In a typically month, how often do you go to a movie theater to see a movie?”  
 a) Never  
 b) Occasionally  
@@ -402,12 +581,27 @@ c) Sometimes
 d) Often   
 e) Regularly  
 
-<span style="color: green;"><B>Correct:</B></span>     
+```{block, type="incorrect", purl=FALSE}
+\vspace{-0.1in}
+\vspace{-0.1in}
+```
+
+```{block, type="correct", purl=FALSE}
+\vspace{-0.1in}
+Correct
+\vspace{-0.1in}
+```
+
 "In a typically month, how often do you go to a movie theater to see a movie?"    
 a) Less than once  
 b) 1 or 2 times  
 c) 3 or 4 times  
 d) More than 4 times
+
+```{block, type="correct", purl=FALSE}
+\vspace{-0.1in}
+\vspace{-0.1in}
+```
 
 ### Choose adequate order {-}
 
@@ -438,8 +632,7 @@ After testing your questionnaire you should be able to determine whether:
 * The questions are understandable  
 * Specifying questions are needed or some need to be eliminated  
 
-
-## Questionnaire in Qualtrics {-}
+### Questionnaire in Qualtrics {-}
 
 A questionnaire creation in Qualtrics starts with creation of a Qulatrics project. Each project consists of a survey, distribution record, and collection of responses and reports. There are three ways to create a questionnaire.First, you can create a new survey project from scratch. Second, you can create a new questionnaire from a copy of an existing questionnaire. Eventually, you can create from a template in your Survey Library, or from an exported QSF file.
 
@@ -478,6 +671,12 @@ knitr::include_graphics('library-survey.png')
 ```
 
 
+## Pitch, revision & submission
+
+TO SEND THE QUESTIONNAIRE TOGETHER WITH THE POTENTIAL QUESTIONS.
+
+
+# Part 2 {-}
 
 ## Question types and data analysis {-}
 
@@ -501,7 +700,10 @@ colnames(qualtrics)<- new.colnames
 
 In this chapter we will encounter the nature of data you collect when conducting a survey. It will help you choose a type of a question depending on the nature of data you want to collect and on the type of statistical tests you want to apply.
 
+::: {.infobox .download data-latex="{download}"}
 [Here you can find an example of a questionnaire in Qualtrics with guidelines and suggestions related to each question type.](./ExampleQuestionnaireQualtrics.qsf)
+:::
+
 
 ### Multiple choice with a single answer {-}
 

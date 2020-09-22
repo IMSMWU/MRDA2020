@@ -26,13 +26,32 @@ Here you will find all important points related to the group project. In the fol
 </div>
 
 
-```{r,echo=FALSE,out.width = '70%',fig.align='center',eval=FALSE}
+```{r,echo=FALSE,out.width = '70%',fig.align='center',fig.cap="Structure of the group project"}
 knitr::include_graphics("images/group_project.PNG")
 ```
 
 ## Groups {-}
 
+## Topics for the group project {-}
+
+| Topic | Description |
+|:-----:|:-----------:|
+|       |             |
+|       |             |
+|       |             |
+|       |             |
+|       |             |
+|       |             |
+|       |             |
+|       |             |
+|       |             |
+
+
+
+
 # Part 1 {-}
+
+<div style="text-align: justify">
 
 An aim of this course is to develop your ability to translate business problems into actionable research questions and to design an adequate research plan to answer these questions. Therefore, you need to be equiped with knowledge on how to create a survey and properly conduct a research. 
 
@@ -40,34 +59,16 @@ Generally, what you can expect from the survey design is similar to what one exp
 
 In a research process, conducting a survey is a part of (primary) data collection. Before we collect data, we have to make sure that preceding steps are correctly done. However, in the following sections we will focus on the process of designing a questionnaire. Eventually, you will be able to collect relevant data and apply appropriate statistical tests.    
 
+</div>
+
+
 ```{r,echo=FALSE,out.width = '70%',fig.align='center'}
 knitr::include_graphics("research-process.PNG")
 ```
 
-## Research question and design
+## Research design
 
-## Creat a questionnaire
-
-### Questionnaire design process {-}
-
-A structured questionnaire is a research instrument designed to elicit specific information from a sample of a target population. Usually it is used in a standardized way with fixed-alternative questions (same questions and response options for all respondents).
-
-An objective of a questionnaire is threefold:
-
-* to translate the information need into a set of specific questions that the respondent can and will answer,
-* to motivate, and encourage respondents to become involved, to cooperate, and to complete the questionnaire,
-* to minimize response error.
-
-In order to meet these objectives, a questionnaire design process suggests the following sequence of steps:
-
-```{r,echo=FALSE, out.width = '70%',fig.align='center'}
-knitr::include_graphics("questionnaire-design-process.png")
-```
-
-### Specification of the information needed {-}
-
-The questionnaire design should be aligned with the research design!
-In order to do make it aligned, it is necessary to review components of the problem and the approach. In particular, you should review the research questions, hypotheses and characteristics that influence the research design.  
+As you aim to conduct a real marketing research, before ypu start writing down questions for a questionnaire, you need to come up with a research design. In particular, you should review the research questions, hypotheses and characteristics that influence the research design.  
 
 If you are interested in the causal effect of one particular (independent) variable on another (dependent) variable, think about an experimental design that might allow you to manipulate this variable. In this case, you particularly have to decide on the following:  
 
@@ -104,20 +105,74 @@ If you would like to analyze the effects of multiple categorical or continuous (
 knitr::include_graphics("mlp-regression.png")
 ```
 
-### Specify the interviewing method {-}  
+## Interviewing method  
+
 In the next step you should review the type of interviewing method you will use.
-At this point you need to think in which setting you aim to conduct your survery. For instance, should you do it in a face-to-face setting or rather online. Here you can find some advantages and disadvantages of online surveys:
+
+At this point you need to think in which setting you aim to conduct your survey. For instance, should you do it in a face-to-face setting or rather online. Here you can find some advantages and disadvantages of online surveys:
+
 ```{r, echo=F, fig.align='center',out.width='50%'}
 knitr::include_graphics("adv-disadv-online-questionnaire.png")
 ```
 
-Additionally, here is the list of the online tools you can use to conduct an online survey (usually for free):  
+Here is the list of the online tools you can use to conduct an online survey (usually for free):  
 
 - [Qualtrics](http://www.qualtrics.com/free-account/)
 - [Google form](https://www.google.com/forms/about/)
 - [Survey monkey](https://www.surveymonkey.com/)
 - [Free online surverys](http://freeonlinesurveys.com/)
 - [Kwik surveys](http://kwiksurveys.com/)
+
+For the purpose of this course, we suggest to use **Qualtrics**.
+
+A questionnaire creation in Qualtrics starts with creation of a Qulatrics project. Each project consists of a survey, distribution record, and collection of responses and reports. There are three ways to create a questionnaire.First, you can create a new survey project from scratch. Second, you can create a new questionnaire from a copy of an existing questionnaire. Eventually, you can create from a template in your Survey Library, or from an exported QSF file.
+
+
+In order to create a completely new questionnaire, you need to do the following:  
+
+Go to the Projects page by clicking the Qualtric XM logo or clicking Projects on the top-right.  
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('create-new-project.png')
+```
+
+Create new project by clicking the blue button on the right side.  
+In the "Create your own" section click on the survey button.
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('create-new-project-2.png')
+```
+
+Enter a name for your survey and get started with a survey creation.
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('new-survey.png')
+```
+
+If you would like to create a new questionnaire on a basis of an already existing one, then you choose "From a Copy". Subseqeuntly, you need to indicate the questionnaire you would like to copy. Now you are good to go! 
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('survey-copy.png')
+```
+
+If there is a questionnaire in the Qualtrics Library you would like to use, then you need to choose "From Library", and indicate one library name in the dropdown menu. 
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('library-survey.png')
+```
+
+
+## Questionnaire
+
+The questionnaire design should be aligned with the research design! Therefore, in the following sections we will explain some suggested steps on how to approach questionnaire creation.
+
+Let's start with what is a questionnaire. A structured questionnaire is a research instrument designed to elicit specific information from a sample of a target population. Usually it is used in a standardized way with fixed-alternative questions (same questions and response options for all respondents).
+
+An objective of a questionnaire is threefold:
+
+* to translate the information need into a set of specific questions that the respondent can and will answer,
+* to motivate, and encourage respondents to become involved, to cooperate, and to complete the questionnaire,
+* to minimize response error.
 
 ### Content in a questionnaire {-}
 
@@ -176,7 +231,6 @@ Examples:
 
 
 If you are asking participants to recall certain brands for instance, make sure you use **unaided recall question:**  
-
 
 ```{block, type="correct", purl=FALSE}
 \vspace{-0.1in}
@@ -631,45 +685,6 @@ After testing your questionnaire you should be able to determine whether:
 * The questions are placed in the optimal order  
 * The questions are understandable  
 * Specifying questions are needed or some need to be eliminated  
-
-### Questionnaire in Qualtrics {-}
-
-A questionnaire creation in Qualtrics starts with creation of a Qulatrics project. Each project consists of a survey, distribution record, and collection of responses and reports. There are three ways to create a questionnaire.First, you can create a new survey project from scratch. Second, you can create a new questionnaire from a copy of an existing questionnaire. Eventually, you can create from a template in your Survey Library, or from an exported QSF file.
-
-
-In order to create a completely new questionnaire, you need to do the following:  
-
-Go to the Projects page by clicking the Qualtric XM logo or clicking Projects on the top-right.  
-
-```{r, echo=F, fig.align='center',out.width='72%'}
-knitr::include_graphics('create-new-project.png')
-```
-
-Create new project by clicking the blue button on the right side.  
-In the "Create your own" section click on the survey button.
-
-```{r, echo=F, fig.align='center',out.width='72%'}
-knitr::include_graphics('create-new-project-2.png')
-```
-
-Enter a name for your survey and get started with a survey creation.
-
-```{r, echo=F, fig.align='center',out.width='72%'}
-knitr::include_graphics('new-survey.png')
-```
-
-If you would like to create a new questionnaire on a basis of an already existing one, then you choose "From a Copy". Subseqeuntly, you need to indicate the questionnaire you would like to copy. Now you are good to go! 
-
-```{r, echo=F, fig.align='center',out.width='72%'}
-knitr::include_graphics('survey-copy.png')
-```
-
-If there is a questionnaire in the Qualtrics Library you would like to use, then you need to choose "From Library", and indicate one library name in the dropdown menu. 
-
-```{r, echo=F, fig.align='center',out.width='72%'}
-knitr::include_graphics('library-survey.png')
-```
-
 
 ## Pitch, revision & submission
 

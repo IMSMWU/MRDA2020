@@ -99,6 +99,14 @@ In a research process, conducting a survey is a part of (primary) data collectio
 knitr::include_graphics("research-process.PNG")
 ```
 
+::: {.infobox_red .caution data-latex="{caution}"}
+Note that this assignment may require you to deal with and integrate
+knowledge that has not yet been covered in class! Students are
+expected to read ahead and collect additional information to the
+extent to which their project requires this.
+:::
+
+
 ## Research design
 
 <div style="text-align: justify">
@@ -1547,9 +1555,38 @@ By observing our correlation matrix, we can see that non of the coefficients sug
 
 ## Reporting {-}
 
-TXT
+ inttor
 
-## Final presentation and submission {-}
+
+
+## Presentation guidelines & grading {-}
+
+Your performance in this part will be evaluated based on the following criteria:
+
+* **Individual Responsibility:**
+
+    + Group members should plan to share presentation responsibilities and field questions equally.
+    + All members of the group must contribute to the presentation.
+    + Individual grade for presentation and oral participation during the class.
+    + To ensure an equal contribution of group members, a peer assessment will be conducted, which enters into the computation of the individual grades for the group project. 
+
+* **Quality of questionnaire design:**
+
+    + Survey method
+    + Question structure / wording
+
+* **Data Analysis:**
+
+    + Clarity / appropriateness
+    + Completeness / accuracy
+    
+* **Presentation:**
+
+    + Introduction/problem, approach, solution/inclusion
+
+
+
+### Final presentation and submission {-}
 
 ```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
 library(dplyr)

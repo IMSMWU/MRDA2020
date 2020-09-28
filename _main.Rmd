@@ -1,4 +1,339 @@
 ---
+knit: "bookdown::render_book"
+title: "Marketing Research Design & Analysis 2020"
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "An Introduction to Data Analytics Using R"
+site: bookdown::bookdown_site
+documentclass: book
+favicon: "favicon.ico"
+css: style.css
+classoption:
+  - twocolumn
+---
+
+# (PART) Course outline {-}
+# Welcome! {-}
+
+Placeholder
+
+
+## Schedule {-}
+### Lecture notes Q&A {-}
+### Individual assignments {-}
+### Group project {-}
+## Grading {-}
+## Main reference {-}
+## Further readings {-}
+## Discussion forum {-}
+## DataCamp {-}
+## Other web-resources {-}
+## Contact {-}
+## Acknowledgements {-}
+
+<!--chapter:end:index.rmd-->
+
+
+# (PART) Lecture notes {-}
+# Preliminaries
+
+Placeholder
+
+
+## The marketing research process
+## Choosing a research design
+### Descriptive research
+### Predictive research
+### Causal inference
+#### Experimentation
+#### Observational research
+## Measurement and scaling
+### Scale characteristics
+### Levels of measurement
+#### Categorical (non-metric) variables
+##### Nominal scales
+##### Ordinal scales
+#### Continuous (metric) variables
+##### Interval scales
+##### Ratio scales
+### Measurement accuracy
+### Scaling techniques
+#### Single vs. multi-item scales
+#### Formative vs. reflective scales
+## Learning check {-}
+## References {-}
+
+<!--chapter:end:00-Preliminaries.Rmd-->
+
+
+# Getting started with R
+
+Placeholder
+
+
+## How to download and install R and RStudio
+## Getting help
+## Functions
+## Packages
+## A typical R session
+## References {-}
+
+<!--chapter:end:01-getting_started.Rmd-->
+
+
+# Data handling
+
+Placeholder
+
+
+## Basic data handling
+### Creating objects
+### Data types
+### Data structures
+#### Accessing data in data frames
+#### Inspecting the content of a data frame
+#### Append and delete variables to/from data frames
+
+<!--chapter:end:02-basic_data_handling.Rmd-->
+
+
+
+## Data import and export 
+### Getting data for this course
+#### Directly import datasets from GitHub (recommended)
+#### Download and import datasets from "Learn\@WU"
+### Import data created by other software packages
+### Export data
+### Import data from the Web
+#### Scraping data from websites
+#### Scraping data from APIs
+##### Scraping data from APIs directly
+##### Scraping data from APIs via R packages
+## References {-}
+
+<!--chapter:end:03-data_import.Rmd-->
+
+
+# Summarizing data
+
+Placeholder
+
+
+## Summary statistics
+### Categorical variables
+### Continuous variables
+#### Descriptive statistics
+#### Creating subsets
+
+<!--chapter:end:04-basic_statistics.Rmd-->
+
+
+
+## Data visualization
+### Categorical variables
+#### Bar plot
+#### Pie plot
+#### Covariation plots
+### Continuous variables
+#### Histogram
+#### Boxplot
+#### Plot of means
+#### Scatter plot
+##### Grouped scatter plot
+##### Combination of scatter plot and histogram
+#### Line plot
+### Saving plots
+### Additional options
+
+<!--chapter:end:05-visualization.Rmd-->
+
+
+# Introduction to Statistical Inference
+
+Placeholder
+
+
+## If we knew it all 
+### Sampling from a known population
+### Standard error of the mean
+#### Sample size
+#### Population standard deviation
+## The Central Limit Theorem
+## Using what we actually know
+## Confidence Intervals for the Sample Mean
+## Summary {-}
+
+<!--chapter:end:06-statistical_inference.Rmd-->
+
+
+# Hypothesis testing
+
+Placeholder
+
+
+## Introduction
+### The null hypothesis
+### Statistical inference on a sample
+#### Test statistic
+##### z-scores
+##### t-statistic
+#### P-values
+#### Confidence interval
+### Choosing the right test
+#### Parametric vs. non-parametric tests
+#### One-tailed vs. two-tailed test
+### Summary
+## One sample t-test
+## Comparing two means
+### Independent-means t-test
+#### Theory
+#### Application
+### Dependent-means t-test
+#### Theory
+#### Application
+### Further considerations
+#### Type I and Type II Errors
+#### Significance level, sample size, power, and effect size
+#### P-values, stopping rules and p-hacking
+
+<!--chapter:end:07-hypothesis_testing.Rmd-->
+
+
+
+## Comparing several means
+### Introduction
+### Decomposing variance
+#### Total sum of squares
+#### Model sum of squares
+#### Residual sum of squares
+#### Effect strength
+#### Test of significance
+### One-way ANOVA
+#### Basic ANOVA
+##### Independence of observations {-}
+##### Distributional assumptions {-}
+##### Homogeneity of variance {-}
+#### Post-hoc tests
+##### Bonferroni
+##### Tukey's HSD
+
+<!--chapter:end:08-Anova.Rmd-->
+
+
+
+## Non-parametric tests
+### Mann-Whitney U Test (a.k.a. Wilcoxon rank-sum test)
+### Wilcoxon signed-rank test
+### Kruskal-Wallis test
+## Categorical data
+### Confidence intervals for proportions
+### Chi-square test
+### Sample size
+## Summary {-}
+## References {-}
+
+<!--chapter:end:09-non_parametric_tests.Rmd-->
+
+
+# Regression 
+
+Placeholder
+
+
+## Correlation
+### Correlation coefficient
+### Significance testing
+## Regression
+### Simple linear regression
+#### Estimating the coefficients
+#### Significance testing
+#### Assessing model fit
+##### R-squared {-}
+##### Adjusted R-squared {-}
+##### F-test {-}
+#### Using the model
+### Multiple linear regression
+### Estimation of the regression plane
+### Calculate z on a grid of x-y values
+#### Draw the plane with "plot_ly" and add points with "add_trace"
+## Potential problems
+### Outliers
+### Influential observations
+### Non-linearity
+### Non-constant error variance
+### Non-normally distributed errors
+### Correlation of errors
+### Collinearity
+### Omitted Variables
+## Categorical predictors
+### Two categories
+### More than two categories
+## Extensions of the linear model
+### Interaction effects
+### Non-linear relationships
+
+<!--chapter:end:10-Regression.Rmd-->
+
+
+# Inspect data
+
+Placeholder
+
+
+## Logistic regression
+### Motivation and intuition
+### Technical details of the model
+### Estimation in R
+#### Logistic model with multiple predictors
+#### Model selection
+#### Predictions
+#### Perfect Prediction Logit
+##### Example
+## Summary {-}
+## References {-}
+
+<!--chapter:end:11-Logistic_Regression.Rmd-->
+
+
+# Exploratory factor analysis
+
+Placeholder
+
+
+## Introduction
+## Steps in factor analysis
+### Are the assumptions satisfied?
+### Deriving factors
+### Factor interpretation
+### Creating new variables
+## Reliability analysis
+## Summary {-}
+## References {-}
+
+<!--chapter:end:12-factor_analysis.Rmd-->
+
+
+# (PART) Assignments {-}
+# Introduction to R Markdown
+
+Placeholder
+
+
+## Creating a new R Markdown document {-}
+## Text and Equations {-}
+### Headings {-}
+### Lists {-}
+### Text formatting {-}
+## R-Code {-}
+### Global and chunk options {-}
+## LaTeX Math {-}
+### Important symbols {-}
+### Greek letters {-}
+
+<!--chapter:end:13-rmdIntro.Rmd-->
+
+---
 output:
   pdf_document:
     toc: yes
@@ -1670,4 +2005,12 @@ mytable_sub %>% kable(escape = T) %>%
 
 
 
+
+
+<!--chapter:end:15-Questionnaire_design.Rmd-->
+
+
+
+
+<!--chapter:end:test.rmd-->
 

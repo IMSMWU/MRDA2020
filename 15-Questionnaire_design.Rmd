@@ -1019,82 +1019,32 @@ In our case, our multiple choice question output will contain 5 data groups afte
 # Convert numeric value to factors
 qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?` <- factor(qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`, levels = c(1:5), labels = c('Never','Early morning(00:00-06:00)','Morning(06:00-12:00)','Afternoon(12:00-18:00','Evening (18:00-22:00)'))
 
-qualtrics$` Selected Choice_1` <- factor(qualtrics$` Selected Choice_1`,levels = c(1:2),labels = c("Male","Female"))
-
-qualtrics$` Selected Choice` <- factor(qualtrics$` Selected Choice`, levels = c(1:2), labels=c("Austria","Germany"))
-
 # Table
 table(qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`)
 ```
-
-Second, you might want to visualize your results. In order to do so, the data format needs to be in the appropriate format.Here we proceed with data format adaptation from the point where we stopped:
-
-```{r, eval=TRUE, warning=FALSE, message=FALSE,echo=FALSE}
-# Converting long format to the visualisation-friendly format
-mlc_visualisation <- as.data.frame(table(qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`))
-
-# Naming columns
-names(mlc_visualisation) <- c('Time','Count')
-
-# Observing
-library(kableExtra)
-mlc_visualisation %>%
-kableExtra::kbl(align = "c") %>%
-  kable_paper("hover", full_width = F)
-```
-
-R package **ggplot2** allows you to create visually appealing graphs:
-
-```{r}
-## ggplot2 bar chart
-library(ggplot2)
-p <- ggplot(data=mlc_visualisation, 
-             aes(x=Time, y=Count, fill=Time)) +
-             geom_bar(stat='identity') + theme(axis.text.x = element_blank()) + labs(title = 'The period of the day you prefer watching movies?')+xlab(label = " ")
-p
-```
-
-Another R library which can help you make amazing interactive charts in a minute is **plotly**. Here we use a function called **ggplotly()**, which allows you to turn any **ggplot2** chart interactive. Since we have already created a bar chart using ggplot2 and saved it as "p", we will just turn it into plotly graph:
-
-```{r,warning=F,message=F}
-## ggplotly bar chart
-
-library(plotly)
-ggplotly(p)
-```
-
-
-An improved version of ggplot2 package is the packaged called **ggvis**, which is still in developing:
-```{r, warning=FALSE, message=FALSE}
-## ggvis bar chart
-
-library(ggvis)
-ggvis(mlc_visualisation, 
-      x = ~Time, 
-      y = ~Count, 
-      fill=~Time)
-```
-
-
-
-Data type collected from the previous question is ordinal as we are able to make a natural order of the levels. Since it is ordinal data type, it belongs to categorical data. For the analysis of categorical data we can use Chi-square test or Fisher's test if a count for some level is less than 5. 
 
 #### Fischer's exact {-}
 
 Fisher's exact test is used to test a hypothesis with data obtained from multiple choice questions with single answer. Results from multiple choice questions with multiple answers are treated with different test.
 <ul><li> <B> Application: </B> when you have <B> 1 dependent variable and  1 independent variable with 2 or more levels/factors </B></ul></li>
 <ul><li> Used when frequency in at least one cell is <B> less than 5 </B>. When frequencies in each cell are greater than 5, Chi-square test should be used.</ul></li>
-<ul><li> <B>Hypothesis:</B> Is there a significant difference in frequencies between values observed in cells and values expected in cells ? (R for Marketing and Research Analytics)</ul></li>
+<ul><li> <B>Hypothesis:</B> Is there a significant difference in frequencies between values observed in cells and values expected in cells ? </ul></li>
 <ul><li> <B>H0:</B> There is no relationship between the two categorical variables.Therefore, two categorical variables are <B> independent.</B> Knowing the value of one variable does not help to predict the value of the other variable.</ul></li>
 <ul><li> <B>H1:</B> There is a relationship between the two categorical variables.Therefore, two categorical variables are <B> dependent.</B>Knowing the value of one variable helps to predict the value of the other variable.</ul></li>
 <ul><li> Usually, this type of test is used on 2x2 contingency tables. However, it can be applicable on contingency tables of larger dimensions.</ul></li>
 
-<B>Example:</B> We would like to know whether a number of hours spent watching Netflix depends on the respondents' country of origin.
+<B>Example:</B> We would like to know whether the preferred period of the day for watching Netflix depends on the respondents' country of origin.
 
 
 ```{r}
+# Converting characters to factors
+qualtrics$` Selected Choice_1` <- factor(qualtrics$` Selected Choice_1`,levels = c(1:2),labels = c("Male","Female"))
+
+qualtrics$` Selected Choice` <- factor(qualtrics$` Selected Choice`, levels = c(1:2), labels=c("Austria","Germany"))
+
 # Creation of contingency table
 fisher_test_table <-table(qualtrics$` Selected Choice`,qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`)
+
 # Check how our contigency table looks like
 fisher_test_table
 
@@ -1120,7 +1070,7 @@ In our case, not rejecting the null hypothesis for the Fisher’s exact test of 
 <ul><li> <B> H0: </B> There is no significant difference between the observed and the expected frequencies.</ul></li>
 <ul><li> <B> H1: </B> There is a significant difference between the observed and the expected frequencies. </ul></li>
 <ul><li> If we don't specify expected frequency per cell (see in the code below), then it is expected that all cells show an eqaul frequency. </ul></li>
-<ul><li> <B> Example</B> :'Do the numbers of respondents who are spending different amount of hours watching Netflix <B> significantly differ from each other?</B>'</ul></li></div>
+<ul><li> <B> Example</B> :'Do the numbers of respondents who prefer watching Netflix in different periods of a day <B> significantly differ from each other?</B>'</ul></li></div>
 <ul><li><B> Note that we did not assume any specific distribution, so we are assuming that each count will have the same or similar number. </ul></li></B>
 
 ```{r} 
@@ -1380,6 +1330,7 @@ constant.sum.long
 
 ```{r,error=FALSE,warning=FALSE, message=FALSE}
 # Boxplot ggplot2
+library(plotly)
 p<-constant.sum.long %>% 
   filter(Factor!="id") %>%
   ggplot(aes(x=Factor, y=Points, fill= Factor)) +
@@ -1552,10 +1503,40 @@ correlation
 
 By observing our correlation matrix, we can see that non of the coefficients suggest values close to 0.8 or 0.9. Consequently, we conclude that there are no concerns regarding the multicolinearity between independent variables.
 
-
 ## Reporting {-}
 
- inttor
+### Multiple choice question visualisation {-}
+
+You might want to visualize your results. In order to do so, the data format needs to be in the appropriate format.Here we proceed with data format adaptation from the point where we stopped:
+
+```{r, eval=TRUE, warning=FALSE, message=FALSE,echo=FALSE}
+# Converting long format to the visualisation-friendly format
+mlc_visualisation <- as.data.frame(table(qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`))
+
+# Naming columns
+names(mlc_visualisation) <- c('Time','Count')
+
+# Observing
+library(kableExtra)
+mlc_visualisation %>%
+kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
+```
+
+R package **ggplot2** allows you to create visually appealing graphs:
+
+```{r}
+## ggplot2 bar chart
+library(ggplot2)
+p <- ggplot(data=mlc_visualisation, 
+  aes(x=Time, y=Count, fill=Time)) +
+  geom_bar(stat='identity') + 
+  theme(axis.text.x = element_blank()) + labs(title = 'The period of the day you prefer watching movies?')+
+  xlab(label = " ")
+p
+```
+
+
 
 
 

@@ -74,7 +74,6 @@ mytable_sub %>% kable(escape = T) %>%
 ```
 
 
-
 # Part 1: Before collecting data {-}
 
 <div style="text-align: justify">
@@ -450,7 +449,7 @@ library(sjlabelled)
 library(kableExtra)
 
 # Read the qualtrics survey data
-qualtrics<-read_survey('new_qualtrics_response_data_final_final.csv')
+qualtrics<-read_survey('data_analysis_survey.csv')
 
 # Using labels as column name
 
@@ -459,6 +458,15 @@ new.colnames <- make.unique(new.colnames, sep="_")
 colnames(qualtrics)<- new.colnames
 
 ```
+
+#### Number entry question {-}
+
+```{r, echo=F, fig.align='center',out.width='72%', fig.cap="Text or number entry question"}
+knitr::include_graphics('images/text-entry.PNG')
+```
+
+A number entry question is a recommended type of question if you are interested in obtaining **ratio data type**. Ratio data type gives you flexibility to apply a broad range of statistical analyses such as regression analysis, correlation computation, t-test (or ANOVA), or factor analysis. Data collected by number entry question is handy to use with data collected by slider questions or with a constant sum question. Note that in this case we treat constant sum data as ratio data and therefore assume that 0 means complete absence.
+
 
 #### Multiple choice question {-}
 
@@ -537,13 +545,7 @@ In order to answer this question we need to conduct **a repeated measures ANOVA*
 This type of ANOVA is used for analyzing data where the same subjects are measured more than once. In our case we have every respondent measured on each of the factors (locations, price, ambience and customer service). Repeated measures ANOVA is an extension of the paired-samples t-test. This test is also referred to as a within-subjects ANOVA. In the within-subject experimental design the same individuals are measured on the same outcome variable under different time points or conditions.
 :::
 
-#### Text or number entry question {-}
 
-```{r, echo=F, fig.align='center',out.width='72%', fig.cap="Text or number entry question"}
-knitr::include_graphics('images/text-entry.PNG')
-```
-
-A text or number entry question is a recommended type of question if you are interested in obtaining ratio data type. We will use this type of question together with a constant sum question type to collect data that can be analysed with regression analysis. Note that in this case we treat constant sum data as ratio data and therefore assume that 0 means complete absence.  
 
 ### Scaling techniques {-}
 
@@ -950,41 +952,60 @@ mytable_sub %>% kable(escape = T) %>%
 
 # Part 2: Collecting data and analysis {-}
 
+Your task in this part is to collect real data from real people. More specifically, 
+each group member is supposed to administer the questionnaire to 20 persons, i.e. a group of 6 = 120 people per group project.
+
 ## Data analysis {-}
 
-```{r, echo = FALSE, results='asis', warning=FALSE ,error=FALSE}
-
-# Load in qualtRics package
-library(qualtRics)
+```{r, echo = FALSE, message=FALSE, warning=FALSE, error=FALSE}
 library(janitor)
 library(sjlabelled)
-
-# Read the qualtrics survey data
-qualtrics<-read_survey('new_qualtrics_response_data_final_final.csv')
-
-# Using labels as column name
-
-new.colnames <-colnames(label_to_colnames(qualtrics))
-new.colnames <- make.unique(new.colnames, sep="_")
-colnames(qualtrics)<- new.colnames
-
 ```
 
 In this chapter we will encounter the nature of data you collect when conducting a survey. It will help you choose a type of a question depending on the nature of data you want to collect and on the type of statistical tests you want to apply.
 
+### Load in a Qualtrics survey via package "qualtRics"? {-}
+
+After downloading your survey in CSV format, you need to install `qualtRics` and load it in.
+
+```{r, echo = TRUE, message=FALSE , warning=FALSE ,error=FALSE}
+# Load in qualtRics package
+# install.packages("qualtRics")
+library(qualtRics)
+```
+
+`read_survey()` is a function that loads in survey results in CSV to R.
+
+```{r, echo = TRUE, message=FALSE, warning=FALSE ,error=FALSE}
+# Read the qualtrics survey data
+qualtrics<-read_survey('data_analysis_survey.csv')
+head(qualtrics,3)
+```
+Current column names are not much helpful in identyfing questions from the questionnaire. In order to name columns after corresponding question, the function `label_to_colnames()` from package `sjlabelled` can help. 
+
+```{r, echo = TRUE, results='asis', warning=FALSE ,error=FALSE}
+# Using labels as column name
+new.colnames <-colnames(label_to_colnames(qualtrics))
+```
+As it can happen that two or more column names are identical, we can use `make.unique()` function to assign different names to columns that are supposed to have same names. For instance, in our case it is column name 'Selected choice' that appears twice for two different questions. After we run the function, the resulting names will be 'Selected choice' and 'Selected choice_1'. 
+
+```{r, echo = TRUE, message=FALSE, warning=FALSE ,error=FALSE}
+new.colnames <- make.unique(new.colnames, sep="_")
+```
+
+Finally, we can assign unique corresponding names to the columns in our survey data.
+
+```{r, echo = TRUE, results='asis', warning=FALSE ,error=FALSE}
+colnames(qualtrics)<- new.colnames
+head(qualtrics,3)
+```
 
 ### Multiple choice with a single answer {-}
 
-Multiple Choice with a single answer is a type of closed-ended question that lets respondents select **one answer** from a defined list of choices.
-
-```{r, echo=F, fig.align='center',out.width='72%'}
-knitr::include_graphics('support-multiple-choice-question.png')
-```
-
 Type of data you obtain is **categorical**, and the output comes in the following form:  
 
-```{r, echo=FALSE,warning=FALSE, error=FALSE, fig.align='center',eval=FALSE}
-qualtrics[1:6,c("In a typical week, how many hours do you spend watching movies or TV series on Netflix?")] %>%
+```{r, echo=FALSE,warning=FALSE, error=FALSE, fig.align='center',eval=TRUE}
+qualtrics[1:6,c("During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?")] %>%
   kableExtra::kbl(align = "c") %>%
   kable_paper("hover", full_width = F)
 ```
@@ -992,48 +1013,34 @@ qualtrics[1:6,c("In a typical week, how many hours do you spend watching movies 
 What to do with this data now? First, we need to load it in R and prepare for analysis. The numbers you see in the output R recognizes **as numeric**. In order to conduct statistical modeling and properly visualize our results, we need to convert our data to **a factor class.**
 
 A factor (or coding variable) represents different groups of data by using numbers (integers). In fact, factors appear as numeric variables, but they hold meaning of labels/names of data groups, i.e. nominal variable. These data groups are represented in a form of 'levels'.  
-In our case, our multiple choice question output will contain 4 data groups ('Grocery Store', 'Online shop', 'Specialised coffee shop', 'other') after converting it to factor:
+In our case, our multiple choice question output will contain 5 data groups after converting it to factor:
 
-```{r, eval=TRUE, warning=FALSE, message=FALSE}
+```{r, eval=TRUE, warning=FALSE, message=FALSE,}
 # Convert numeric value to factors
-qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?' <- factor(qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?', levels = c(1:5), labels = c('Never','1-2 hours','3-4 hours','5-6 hours','more than 6 hours'))
+qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?` <- factor(qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`, levels = c(1:5), labels = c('Never','Early morning(00:00-06:00)','Morning(06:00-12:00)','Afternoon(12:00-18:00','Evening (18:00-22:00)'))
 
 qualtrics$` Selected Choice_1` <- factor(qualtrics$` Selected Choice_1`,levels = c(1:2),labels = c("Male","Female"))
 
 qualtrics$` Selected Choice` <- factor(qualtrics$` Selected Choice`, levels = c(1:2), labels=c("Austria","Germany"))
 
-
 # Table
-table(qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?')
-table(qualtrics$` Selected Choice`)     #countries
-table(qualtrics$` Selected Choice_1`)   #gender
-
+table(qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`)
 ```
 
 Second, you might want to visualize your results. In order to do so, the data format needs to be in the appropriate format.Here we proceed with data format adaptation from the point where we stopped:
 
-```{r, eval=TRUE, warning=FALSE, message=FALSE}
+```{r, eval=TRUE, warning=FALSE, message=FALSE,echo=FALSE}
 # Converting long format to the visualisation-friendly format
-mlc_visualisation <- as.data.frame(table(qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?'))
+mlc_visualisation <- as.data.frame(table(qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`))
 
 # Naming columns
 names(mlc_visualisation) <- c('Time','Count')
 
 # Observing
-knitr::kable(mlc_visualisation)
-
-```
-
-The simplest way to visualize data obtained from multiple choice question with a single answer is **a bar chart**:
-
-```{r}
-## Basic bar chart
-labels <- as.character(mlc_visualisation$Time) #Save labels for x-axis in the barplot
-barplot(mlc_visualisation$Count, # Column to visualize
-        xlab='Time', # X-axis label
-        ylab = 'Count(answers)', # Y-axis label
-        names.arg = labels,
-        main = 'How many hours do you spend watching movies or series on Netflix?') # Title
+library(kableExtra)
+mlc_visualisation %>%
+kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
 ```
 
 R package **ggplot2** allows you to create visually appealing graphs:
@@ -1043,7 +1050,7 @@ R package **ggplot2** allows you to create visually appealing graphs:
 library(ggplot2)
 p <- ggplot(data=mlc_visualisation, 
              aes(x=Time, y=Count, fill=Time)) +
-             geom_bar(stat='identity') + theme_minimal() + labs(title = "In a typical week, how many hours do you spend watching movies or series on Netflix?")
+             geom_bar(stat='identity') + theme(axis.text.x = element_blank()) + labs(title = 'The period of the day you prefer watching movies?')+xlab(label = " ")
 p
 ```
 
@@ -1087,7 +1094,7 @@ Fisher's exact test is used to test a hypothesis with data obtained from multipl
 
 ```{r}
 # Creation of contingency table
-fisher_test_table <-table(qualtrics$` Selected Choice`,qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?')
+fisher_test_table <-table(qualtrics$` Selected Choice`,qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`)
 # Check how our contigency table looks like
 fisher_test_table
 
@@ -1101,7 +1108,7 @@ test
 test$p.value
 ```
 
-From the output and from test$p.value we see that the p-value is higher than the significance level of 5%. Like any other statistical test, if the p-value is higher than the significance level, we can not reject the null hypothesis.
+From the output and from `test$p.value` we see that the p-value is higher than the significance level of 5%. Like any other statistical test, if the p-value is higher than the significance level, we can not reject the null hypothesis.
 
 In our case, not rejecting the null hypothesis for the Fisher’s exact test of independence means that there is no significant relationship between the two categorical variables. Therefore, knowing the value of one variable does not help to predict the value of the other variable.
 
@@ -1118,7 +1125,7 @@ In our case, not rejecting the null hypothesis for the Fisher’s exact test of 
 
 ```{r} 
 # Creating table 
-(mlc_chi_square <- table(qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?'))
+(mlc_chi_square <- table(qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`))
       
 # Chi-square test (without given expected values = equal values )
 chisq.test(mlc_chi_square)
@@ -1153,7 +1160,7 @@ This time the p-value of the test is lower than 0.05.We have an evidence that ob
 
 ```{r}
 # Creation of contingency table
-chi_square_table <-table(qualtrics$` Selected Choice_1`,qualtrics$'In a typical week, how many hours do you spend watching movies or TV series on Netflix?')
+chi_square_table <-table(qualtrics$` Selected Choice_1`,qualtrics$'During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?')
 
 # Chi-square independence test
 chisq.test(chi_square_table)

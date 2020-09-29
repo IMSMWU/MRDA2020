@@ -350,11 +350,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="" data-path="part-2-collecting-data-and-analysis.html"><a href="part-2-collecting-data-and-analysis.html"><i class="fa fa-check"></i>Part 2: Collecting data and analysis</a><ul>
 <li class="chapter" data-level="" data-path="part-2-collecting-data-and-analysis.html"><a href="part-2-collecting-data-and-analysis.html#data-analysis"><i class="fa fa-check"></i>Data analysis</a><ul>
+<li class="chapter" data-level="" data-path="part-2-collecting-data-and-analysis.html"><a href="part-2-collecting-data-and-analysis.html#load-in-a-qualtrics-survey-via-package-qualtrics"><i class="fa fa-check"></i>Load in a Qualtrics survey via package “qualtRics”?</a></li>
 <li class="chapter" data-level="" data-path="part-2-collecting-data-and-analysis.html"><a href="part-2-collecting-data-and-analysis.html#multiple-choice-with-a-single-answer"><i class="fa fa-check"></i>Multiple choice with a single answer</a></li>
 <li class="chapter" data-level="10.4.1" data-path="part-2-collecting-data-and-analysis.html"><a href="part-2-collecting-data-and-analysis.html#multiple-choice-with-multiple-answers"><i class="fa fa-check"></i><b>10.4.1</b> Multiple choice with multiple answers</a></li>
 <li class="chapter" data-level="" data-path="part-2-collecting-data-and-analysis.html"><a href="part-2-collecting-data-and-analysis.html#rank-order-question-1"><i class="fa fa-check"></i>Rank order question</a></li>
 <li class="chapter" data-level="" data-path="part-2-collecting-data-and-analysis.html"><a href="part-2-collecting-data-and-analysis.html#constant-sum-question-1"><i class="fa fa-check"></i>Constant Sum question</a></li>
-<li class="chapter" data-level="" data-path="part-2-collecting-data-and-analysis.html"><a href="part-2-collecting-data-and-analysis.html#text-or-number-entry-question-1"><i class="fa fa-check"></i>Text or number entry question</a></li>
+<li class="chapter" data-level="" data-path="part-2-collecting-data-and-analysis.html"><a href="part-2-collecting-data-and-analysis.html#text-or-number-entry-question"><i class="fa fa-check"></i>Text or number entry question</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="part-2-collecting-data-and-analysis.html"><a href="part-2-collecting-data-and-analysis.html#reporting"><i class="fa fa-check"></i>Reporting</a></li>
 <li class="chapter" data-level="" data-path="part-2-collecting-data-and-analysis.html"><a href="part-2-collecting-data-and-analysis.html#presentation-guidelines-grading"><i class="fa fa-check"></i>Presentation guidelines &amp; grading</a><ul>
@@ -637,13 +638,23 @@ For instance, it would not make sense to compute an average of genders. An avera
 <div id="the-most-frequent-types-of-questions" class="section level3 unnumbered">
 <h3>The most frequent types of questions</h3>
 <p>Here we want to show you the most frequent types of questions students use and what type of data can be collected by using them.</p>
+<div id="number-entry-question" class="section level4 unnumbered">
+<h4>Number entry question</h4>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-32"></span>
+<img src="images/text-entry.PNG" alt="Text or number entry question" width="72%" />
+<p class="caption">
+Figure 10.2: Text or number entry question
+</p>
+</div>
+<p>A number entry question is a recommended type of question if you are interested in obtaining <strong>ratio data type</strong>. Ratio data type gives you flexibility to apply a broad range of statistical analyses such as regression analysis, correlation computation, t-test (or ANOVA), or factor analysis. Data collected by number entry question is handy to use with data collected by slider questions or with a constant sum question. Note that in this case we treat constant sum data as ratio data and therefore assume that 0 means complete absence.</p>
+</div>
 <div id="multiple-choice-question" class="section level4 unnumbered">
 <h4>Multiple choice question</h4>
 <p>Multiple Choice with a single answer is a type of closed-ended question that lets respondents select <strong>one answer</strong> from a defined list of choices.Type of data you obtain is <strong>categorical.</strong></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-32"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-33"></span>
 <img src="support-multiple-choice-question.png" alt="Multiple choice question with single answer" width="72%" />
 <p class="caption">
-Figure 10.2: Multiple choice question with single answer
+Figure 10.3: Multiple choice question with single answer
 </p>
 </div>
 <div class="infobox_orange hint">
@@ -673,10 +684,10 @@ Figure 10.2: Multiple choice question with single answer
 <li>Categorical variables can be used as predictors in regression (as dummy variables).</li>
 </ul>
 </div>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-33"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-34"></span>
 <img src="multiple-choice-question-multiple-answers.png" alt="Multiple choice question with multiple answers" width="72%" />
 <p class="caption">
-Figure 10.3: Multiple choice question with multiple answers
+Figure 10.4: Multiple choice question with multiple answers
 </p>
 </div>
 <p>It is important to distinguish multiple choice questions with single and multiple answers (which will be presented later) as their analysis looks differently.</p>
@@ -692,10 +703,10 @@ Figure 10.3: Multiple choice question with multiple answers
 </div>
 <div id="rank-order-question" class="section level4 unnumbered">
 <h4>Rank order question</h4>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-34"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-35"></span>
 <img src="rank-order-question.png" alt="Rank order question" width="72%" />
 <p class="caption">
-Figure 10.4: Rank order question
+Figure 10.5: Rank order question
 </p>
 </div>
 <p>A rank order question asks respondents to compare items to each other by placing them in order of preference. Note that the data obtained from a rank order question shows an order of a respondent’s preference, but not the difference between items. For instance, if it turns out that the most important feature of a fitness tracker for a respondent XY is “Measuring steps” and the second most important feature “Calories burned”, we don’t know for how much more important is the former one in comparison to the latter one.</p>
@@ -706,10 +717,10 @@ Figure 10.4: Rank order question
 </div>
 <div id="constant-sum-question" class="section level4 unnumbered">
 <h4>Constant Sum question</h4>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-35"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-36"></span>
 <img src="constant-sum-question.png" alt="Constant sum question" width="72%" />
 <p class="caption">
-Figure 10.5: Constant sum question
+Figure 10.6: Constant sum question
 </p>
 </div>
 <p>If you wish to obtain information about how much one attribute is preferred over another one, you may use a constant sum scale. The total box should always be displayed at the bottom to make it easier for respondents. A constant sum question permits collection of ratio data type. With data obtained we would be able to express the relative importance of the options.</p>
@@ -718,16 +729,6 @@ Figure 10.5: Constant sum question
 <div class="infobox_orange hint">
 <p>This type of ANOVA is used for analyzing data where the same subjects are measured more than once. In our case we have every respondent measured on each of the factors (locations, price, ambience and customer service). Repeated measures ANOVA is an extension of the paired-samples t-test. This test is also referred to as a within-subjects ANOVA. In the within-subject experimental design the same individuals are measured on the same outcome variable under different time points or conditions.</p>
 </div>
-</div>
-<div id="text-or-number-entry-question" class="section level4 unnumbered">
-<h4>Text or number entry question</h4>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-36"></span>
-<img src="images/text-entry.PNG" alt="Text or number entry question" width="72%" />
-<p class="caption">
-Figure 10.6: Text or number entry question
-</p>
-</div>
-<p>A text or number entry question is a recommended type of question if you are interested in obtaining ratio data type. We will use this type of question together with a constant sum question type to collect data that can be analysed with regression analysis. Note that in this case we treat constant sum data as ratio data and therefore assume that 0 means complete absence.</p>
 </div>
 </div>
 <div id="scaling-techniques" class="section level3 unnumbered">

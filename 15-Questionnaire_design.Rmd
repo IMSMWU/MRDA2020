@@ -952,6 +952,8 @@ mytable_sub %>% kable(escape = T) %>%
 
 # Part 2: Collecting data and analysis {-}
 
+## Collecting data {-}
+
 Your task in this part is to collect real data from real people. More specifically, 
 each group member is supposed to administer the questionnaire to 20 persons, i.e. a group of 6 = 120 people per group project.
 
@@ -962,9 +964,13 @@ library(janitor)
 library(sjlabelled)
 ```
 
-In this chapter we will encounter the nature of data you collect when conducting a survey. It will help you choose a type of a question depending on the nature of data you want to collect and on the type of statistical tests you want to apply.
+In this chapter we will encounter the nature of data you collect when conducting a survey. It will help you in handling your survey data in R, and show you which statistical tests you might apply. Note that in focus of this chapter are not statistical test as they are extensively discussed in the previous chapters.
 
-### Load in a Qualtrics survey via package "qualtRics"? {-}
+::: {.infobox_red .caution data-latex="{caution}"}
+The purpose of this chapter is primary to help you handle and determine data types from your Qualtrics survey. For more information in regards to what statistical tests to use, assumptions or other details, please consult relevant chapters. 
+:::
+
+### Load in a Qualtrics survey data via package "qualtRics" {-}
 
 After downloading your survey in CSV format, you need to install `qualtRics` and load it in.
 
@@ -981,12 +987,13 @@ library(qualtRics)
 qualtrics<-read_survey('data_analysis_survey.csv')
 head(qualtrics,3)
 ```
-Current column names are not much helpful in identyfing questions from the questionnaire. In order to name columns after corresponding question, the function `label_to_colnames()` from package `sjlabelled` can help. 
+Current column names are not much helpful in identifying questions from the questionnaire. In order to name columns after corresponding question, the function `label_to_colnames()` from package `sjlabelled` can help. 
 
 ```{r, echo = TRUE, results='asis', warning=FALSE ,error=FALSE}
 # Using labels as column name
 new.colnames <-colnames(label_to_colnames(qualtrics))
 ```
+
 As it can happen that two or more column names are identical, we can use `make.unique()` function to assign different names to columns that are supposed to have same names. For instance, in our case it is column name 'Selected choice' that appears twice for two different questions. After we run the function, the resulting names will be 'Selected choice' and 'Selected choice_1'. 
 
 ```{r, echo = TRUE, message=FALSE, warning=FALSE ,error=FALSE}
@@ -1045,17 +1052,11 @@ qualtrics$` Selected Choice` <- factor(qualtrics$` Selected Choice`, levels = c(
 # Creation of contingency table
 fisher_test_table <-table(qualtrics$` Selected Choice`,qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`)
 
-# Check how our contigency table looks like
-fisher_test_table
-
 # Since we have a count less than 5, we should apply Fisher's test instead of Chi-square.
 
 # Fisher's test
 test <- fisher.test(fisher_test_table)
 test
-
-# p-value
-test$p.value
 ```
 
 From the output and from `test$p.value` we see that the p-value is higher than the significance level of 5%. Like any other statistical test, if the p-value is higher than the significance level, we can not reject the null hypothesis.
@@ -1075,30 +1076,28 @@ In our case, not rejecting the null hypothesis for the Fisher’s exact test of 
 
 ```{r} 
 # Creating table 
-(mlc_chi_square <- table(qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`))
+mlc_chi_square <- table(qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`)
       
 # Chi-square test (without given expected values = equal values )
 chisq.test(mlc_chi_square)
 ```
 
-The p-value of the test is higher than 0.05. We can conclude that the numbers of respondents who spent different amount of hours watching Netflix are commonly distributed. Observed distribution does not differ significantly from the expected. This result does not surprise if you take a look at the values for each level in the table we created before conducting the test. There you can see that count of answers in each level is more or less not deviating too much. It is visible if you take a look at the previous visualisations as well.
+The p-value of the test is higher than 0.05. We can conclude that the numbers of respondents who watch Netflix in different periods of a day are commonly distributed. Observed distribution does not differ significantly from the expected. This result does not surprise if you take a look at the values for each level in the table we created before conducting the test. There you can see that count of answers in each level is more or less not deviating too much. It is visible if you take a look at the previous visualizations as well.
 
-
-If we are interested in testing more specific distribution, i.e. expect that 40% of our respondents are watching Netflix 3-4 hours, we can introduce corresponding distribution in the test. 
-
+If we are interested in testing more specific distribution, i.e. expect that 40% of our respondents are watching Netflix during evening hours, we can introduce corresponding distribution in the test. 
 ```{r}
 # Expected values in percentages for each alternative. The sum must be 1.
-expected_values <- c(0.10, # We expect that 10% of our respondents do not watch Netflix at all ("Never").
-                     0.20, # We expect that 20% of our respondents watch Netflix 1-2 hours a week.  
-                     0.40, # We expect that 40% of our respondents watch Netflix 3-4 hours a week.
-                     0.20, # We expect that 20% of our respondents watch Netflix 5-6 hours a week.
-                     0.10 # We expect that 10% of our respondents watch Netflix more than 6 hours a week.
+expected_values <- c(0.10, # We expect that 10% of our respondents do not watch Netflix at all.
+                     0.20, # We expect that 20% of our respondents watch Netflix in early morning.
+                     0.10, # We expect that 10% of our respondents watch Netflix in morning.
+                     0.20, # We expect that 20% of our respondents watch Netflix in afternoon.
+                     0.40  # We expect that 40% of our respondents watch Netflix in evening.
                     )
 # Chi-square test with expected values
 chisq.test(mlc_chi_square, p=expected_values)
 ```
 
-This time the p-value of the test is lower than 0.05.We have an evidence that observed distribution does significantly differ from the expected distribution (10%/20%/40%/20%/10%).  
+This time the p-value of the test is lower than 0.05. We have an evidence that observed distribution does significantly differ from the expected distribution (10%/20%/10%/20%/40%).  
 
 
 2) Chi-Square Test of Independence
@@ -1106,7 +1105,7 @@ This time the p-value of the test is lower than 0.05.We have an evidence that ob
 <ul><li> <B> Hypothesis: </B> Is there an association between categorical variable X and categorical variable Y? </ul></li>
 <ul><li> <B> H0: </B> There is no association between the two variables.</B></ul></li>
 <ul><li> <B> H1: </B> There is an association between the two variables.</B></ul></li>
-<ul><li> <B> Example: </B> Is there an association between gender and the hours spent watching Neflix during a week? </ul></li></div>
+<ul><li> <B> Example: </B> Is there an association between gender and the preferred period of a day for watching Netflix? </ul></li></div>
 
 ```{r}
 # Creation of contingency table
@@ -1116,111 +1115,98 @@ chi_square_table <-table(qualtrics$` Selected Choice_1`,qualtrics$'During a typi
 chisq.test(chi_square_table)
 ```
 
-Since the p-value (0.8135) is higher than the significance level (0.05), we cannot reject the null hypothesis. Thus, we conclude that there is no association relationship between gender and number of hours spent watching Netflix. Therefore, we can say that the hours spent is independent from the gender of participant.
+Since the p-value (0.8135) is higher than the significance level (0.05), we cannot reject the null hypothesis. Thus, we conclude that there is no association relationship between gender and the preferred period of a day for watching Netflix. Therefore, we can say that the hours spent is independent from the gender of participant.
 
-### Multiple choice with multiple answers
+### Multiple choice with multiple answers {-}
 
-```{r, echo=F, fig.align='center',out.width='72%'}
-knitr::include_graphics('multiple-choice-question-multiple-answers.png')
+In Qualtrics, multiple answers on multiple choice questions are captured in separate columns. For instance, the second respondents chose "Ja!Natürlich" and "Clever" as answers, thus, the rest of alternatives have none value in this row.
+
+```{r, echo=FALSE,warning=FALSE, error=FALSE, fig.align='center',eval=TRUE}
+qualtrics[1:6,c(38,39,40,41)] %>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
 ```
 
-Before we conduct any test, we will do some simple calculations and visualise our data. 
+Since this type of question provides multiple possible answers, one way to analyze data obtained from this question is in the following form:
 
-```{r}
-# Rename columns
-colnames(qualtrics)[38] <- "ja!Naturlich"
-colnames(qualtrics)[39] <- "Clever"
-colnames(qualtrics)[40] <- "Spar Vital"
-colnames(qualtrics)[41] <- "..."
-
+```{r,error=FALSE, message=FALSE, warning=FALSE}
 # Replacing NA with 0
-qualtrics$`ja!Naturlich`[is.na(qualtrics$`ja!Naturlich`)]=0
-qualtrics$Clever[is.na(qualtrics$Clever)]=0
-qualtrics$`Spar Vital`[is.na(qualtrics$`Spar Vital`)]=0
-qualtrics$...[is.na(qualtrics$...)]=0
+qualtrics$` ja! Natürlich.`[is.na(qualtrics$` ja! Natürlich.`)]=0
+qualtrics$` Clever`[is.na(qualtrics$` Clever`)]=0
+qualtrics$` Spar Vital`[is.na(qualtrics$` Spar Vital`)]=0
+qualtrics$` ...`[is.na(qualtrics$` ...`)]=0
+
+# qualtrics[38] accesses ja!Natürlich column
+# qualtrics[39] accesses Clever column
+# qualtrics[40] accesses  Spar Vital column
+# qualtrics[41] accesses ... column
 
 # Calculating frequency, percentage of respondents and percentage of cases
 df.cochran <- data.frame(Frequnecy = colSums(qualtrics[38:41]),
                          Share_of_respondents = (colSums(qualtrics[38:41])/sum(qualtrics[38:41]))*100,
                                 Share_of_cases =((colSums(qualtrics[38:41]))/nrow(qualtrics[38:41]))*100)
-# Observing
-df.cochran
 
-# Visualisation
-barplot(df.cochran[,3], names.arg = row.names(df.cochran), main = "% of Respondents familiar with brands", xlab = "Brand",ylab = "Percentage")
+df.cochran %>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
 ```
 
-The visualisation above depicts the fact that more than 60% percent of people are familiar with the brand "ja!Naturlich", while we can not say the same for other brands considered in our question. 
-
+The share of cases column suggests that, for instance, almost 70% percent of people are familiar with the brand "ja!Naturlich". 
 
 For the analysis of results collected with multiple choice question with multiple possible answers, we can use **Cochran's Q test.**Although we did not mention it before, it is not too different from what you have already learned about other tests. 
 
-The Cochran’s Q test and associated multiple comparisons require the following assumptions:
-1. Responses are dichotomous and from k number of matched samples.
-2. The subjects are independent of one another and were selected at random from a larger population.
-3. The sample size is sufficiently “large”. (As a rule of thumb, the number of subjects for which the
-responses are not all 0’s or 1’s, n, should be ≥ 4 and nk should be ≥ 24)
+The Cochran’s Q test and associated multiple comparisons require the following assumptions:  
 
-In a within-subjects experiment design with three or more observations of a dichotomous(= just two levels such as "Yes" or "No") categorical outcome, you utilize Cochran's Q test to assess main effects.Similarly, in our multiple choice question with multiple answers we have the same respondent going through three or more potential answers with dichotomous(=yes or no) categorical outcome. 
+1. Responses are dichotomous and from k number of matched samples.  
 
+2. The subjects are independent of one another and were selected at random from a larger population.  
 
-```{r}
-library(nonpar)
+3. The sample size is sufficiently “large”. (As a rule of thumb, the number of subjects for which the responses are not all 0’s or 1’s, n, should be ≥ 4 and nk should be ≥ 24)  
 
-# Creation of matrix
-#matrix.cochran <- cbind(qualtrics$`ja!Naturlich`,
-#                   qualtrics$Clever,
-#                   qualtrics$`Spar Vital`,
-#                   qualtrics$`...`)
-# Turning NAs to 0
-#matrix.cochran[is.na(matrix.cochran)]=0
-
-# Cochran test                   
-#cochrans.q(matrix.cochran, alpha = 0.05)
-
-```
-
-The p-value less than 0.05 indicates that there is enough evidence to conclude that some of the store brands are better known among our respondents than other. In order to take a closer look at it, we need to conduct a post hoc test.
+In a within-subjects experiment design with three or more observations of a dichotomous(= just two levels such as "Yes" or "No") categorical outcome, you utilize Cochran's Q test to assess main effects. Similarly, in a multiple choice question with multiple answers we have the same respondent going through three or more potential answers with dichotomous(=yes or no) categorical outcome, meaning that responses are **not independent from each other.** 
 
 ```{r}
 library(DescTools)
-list.cochran <- list(qualtrics$`ja!Naturlich`,
-                   qualtrics$Clever,
-                   qualtrics$`Spar Vital`,
-                   qualtrics$...) # imaginary brand
+list.cochran <- list(qualtrics$` ja! Natürlich.`,
+                   qualtrics$` Clever`,
+                   qualtrics$` Spar Vital`,
+                   qualtrics$` ...`) # imaginary brand
 
 # Replacing NAs in the list with 0 in order to be able to run the test
 list.cochran <- rapply(list.cochran, f=function(x) ifelse(is.na(x),0,x), how="replace" )
 
+# Cochran test
+library(nonpar)
+matrix.cochran <- do.call(cbind,list.cochran)
+cochrans.q(matrix.cochran, alpha = 0.05)
+```
+
+
+The p-value less than 0.05 indicates that there is enough evidence to conclude that some of the store brands are better known among our respondents than other. In order to take a closer look at it, we need to conduct a post hoc test.
+
+```{r}
 # Post hoc test (Dunn Test)
 DunnTest(list.cochran, method="bonferroni")
-
 ```
 
 From the results of the Dunn Test, we can see that there is a big difference between 1 ("ja!Natürlich") and 4("..."), as well as between 4("...") and 3("Spar Vital"). 
 
 ### Rank order question {-}
 
-```{r, echo=F, fig.align='center',out.width='72%'}
-knitr::include_graphics('rank-order-question.png')
-```
-
-A rank order question asks respondents to compare items to each other by placing them in order of preference. Note that the data obtained from a rank order question shows an order of a respondent's pereference, but not the difference between items. For instance, if the the most important feature of a fitness tracker for a respondendt XY is "Measuring steps" and the second most important feature "Calories burned", we don't know for how much more important is the former one in comparison to the latter one.
-
-Intuitive question to ask is the following: which feature of the fitness tracker is the most important for our respondents?
+Intuitive question to ask when it comes to this type of question is the following: which feature is the most important for respondents?
 
 We can answer this question by calculating a mean rank for each feature. Before we do so, we will create a separate data frame and add columns of the response data.
-```{r}
-rank.data <- data.frame(qualtrics$` Measuring steps`,
-                        qualtrics$` Calories burned`,
-                        qualtrics$` Measuring heartbeat`,
-                        qualtrics$` Exercise tracking`,
-                        qualtrics$` Measuring distance`)
-colnames(rank.data)<-c("Measuring steps","Calories burned","Measuring heartbeat","Exercise tracking","Measuring distance")
 
+```{r}
+rank.data <- subset(qualtrics,select = c(" Measuring steps"," Calories burned"," Measuring heartbeat"," Exercise tracking"," Measuring distance")) 
+
+head(rank.data)%>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
 ```
 
 First information we would like to know is how many preference combinations there are, and how repetitive they are. We can obtain that information by creating a summary of the ranking data frame we created. 
+
 ```{r}
 library(pmr)
 test <- rankagg(rank.data)
@@ -1240,51 +1226,26 @@ As we can observe from the output, the item 1("Measuring steps") shows the best 
 
 Friedman rank sum test is used to identify whether there are any statistically significant differences between the distributions of 3 or more paired groups. It is used when the normality assumptions for using one-way repeated measures ANOVA are not met. Another case when Friedman rank rum test is used is when the dependent variable is measured on an ordinal scale, as in our case.
 
-Before we conduct the Friedman rank sum test, we will visualise our data:
-```{r,echo=FALSE}
-# Preparing data frame for Friedman rank sum test
-library(reshape2)
-library(ggpubr)
-library(rstatix)
-library(ggstatsplot)
-```
-
-
-```{r}
-# We have just turned our data frame from the wide format to the long format by using function melt(). If we take a look at head and tail of our new data frame, we can see that it contains just two columns, "Rank" and "Feature".
-
-rank.data.long <- reshape2::melt(rank.data,value.name = "Rank",variable.name = "Feature", stringsAsFactors=TRUE)
-
-tail(rank.data.long)
-head(rank.data.long)
-
-# Visualisation
-ggstatsplot::ggwithinstats(
-  data = rank.data.long,
-  x = Feature,
-  y = Rank,
-  type = "np",
-  pairwise.comparisons = TRUE, # show pairwise comparison test results
-  title = "What features are important to you when evualting fitness trackers?")
-```
-
-Already from the advanced visualisation, that includes Friedman rank sum test and pairwise comparison, we can have an insight in significance of differences among features.  
-
 ```{r}
 # Friedman test 
 friedman.test(as.matrix(rank.data))
 ```
 
-Friedman rank sum test has a p-value lower than 0.05, so we can conclude that here are significant differences between at least two features (what we have already seen in our visualisation). Even though we have identified differences between preferences towards features in our advanced visualisation, we will conduct a post hoc test in order to demonstrate traditional way of calculating pairwise comparisons.
+Friedman rank sum test has a p-value lower than 0.05, so we can conclude that here are significant differences between at least two features (what we have already seen in our visualization). Even though we have identified differences between preferences towards features in our advanced visualization, we will conduct a post hoc test in order to demonstrate traditional way of calculating pairwise comparisons.
 
 
-```{r}
-knitr::kable(wilcox_test(Rank ~ Feature, paired = TRUE, p.adjust.method = "bonferroni", data = rank.data.long))
+```{r,error=FALSE,message=FALSE,warning=FALSE}
+library(rstatix)
+rank.data.long <- reshape2::melt(rank.data,value.name = "Rank",variable.name = "Feature", stringsAsFactors=TRUE)
+posthoc <- wilcox_test(Rank ~ Feature, paired = TRUE, p.adjust.method = "bonferroni", data = rank.data.long)
+posthoc%>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
 ```
 The output table provides us with p-values referring to significance of difference in mean ranks of each pair. For instance, the first 4 rows  proves that the differences between the mean rank of the feature "Measuring steps" and each of the rest of features are significant. Consequently, we can conclude that this feature is by far the most important among our respondents. 
 
-
 Another question that may be interesting to explore is whether there are any complementary features ? Or features which overlap each other in its functionality? In order to have a look at that, we can investigate the correlation between ranks assigned to each feature.
+
 ```{r}
 #Correlation Matrix
 cor.matrix<-cor(rank.data, method=c('spearman'))
@@ -1302,90 +1263,70 @@ From the correlation matrix we can confirm that almost all features negatively c
 
 ### Constant Sum question {-}
 
-```{r, echo=F, fig.align='center',out.width='72%'}
-knitr::include_graphics('constant-sum-question.png')
-```
-
 If you wish to obtain information about how much one attribute is preferred over another one, you may use a constant sum scale. The total box should always be displayed at the bottom to make it easier for respondents. A constant sum question permits collection of ratio data type. With data obtained we would be able to express the relative importance of the options.
 
 ```{r, echo=FALSE,warning=FALSE, error=FALSE, fig.align='center'}
+library(robCompositions)
 constant.sum <- subset(qualtrics, select =c(" Location"," Price"," Ambience"," Customer Service"))
 constant.sum$id <- seq(1:nrow(constant.sum))
-knitr::kable(constant.sum[1:6,], caption = "Constant Sum Question")
+constant.sum[1:6,] %>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
 ```
+
+By computing descriptive statistics per column we get very useful insight in our data: 
 
 ```{r}
 # Compute descriptive statistics
 library(pastecs) 
 res <- stat.desc(constant.sum)
-round(res[,1:4],2)
+round(res[,1:4],2) %>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
 ```
 
-```{r,error=FALSE,warning=FALSE, message=FALSE}
-# Creation of the long version of data frame
-constant.sum.long <-melt(constant.sum[,-5], variable.name ="Factor" ,value.name = "Points")
-constant.sum.long
-```
-
-
-```{r,error=FALSE,warning=FALSE, message=FALSE}
-# Boxplot ggplot2
-library(plotly)
-p<-constant.sum.long %>% 
-  filter(Factor!="id") %>%
-  ggplot(aes(x=Factor, y=Points, fill= Factor)) +
-    geom_boxplot()  +
-    theme_minimal() +
-    ggtitle("What factors do you consider when choosing a place to go for a dinner?") +
-    xlab("")
-ggplotly(p)
-```
 
 With the data collected we are able to answer the question: what factor is the most important for our respondents when they go out for a dinner?
 
-```{r}
-library(robCompositions)
-constSum(constant.sum,100)[,-5]
-```
+In order to answer this question we need to conduct **a repeated measures ANOVA**.
+This type of ANOVA is used for analyzing data where the same subjects are measured more than once. In our case we have every respondent measured on each of the factors (locations, price, ambiance and customer service). Repeated measures ANOVA is an extension of the paired-samples t-test. This test is also referred to as a within-subjects ANOVA. In the within-subject experimental design the same individuals are measured on the same outcome variable under different time points or conditions.
 
-In order to anwser this question we need to conduct **a repeated measures ANOVA**.
-This type of ANOVA is used for analyzing data where the same subjects are measured more than once. In our case we have every respondent measured on each of the factors (locations, price, ambience and customer service). Repeated measures ANOVA is an extension of the paired-samples t-test. This test is also referred to as a within-subjects ANOVA. In the within-subject experimental design the same individuals are measured on the same outcome variable under different time points or conditions.
+We need to check all assumptions that need to be fulfilled in order to deploy this type of ANOVA. There are three assumptions that need to check. The first to check that each level of the independent variable is approximately normally distributed. Since we have more than 30 observations at each level, we do not need to proceed further due to the central limit theorem. Second assumption refers to extreme outliers. Let's have a look at potential outliers:
 
-We need to check all assumptions that need to be fulfilled in order to deploy this type of ANOVA. There are three assumputions that need to check. The first to check that each level of the independent variable is approximately normally distributed. Since we have more than 30 observations at each level, we do not need to proceed further due to the central limit theorem. Second assumption referrs to extreme outliers. Let's have a look at potential outliers:
-
-```{r}
+```{r,error=FALSE,warning=FALSE, message=FALSE}
+# Creation of the long version of data frame
+library(reshape2)
+constant.sum.long <-melt(constant.sum[,-5], variable.name ="Factor" ,value.name = "Points")
 # Outliers
 constant.sum.long %>% 
   group_by(Factor) %>%
-  identify_outliers(Points)
+  identify_outliers(Points)%>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
 ```
 
-As we cannot identify any extreme outliers, we can proceed with deploying repeated measures ANOVA.
+The p value seems to be significant, i.e., less than 0.05. As we cannot identify any extreme outliers, we can proceed with deploying repeated measures ANOVA.
 
-```{r}
+```{r,error=FALSE, message=FALSE,warning=FALSE}
 # Formatting data 
 constant.sum.aov <- gather(constant.sum, key = "Factor", value = "Points", ` Location`,` Price`,` Ambience`,` Customer Service`)
 
 # One-way repeated measures ANOVA  
 res.aov <- anova_test(data = constant.sum.aov, dv = Points,wid = id ,within = Factor)
-get_anova_table(res.aov)
+get_anova_table(res.aov)%>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
+```
+As we know that ANOVA is an omnibus test, we need to conduct post hoc test for further details:
 
+```{r}
 # Post hoc test
 pairwise.t.test(constant.sum.long$Points,constant.sum.long$Factor, paired = T, p.adjust.method = "holm")
 ```
-Now we can clearly see that our respondents consider price more than location, or ambience, while customer service is perceived almost equally important as prices.
 
-```{r}
-ggstatsplot::ggwithinstats(
-  data = constant.sum.long %>% filter(Factor!="id"), # excluding "id" column from the data
-  x = Factor,
-  y = Points,
-  type = "p",
-  pairwise.comparisons = TRUE, # show pairwise comparison test results
-  title = "What factors do you consider when choosing a place to go for a dinner?")
-```
+Now we can clearly see that difference between perceived importance of price and location, or price and ambiance, are significant. On the other hand, the difference in perceived importance between customer service and price is not significant.
 
-### Text or number entry question {-}
+### Number entry question {-}
 
 ```{r,echo=FALSE}
 set.seed(1234567)
@@ -1394,18 +1335,23 @@ qualtrics$` Customer Service` <- abs(as.integer(runif(n=117,min=0,max = 100)))
 ```
 
 
-A text or number entry question is a recommended type of question if you are interested in obtaining ratio data type. We will use this type of question together with a constant sum question type to collect data that can be analysed with regression analysis. Note that in this case we treat constant sum data as ratio data and therefore assume that 0 means complete absence.  
-
+A number entry question is a recommended type of question if you are interested in obtaining ratio data type. We will use this type of question together with a constant sum question type to collect data that can be analyzed with regression analysis.**Note that in this case we treat constant sum data as ratio data and therefore assume that 0 means complete absence.**  
 
 Here is a glimpse in answers on how important is each factor to our respondents when it comes to dinning outside:
+
 ```{r, echo= FALSE}
-knitr::kable(qualtrics[1:6,c(" Location"," Price"," Ambience"," Customer Service")], caption = "Constant sum question")
+qualtrics[1:6,c(" Location"," Price"," Ambience"," Customer Service")]%>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
 ```
 
 Additionally, we asked our respondents how much are they willing to spend on dinner on average. In order to handle data easier, we will create a new data frame where we merge all the data together:
+
 ```{r}
 dinner <- subset(qualtrics, select = c(" Location"," Price"," Ambience"," Customer Service", " Willingness-to-pay (in EUR)"))
-knitr::kable(head(dinner))
+head(dinner)%>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = T)
 ```
 Before we conduct a linear regression analysis, we need to take a look at correlation matrix:  
 
@@ -1414,12 +1360,17 @@ correlation <-cor(dinner, method=c('pearson'))
 correlation
 ```
 From our data we see, for instance, that some negative correlation between willingness to pay and importance of ambiance as well as some positive correlation between importance of customer service and willingness-to-pay. Let us observe descriptive statistics as well:  
+
 ```{r}
-knitr::kable(psych::describe(dinner))
+psych::describe(dinner)%>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
 ```
 
 We see that difference between mean and median does not suggest (at the first sight) great effect of outliers.
+
 Let us now do linear regression analysis:
+
 ```{r}
 mlr.dinner <- lm(` Willingness-to-pay (in EUR)` ~ ` Location` + ` Price` + ` Ambience`+` Customer Service`, data = dinner)
 summary(mlr.dinner)
@@ -1432,12 +1383,15 @@ coeff <- summary(mlr.dinner)
 Out of all factors of importance when dinning out, the only one that suggests significance at 0.05 level of significance is ambience. From the summary we can conclude that increase in importance of ambience by 1 point, leads to decrease in willingness to pay by `r summary(mlr.dinner)$coefficients[4,1]`.
 
 ```{r}
-confint(mlr.dinner)
+confint(mlr.dinner)%>%
+  kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
 ```
 
 From confidence intervals, We can conclude that when we do not consider any of given factors (location, price, ambience and customer service), willingness to pay  will be somewhere between `r confint(mlr.dinner)[1,1]`EUR and `r confint(mlr.dinner)[1,2]`EUR. Besides that, for each increase in importance of dinner ambiance by one point, there will be an average decrease of willingness to pay between `r confint(mlr.dinner)[4,1]` and `r confint(mlr.dinner)[4,2]`.
 
-```{r, warning=FALSE, error=FALSE}
+```{r, warning=FALSE, error=FALSE,message=FALSE}
+library(ggstatsplot)
 ggcoefstats(x = mlr.dinner,
             title = "Willingness to pay predicted by importance of factors")
 ```
@@ -1468,7 +1422,7 @@ A rule of thumb to determine whether an observation should be classified as infl
 
 Another thing to consider is linearity, i.e. that the relationship between the dependent and the independent variable can be reasonably approximated in linear terms:
 
-```{r}
+```{r,error=FALSE, message=FALSE, warning=FALSE}
 # Linear specification
 library(car)
 avPlots(mlr.dinner)
@@ -1477,7 +1431,7 @@ avPlots(mlr.dinner)
 In our example it does not seem that linear relationships can be reasonably assumed for all variables.
 
 As we already learned, another important assumption of the linear model is that the error terms have a constant variance (i.e., homoscedasticity):
-```{r}
+```{r,error=FALSE, message=FALSE, warning=FALSE}
 # Breusch-Pagan Test
 library(lmtest)
 bptest(mlr.dinner)
@@ -1487,7 +1441,7 @@ The null hypothesis for this test is that the error variances are all equal, and
 
 Another assumption to be met is that the error term is normally distributed. One way to check for normal distribution of the data is to employ statistical with the null hypothesis that the data is normally distributed. One of these is a Shapiro–Wilk test:
 
-```{r}
+```{r,error=FALSE, message=FALSE, warning=FALSE}
 shapiro.test(resid(mlr.dinner))
 ```
 
@@ -1496,7 +1450,7 @@ When the assumption of normally distributed errors is not met (as it is not met 
 
 Finally, we need to check for multicollinearity, the case when there is a strong linear relationship between the independent variables:
 
-```{r}
+```{r,error=FALSE, message=FALSE, warning=FALSE}
 correlation <-cor(dinner, method=c('pearson'))
 correlation
 ```
@@ -1536,9 +1490,76 @@ p <- ggplot(data=mlc_visualisation,
 p
 ```
 
+### Multiple choice question with multiple answers {-}
+
+Here we handle visualization of multiple answers from multiple choice questions. 
+
+```{r}
+# Observing
+df.cochran
+
+# Visualisation
+barplot(df.cochran[,3], names.arg = row.names(df.cochran), main = "% of Respondents familiar with brands", xlab = "Brand",ylab = "Percentage")
+```
+
+### Rank order question {-}
+
+Here is how we can visualize rank order 
+
+```{r,echo=FALSE,error=FALSE,message=FALSE,warning=FALSE}
+# Preparing data frame for Friedman rank sum test
+library(reshape2)
+library(ggpubr)
+library(rstatix)
+library(ggstatsplot)
+```
 
 
+```{r}
+# We have just turned our data frame from the wide format to the long format by using function melt(). If we take a look at head and tail of our new data frame, we can see that it contains just two columns, "Rank" and "Feature".
 
+rank.data.long <- reshape2::melt(rank.data,value.name = "Rank",variable.name = "Feature", stringsAsFactors=TRUE)
+
+# Visualisation
+ggstatsplot::ggwithinstats(
+  data = rank.data.long,
+  x = Feature,
+  y = Rank,
+  type = "np",
+  pairwise.comparisons = TRUE, # show pairwise comparison test results
+  title = "What features are important to you when evualting fitness trackers?")
+```
+
+
+### Constant Sum question {-}
+
+Here is one way to visualize data obtained from constant sum question.
+
+
+```{r,error=FALSE,warning=FALSE, message=FALSE}
+# Boxplot ggplot2
+library(plotly)
+p<-constant.sum.long %>% 
+  filter(Factor!="id") %>%
+  ggplot(aes(x=Factor, y=Points, fill= Factor)) +
+    geom_boxplot()  +
+    theme_minimal() +
+    ggtitle("What factors do you consider when choosing a place to go for a dinner?") +
+    xlab("")
+ggplotly(p)
+```
+
+The following type of visualisation includes statistical test as well:
+
+```{r}
+ggstatsplot::ggwithinstats(
+  data = constant.sum.long %>% filter(Factor!="id"), # excluding "id" column from the data
+  x = Factor,
+  y = Points,
+  type = "p",
+  pairwise.comparisons = TRUE, # show pairwise comparison test results
+  title = "What factors do you consider when choosing a place to go for a dinner?")
+```
 
 ## Presentation guidelines & grading {-}
 

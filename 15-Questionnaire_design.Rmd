@@ -1176,12 +1176,9 @@ list.cochran <- list(qualtrics$` ja! Natürlich.`,
 list.cochran <- rapply(list.cochran, f=function(x) ifelse(is.na(x),0,x), how="replace" )
 
 # Cochran test
-library(nonpar)
 matrix.cochran <- do.call(cbind,list.cochran)
-cochrans.q(matrix.cochran, alpha = 0.05)
+DescTools::CochranQTest(matrix.cochran, alpha=0.05)
 ```
-
-
 The p-value less than 0.05 indicates that there is enough evidence to conclude that some of the store brands are better known among our respondents than other. In order to take a closer look at it, we need to conduct a post hoc test.
 
 ```{r}
@@ -1459,9 +1456,18 @@ By observing our correlation matrix, we can see that non of the coefficients sug
 
 ## Reporting {-}
 
+After you are done with statistical analysis, you are ready to create visually appealing and understandable graphs for your final report. In the following sections you can get certain ideas (and R code) for visualization of data obtained by frequently asked types of questions.
+
+::: {.infobox_orange .hint data-latex="{hint}"}
+
+The format (e.g., data frame, matrix, list or similar) in which you have your data stored in R plays important role when you visualize that data. Therefore, reshaping data to the required form will be always a prerequisite for any visualization.  
+
+:::
+
+
 ### Multiple choice question visualisation {-}
 
-You might want to visualize your results. In order to do so, the data format needs to be in the appropriate format.Here we proceed with data format adaptation from the point where we stopped:
+In order to visualize a survey data obtained from multiple choice question with single answer, a data format needs to be in the appropriate format. Here we proceed with data format adaptation from the point where we stopped:
 
 ```{r, eval=TRUE, warning=FALSE, message=FALSE,echo=FALSE}
 # Converting long format to the visualisation-friendly format
@@ -1477,50 +1483,105 @@ kableExtra::kbl(align = "c") %>%
   kable_paper("hover", full_width = F)
 ```
 
-R package **ggplot2** allows you to create visually appealing graphs:
+R package `ggplot2` allows you to create visually appealing graphs. Below you can see how to create simple versions of a bar chart and a pie chart.
+
+```{r, message=FALSE, error=FALSE, warning=FALSE}
+# Multiple choice question with single answer - a bar chart
+library(ggplot2)
+p <- ggplot(data=mlc_visualisation,aes(x=Time, y=Count, fill=Time)) +
+  geom_bar(stat='identity') + 
+  geom_text(aes(label = paste0("n=",round(Count))), position = position_stack(vjust = 0.5))+
+  scale_fill_brewer(palette = "Blues") +
+  labs(x = NULL, y = NULL, fill = NULL, title = "The period of the day you prefer watching movies?") +
+  theme_classic() + 
+  theme(axis.line = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        plot.title = element_text(hjust = 0.5, color = "#666666"))
+p
+```
 
 ```{r}
-## ggplot2 bar chart
-library(ggplot2)
-p <- ggplot(data=mlc_visualisation, 
-  aes(x=Time, y=Count, fill=Time)) +
-  geom_bar(stat='identity') + 
-  theme(axis.text.x = element_blank()) + labs(title = 'The period of the day you prefer watching movies?')+
-  xlab(label = " ")
+# Multiple choice question with single answer - a pie chart
+p<-ggplot(mlc_visualisation, aes(x="", y=Count, fill=Time))+
+  geom_bar(width = 1, stat = "identity") + 
+  coord_polar("y", start=0) +
+  geom_text(aes(label = paste0("n=",round(Count))), position = position_stack(vjust = 0.5))+
+  scale_fill_brewer(palette = "Blues") +
+  labs(x = NULL, y = NULL, fill = NULL, title = "The period of the day you prefer watching movies?") +
+  theme_minimal() + 
+  theme(axis.line = element_blank(),
+        axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        plot.title = element_text(hjust = 0.5, color = "#666666"))
 p
 ```
 
 ### Multiple choice question with multiple answers {-}
 
-Here we handle visualization of multiple answers from multiple choice questions. 
+If our multiple choice question has more possible answers, we would need first to calculate share of cases when each possible answer was selected.
 
 ```{r}
-# Observing
-df.cochran
+setDT(df.cochran, keep.rownames = TRUE)
+colnames(df.cochran)[1]<-"Brand"
+df.cochran %>%
+kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
+```
+After we make sure we have our data in the required form, we can create a nice bar chart:
 
-# Visualisation
-barplot(df.cochran[,3], names.arg = row.names(df.cochran), main = "% of Respondents familiar with brands", xlab = "Brand",ylab = "Percentage")
+```{r}
+# Multiple choice question with multiple answers - a bar chart
+library(ggplot2)
+p <- ggplot(data=df.cochran,aes(x=Brand, y=Share_of_cases, fill=Brand)) +
+  geom_bar(stat='identity') + 
+  geom_text(aes(label = paste0(round(Share_of_cases),"%")), position = position_stack(vjust = 0.5))+
+  scale_fill_brewer(palette = "Blues") +
+  labs(x = NULL, y = NULL, fill = NULL, title = "Brands repsondents are familiar with") +
+  theme_minimal() + 
+  theme(axis.line = element_blank(),
+        axis.ticks = element_blank(),
+        plot.title = element_text(hjust = 0.5, color = "#666666"))
+p
+
 ```
 
 ### Rank order question {-}
 
-Here is how we can visualize rank order 
+In case of ranked data, one need to transform data from wide format to long format first.
 
-```{r,echo=FALSE,error=FALSE,message=FALSE,warning=FALSE}
-# Preparing data frame for Friedman rank sum test
+```{r}
+# Packages
 library(reshape2)
 library(ggpubr)
 library(rstatix)
 library(ggstatsplot)
-```
 
+# Data in wide format
+head(rank.data)%>%
+kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
+
+# Data in long format
+head(rank.data.long)%>%
+kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
+```
+Simple way to depict ranks is a chart of box plots:
 
 ```{r}
-# We have just turned our data frame from the wide format to the long format by using function melt(). If we take a look at head and tail of our new data frame, we can see that it contains just two columns, "Rank" and "Feature".
+# Rank order question - box plots
+p <-ggplot(rank.data.long, aes(x=Feature, y=Rank, fill= Feature)) +
+    geom_boxplot()  +
+    theme_minimal() +
+    ggtitle(label="Perceived importance of features")+
+    theme(axis.text = element_blank())
+p
+```
+Package `ggstatsplot()` provides a great feature, which enables creation of a plot and conducting a statistical test at the same time. 
 
-rank.data.long <- reshape2::melt(rank.data,value.name = "Rank",variable.name = "Feature", stringsAsFactors=TRUE)
-
-# Visualisation
+```{r}
+# Rank order question - ggstatsplot
 ggstatsplot::ggwithinstats(
   data = rank.data.long,
   x = Feature,
@@ -1533,20 +1594,26 @@ ggstatsplot::ggwithinstats(
 
 ### Constant Sum question {-}
 
+Required data format for a data obtained from constant sum question is similar to ranked data.
+
+```{r}
+# Data in long format
+head(constant.sum.long) %>%
+kableExtra::kbl(align = "c") %>%
+  kable_paper("hover", full_width = F)
+```
+
 Here is one way to visualize data obtained from constant sum question.
 
-
 ```{r,error=FALSE,warning=FALSE, message=FALSE}
-# Boxplot ggplot2
-library(plotly)
+# Constant sum question
 p<-constant.sum.long %>% 
   filter(Factor!="id") %>%
   ggplot(aes(x=Factor, y=Points, fill= Factor)) +
     geom_boxplot()  +
     theme_minimal() +
-    ggtitle("What factors do you consider when choosing a place to go for a dinner?") +
-    xlab("")
-ggplotly(p)
+    ggtitle("What factors do you consider when choosing a place to go for a dinner?") 
+p
 ```
 
 The following type of visualisation includes statistical test as well:

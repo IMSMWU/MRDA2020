@@ -53,13 +53,6 @@
 <script src="libs/pagedtable-1.1/js/pagedtable.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
-<script src="libs/plotly-binding-4.9.2.1/plotly.js"></script>
-<script src="libs/typedarray-0.1/typedarray.min.js"></script>
-<link href="libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
-<script src="libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
-<link href="libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
-<script src="libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 
 
 <style type="text/css">
@@ -867,23 +860,13 @@ Spar Vital
 <span id="cb17-8"><a href="part-2-collecting-data-and-analysis.html#cb17-8"></a>list.cochran &lt;-<span class="st"> </span><span class="kw">rapply</span>(list.cochran, <span class="dt">f=</span><span class="cf">function</span>(x) <span class="kw">ifelse</span>(<span class="kw">is.na</span>(x),<span class="dv">0</span>,x), <span class="dt">how=</span><span class="st">&quot;replace&quot;</span> )</span>
 <span id="cb17-9"><a href="part-2-collecting-data-and-analysis.html#cb17-9"></a></span>
 <span id="cb17-10"><a href="part-2-collecting-data-and-analysis.html#cb17-10"></a><span class="co"># Cochran test</span></span>
-<span id="cb17-11"><a href="part-2-collecting-data-and-analysis.html#cb17-11"></a><span class="kw">library</span>(nonpar)</span>
-<span id="cb17-12"><a href="part-2-collecting-data-and-analysis.html#cb17-12"></a>matrix.cochran &lt;-<span class="st"> </span><span class="kw">do.call</span>(cbind,list.cochran)</span>
-<span id="cb17-13"><a href="part-2-collecting-data-and-analysis.html#cb17-13"></a><span class="kw">cochrans.q</span>(matrix.cochran, <span class="dt">alpha =</span> <span class="fl">0.05</span>)</span></code></pre></div>
+<span id="cb17-11"><a href="part-2-collecting-data-and-analysis.html#cb17-11"></a>matrix.cochran &lt;-<span class="st"> </span><span class="kw">do.call</span>(cbind,list.cochran)</span>
+<span id="cb17-12"><a href="part-2-collecting-data-and-analysis.html#cb17-12"></a>DescTools<span class="op">::</span><span class="kw">CochranQTest</span>(matrix.cochran, <span class="dt">alpha=</span><span class="fl">0.05</span>)</span></code></pre></div>
 <pre><code>## 
-##  Cochran&#39;s Q Test 
-##  
-##  H0: There is no difference in the effectiveness of treatments. 
-##  HA: There is a difference in the effectiveness of treatments. 
-##  
-##  Q = 25.5681818181818 
-##  
-##  Degrees of Freedom = 3 
-##  
-##  Significance Level = 0.05 
-##  The p-value is  1.17439848891232e-05 
-##  There is enough evidence to conclude that the effectiveness of at least two treatments differ. 
-## </code></pre>
+## 	Cochran&#39;s Q test
+## 
+## data:  y
+## Q = 25.568, df = 3, p-value = 1.174e-05</code></pre>
 <p>The p-value less than 0.05 indicates that there is enough evidence to conclude that some of the store brands are better known among our respondents than other. In order to take a closer look at it, we need to conduct a post hoc test.</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="part-2-collecting-data-and-analysis.html#cb19-1"></a><span class="co"># Post hoc test (Dunn Test)</span></span>
 <span id="cb19-2"><a href="part-2-collecting-data-and-analysis.html#cb19-2"></a><span class="kw">DunnTest</span>(list.cochran, <span class="dt">method=</span><span class="st">&quot;bonferroni&quot;</span>)</span></code></pre></div>
@@ -2938,9 +2921,13 @@ Willingness-to-pay (in EUR)
 </div>
 <div id="reporting" class="section level2 unnumbered">
 <h2>Reporting</h2>
+<p>After you are done with statistical analysis, you are ready to create visually appealing and understandable graphs for your final report. In the following sections you can get certain ideas (and R code) for visualization of data obtained by frequently asked types of questions.</p>
+<div class="infobox_orange hint">
+<p>The format (e.g., data frame, matrix, list or similar) in which you have your data stored in R plays important role when you visualize that data. Therefore, reshaping data to the required form will be always a prerequisite for any visualization.</p>
+</div>
 <div id="multiple-choice-question-visualisation" class="section level3 unnumbered">
 <h3>Multiple choice question visualisation</h3>
-<p>You might want to visualize your results. In order to do so, the data format needs to be in the appropriate format.Here we proceed with data format adaptation from the point where we stopped:</p>
+<p>In order to visualize a survey data obtained from multiple choice question with single answer, a data format needs to be in the appropriate format. Here we proceed with data format adaptation from the point where we stopped:</p>
 <table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
 <thead>
 <tr>
@@ -2995,72 +2982,447 @@ Evening (18:00-22:00)
 </tr>
 </tbody>
 </table>
-<p>R package <strong>ggplot2</strong> allows you to create visually appealing graphs:</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="part-2-collecting-data-and-analysis.html#cb56-1"></a><span class="co">## ggplot2 bar chart</span></span>
+<p>R package <code>ggplot2</code> allows you to create visually appealing graphs. Below you can see how to create simple versions of a bar chart and a pie chart.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="part-2-collecting-data-and-analysis.html#cb56-1"></a><span class="co"># Multiple choice question with single answer - a bar chart</span></span>
 <span id="cb56-2"><a href="part-2-collecting-data-and-analysis.html#cb56-2"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb56-3"><a href="part-2-collecting-data-and-analysis.html#cb56-3"></a>p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span>mlc_visualisation, </span>
-<span id="cb56-4"><a href="part-2-collecting-data-and-analysis.html#cb56-4"></a>  <span class="kw">aes</span>(<span class="dt">x=</span>Time, <span class="dt">y=</span>Count, <span class="dt">fill=</span>Time)) <span class="op">+</span></span>
-<span id="cb56-5"><a href="part-2-collecting-data-and-analysis.html#cb56-5"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&#39;identity&#39;</span>) <span class="op">+</span><span class="st"> </span></span>
-<span id="cb56-6"><a href="part-2-collecting-data-and-analysis.html#cb56-6"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>()) <span class="op">+</span><span class="st"> </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&#39;The period of the day you prefer watching movies?&#39;</span>)<span class="op">+</span></span>
-<span id="cb56-7"><a href="part-2-collecting-data-and-analysis.html#cb56-7"></a><span class="st">  </span><span class="kw">xlab</span>(<span class="dt">label =</span> <span class="st">&quot; &quot;</span>)</span>
-<span id="cb56-8"><a href="part-2-collecting-data-and-analysis.html#cb56-8"></a>p</span></code></pre></div>
+<span id="cb56-3"><a href="part-2-collecting-data-and-analysis.html#cb56-3"></a>p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span>mlc_visualisation,<span class="kw">aes</span>(<span class="dt">x=</span>Time, <span class="dt">y=</span>Count, <span class="dt">fill=</span>Time)) <span class="op">+</span></span>
+<span id="cb56-4"><a href="part-2-collecting-data-and-analysis.html#cb56-4"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&#39;identity&#39;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb56-5"><a href="part-2-collecting-data-and-analysis.html#cb56-5"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;n=&quot;</span>,<span class="kw">round</span>(Count))), <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>))<span class="op">+</span></span>
+<span id="cb56-6"><a href="part-2-collecting-data-and-analysis.html#cb56-6"></a><span class="st">  </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Blues&quot;</span>) <span class="op">+</span></span>
+<span id="cb56-7"><a href="part-2-collecting-data-and-analysis.html#cb56-7"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="ot">NULL</span>, <span class="dt">fill =</span> <span class="ot">NULL</span>, <span class="dt">title =</span> <span class="st">&quot;The period of the day you prefer watching movies?&quot;</span>) <span class="op">+</span></span>
+<span id="cb56-8"><a href="part-2-collecting-data-and-analysis.html#cb56-8"></a><span class="st">  </span><span class="kw">theme_classic</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb56-9"><a href="part-2-collecting-data-and-analysis.html#cb56-9"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.line =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb56-10"><a href="part-2-collecting-data-and-analysis.html#cb56-10"></a>        <span class="dt">axis.text =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb56-11"><a href="part-2-collecting-data-and-analysis.html#cb56-11"></a>        <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb56-12"><a href="part-2-collecting-data-and-analysis.html#cb56-12"></a>        <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>, <span class="dt">color =</span> <span class="st">&quot;#666666&quot;</span>))</span>
+<span id="cb56-13"><a href="part-2-collecting-data-and-analysis.html#cb56-13"></a>p</span></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-118-1.png" width="672" /></p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="part-2-collecting-data-and-analysis.html#cb57-1"></a><span class="co"># Multiple choice question with single answer - a pie chart</span></span>
+<span id="cb57-2"><a href="part-2-collecting-data-and-analysis.html#cb57-2"></a>p&lt;-<span class="kw">ggplot</span>(mlc_visualisation, <span class="kw">aes</span>(<span class="dt">x=</span><span class="st">&quot;&quot;</span>, <span class="dt">y=</span>Count, <span class="dt">fill=</span>Time))<span class="op">+</span></span>
+<span id="cb57-3"><a href="part-2-collecting-data-and-analysis.html#cb57-3"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">width =</span> <span class="dv">1</span>, <span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb57-4"><a href="part-2-collecting-data-and-analysis.html#cb57-4"></a><span class="st">  </span><span class="kw">coord_polar</span>(<span class="st">&quot;y&quot;</span>, <span class="dt">start=</span><span class="dv">0</span>) <span class="op">+</span></span>
+<span id="cb57-5"><a href="part-2-collecting-data-and-analysis.html#cb57-5"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="st">&quot;n=&quot;</span>,<span class="kw">round</span>(Count))), <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>))<span class="op">+</span></span>
+<span id="cb57-6"><a href="part-2-collecting-data-and-analysis.html#cb57-6"></a><span class="st">  </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Blues&quot;</span>) <span class="op">+</span></span>
+<span id="cb57-7"><a href="part-2-collecting-data-and-analysis.html#cb57-7"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="ot">NULL</span>, <span class="dt">fill =</span> <span class="ot">NULL</span>, <span class="dt">title =</span> <span class="st">&quot;The period of the day you prefer watching movies?&quot;</span>) <span class="op">+</span></span>
+<span id="cb57-8"><a href="part-2-collecting-data-and-analysis.html#cb57-8"></a><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb57-9"><a href="part-2-collecting-data-and-analysis.html#cb57-9"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.line =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb57-10"><a href="part-2-collecting-data-and-analysis.html#cb57-10"></a>        <span class="dt">axis.text =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb57-11"><a href="part-2-collecting-data-and-analysis.html#cb57-11"></a>        <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb57-12"><a href="part-2-collecting-data-and-analysis.html#cb57-12"></a>        <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>, <span class="dt">color =</span> <span class="st">&quot;#666666&quot;</span>))</span>
+<span id="cb57-13"><a href="part-2-collecting-data-and-analysis.html#cb57-13"></a>p</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-119-1.png" width="672" /></p>
 </div>
 <div id="multiple-choice-question-with-multiple-answers" class="section level3 unnumbered">
 <h3>Multiple choice question with multiple answers</h3>
-<p>Here we handle visualization of multiple answers from multiple choice questions.</p>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="part-2-collecting-data-and-analysis.html#cb57-1"></a><span class="co"># Observing</span></span>
-<span id="cb57-2"><a href="part-2-collecting-data-and-analysis.html#cb57-2"></a>df.cochran</span></code></pre></div>
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Frequnecy"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["Share_of_respondents"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Share_of_cases"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"80","2":"31.25000","3":"68.37607","_rn_":"ja! Natürlich."},{"1":"62","2":"24.21875","3":"52.99145","_rn_":"Clever"},{"1":"71","2":"27.73438","3":"60.68376","_rn_":"Spar Vital"},{"1":"43","2":"16.79688","3":"36.75214","_rn_":"..."}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="part-2-collecting-data-and-analysis.html#cb58-1"></a><span class="co"># Visualisation</span></span>
-<span id="cb58-2"><a href="part-2-collecting-data-and-analysis.html#cb58-2"></a><span class="kw">barplot</span>(df.cochran[,<span class="dv">3</span>], <span class="dt">names.arg =</span> <span class="kw">row.names</span>(df.cochran), <span class="dt">main =</span> <span class="st">&quot;% of Respondents familiar with brands&quot;</span>, <span class="dt">xlab =</span> <span class="st">&quot;Brand&quot;</span>,<span class="dt">ylab =</span> <span class="st">&quot;Percentage&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-119-1.png" width="672" /></p>
+<p>If our multiple choice question has more possible answers, we would need first to calculate share of cases when each possible answer was selected.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="part-2-collecting-data-and-analysis.html#cb58-1"></a><span class="kw">setDT</span>(df.cochran, <span class="dt">keep.rownames =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb58-2"><a href="part-2-collecting-data-and-analysis.html#cb58-2"></a><span class="kw">colnames</span>(df.cochran)[<span class="dv">1</span>]&lt;-<span class="st">&quot;Brand&quot;</span></span>
+<span id="cb58-3"><a href="part-2-collecting-data-and-analysis.html#cb58-3"></a>df.cochran <span class="op">%&gt;%</span></span>
+<span id="cb58-4"><a href="part-2-collecting-data-and-analysis.html#cb58-4"></a>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb58-5"><a href="part-2-collecting-data-and-analysis.html#cb58-5"></a><span class="st">  </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
+<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
+<thead>
+<tr>
+<th style="text-align:center;">
+Brand
+</th>
+<th style="text-align:center;">
+Frequnecy
+</th>
+<th style="text-align:center;">
+Share_of_respondents
+</th>
+<th style="text-align:center;">
+Share_of_cases
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+ja! Natürlich.
+</td>
+<td style="text-align:center;">
+80
+</td>
+<td style="text-align:center;">
+31.25000
+</td>
+<td style="text-align:center;">
+68.37607
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Clever
+</td>
+<td style="text-align:center;">
+62
+</td>
+<td style="text-align:center;">
+24.21875
+</td>
+<td style="text-align:center;">
+52.99145
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Spar Vital
+</td>
+<td style="text-align:center;">
+71
+</td>
+<td style="text-align:center;">
+27.73438
+</td>
+<td style="text-align:center;">
+60.68376
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+…
+</td>
+<td style="text-align:center;">
+43
+</td>
+<td style="text-align:center;">
+16.79688
+</td>
+<td style="text-align:center;">
+36.75214
+</td>
+</tr>
+</tbody>
+</table>
+<p>After we make sure we have our data in the required form, we can create a nice bar chart:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="part-2-collecting-data-and-analysis.html#cb59-1"></a><span class="co"># Multiple choice question with multiple answers - a bar chart</span></span>
+<span id="cb59-2"><a href="part-2-collecting-data-and-analysis.html#cb59-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb59-3"><a href="part-2-collecting-data-and-analysis.html#cb59-3"></a>p &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="dt">data=</span>df.cochran,<span class="kw">aes</span>(<span class="dt">x=</span>Brand, <span class="dt">y=</span>Share_of_cases, <span class="dt">fill=</span>Brand)) <span class="op">+</span></span>
+<span id="cb59-4"><a href="part-2-collecting-data-and-analysis.html#cb59-4"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat=</span><span class="st">&#39;identity&#39;</span>) <span class="op">+</span><span class="st"> </span></span>
+<span id="cb59-5"><a href="part-2-collecting-data-and-analysis.html#cb59-5"></a><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> <span class="kw">paste0</span>(<span class="kw">round</span>(Share_of_cases),<span class="st">&quot;%&quot;</span>)), <span class="dt">position =</span> <span class="kw">position_stack</span>(<span class="dt">vjust =</span> <span class="fl">0.5</span>))<span class="op">+</span></span>
+<span id="cb59-6"><a href="part-2-collecting-data-and-analysis.html#cb59-6"></a><span class="st">  </span><span class="kw">scale_fill_brewer</span>(<span class="dt">palette =</span> <span class="st">&quot;Blues&quot;</span>) <span class="op">+</span></span>
+<span id="cb59-7"><a href="part-2-collecting-data-and-analysis.html#cb59-7"></a><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="ot">NULL</span>, <span class="dt">y =</span> <span class="ot">NULL</span>, <span class="dt">fill =</span> <span class="ot">NULL</span>, <span class="dt">title =</span> <span class="st">&quot;Brands repsondents are familiar with&quot;</span>) <span class="op">+</span></span>
+<span id="cb59-8"><a href="part-2-collecting-data-and-analysis.html#cb59-8"></a><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span></span>
+<span id="cb59-9"><a href="part-2-collecting-data-and-analysis.html#cb59-9"></a><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.line =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb59-10"><a href="part-2-collecting-data-and-analysis.html#cb59-10"></a>        <span class="dt">axis.ticks =</span> <span class="kw">element_blank</span>(),</span>
+<span id="cb59-11"><a href="part-2-collecting-data-and-analysis.html#cb59-11"></a>        <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust =</span> <span class="fl">0.5</span>, <span class="dt">color =</span> <span class="st">&quot;#666666&quot;</span>))</span>
+<span id="cb59-12"><a href="part-2-collecting-data-and-analysis.html#cb59-12"></a>p</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-121-1.png" width="672" /></p>
 </div>
 <div id="rank-order-question-2" class="section level3 unnumbered">
 <h3>Rank order question</h3>
-<p>Here is how we can visualize rank order</p>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="part-2-collecting-data-and-analysis.html#cb59-1"></a><span class="co"># We have just turned our data frame from the wide format to the long format by using function melt(). If we take a look at head and tail of our new data frame, we can see that it contains just two columns, &quot;Rank&quot; and &quot;Feature&quot;.</span></span>
-<span id="cb59-2"><a href="part-2-collecting-data-and-analysis.html#cb59-2"></a></span>
-<span id="cb59-3"><a href="part-2-collecting-data-and-analysis.html#cb59-3"></a>rank.data.long &lt;-<span class="st"> </span>reshape2<span class="op">::</span><span class="kw">melt</span>(rank.data,<span class="dt">value.name =</span> <span class="st">&quot;Rank&quot;</span>,<span class="dt">variable.name =</span> <span class="st">&quot;Feature&quot;</span>, <span class="dt">stringsAsFactors=</span><span class="ot">TRUE</span>)</span>
-<span id="cb59-4"><a href="part-2-collecting-data-and-analysis.html#cb59-4"></a></span>
-<span id="cb59-5"><a href="part-2-collecting-data-and-analysis.html#cb59-5"></a><span class="co"># Visualisation</span></span>
-<span id="cb59-6"><a href="part-2-collecting-data-and-analysis.html#cb59-6"></a>ggstatsplot<span class="op">::</span><span class="kw">ggwithinstats</span>(</span>
-<span id="cb59-7"><a href="part-2-collecting-data-and-analysis.html#cb59-7"></a>  <span class="dt">data =</span> rank.data.long,</span>
-<span id="cb59-8"><a href="part-2-collecting-data-and-analysis.html#cb59-8"></a>  <span class="dt">x =</span> Feature,</span>
-<span id="cb59-9"><a href="part-2-collecting-data-and-analysis.html#cb59-9"></a>  <span class="dt">y =</span> Rank,</span>
-<span id="cb59-10"><a href="part-2-collecting-data-and-analysis.html#cb59-10"></a>  <span class="dt">type =</span> <span class="st">&quot;np&quot;</span>,</span>
-<span id="cb59-11"><a href="part-2-collecting-data-and-analysis.html#cb59-11"></a>  <span class="dt">pairwise.comparisons =</span> <span class="ot">TRUE</span>, <span class="co"># show pairwise comparison test results</span></span>
-<span id="cb59-12"><a href="part-2-collecting-data-and-analysis.html#cb59-12"></a>  <span class="dt">title =</span> <span class="st">&quot;What features are important to you when evualting fitness trackers?&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-121-1.png" width="672" /></p>
+<p>In case of ranked data, one need to transform data from wide format to long format first.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="part-2-collecting-data-and-analysis.html#cb60-1"></a><span class="co"># Packages</span></span>
+<span id="cb60-2"><a href="part-2-collecting-data-and-analysis.html#cb60-2"></a><span class="kw">library</span>(reshape2)</span>
+<span id="cb60-3"><a href="part-2-collecting-data-and-analysis.html#cb60-3"></a><span class="kw">library</span>(ggpubr)</span>
+<span id="cb60-4"><a href="part-2-collecting-data-and-analysis.html#cb60-4"></a><span class="kw">library</span>(rstatix)</span>
+<span id="cb60-5"><a href="part-2-collecting-data-and-analysis.html#cb60-5"></a><span class="kw">library</span>(ggstatsplot)</span>
+<span id="cb60-6"><a href="part-2-collecting-data-and-analysis.html#cb60-6"></a></span>
+<span id="cb60-7"><a href="part-2-collecting-data-and-analysis.html#cb60-7"></a><span class="co"># Data in wide format</span></span>
+<span id="cb60-8"><a href="part-2-collecting-data-and-analysis.html#cb60-8"></a><span class="kw">head</span>(rank.data)<span class="op">%&gt;%</span></span>
+<span id="cb60-9"><a href="part-2-collecting-data-and-analysis.html#cb60-9"></a>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb60-10"><a href="part-2-collecting-data-and-analysis.html#cb60-10"></a><span class="st">  </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
+<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
+<thead>
+<tr>
+<th style="text-align:center;">
+Measuring steps
+</th>
+<th style="text-align:center;">
+Calories burned
+</th>
+<th style="text-align:center;">
+Measuring heartbeat
+</th>
+<th style="text-align:center;">
+Exercise tracking
+</th>
+<th style="text-align:center;">
+Measuring distance
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+3
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+5
+</td>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+4
+</td>
+<td style="text-align:center;">
+2
+</td>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+3
+</td>
+<td style="text-align:center;">
+5
+</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="part-2-collecting-data-and-analysis.html#cb61-1"></a><span class="co"># Data in long format</span></span>
+<span id="cb61-2"><a href="part-2-collecting-data-and-analysis.html#cb61-2"></a><span class="kw">head</span>(rank.data.long)<span class="op">%&gt;%</span></span>
+<span id="cb61-3"><a href="part-2-collecting-data-and-analysis.html#cb61-3"></a>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb61-4"><a href="part-2-collecting-data-and-analysis.html#cb61-4"></a><span class="st">  </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
+<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
+<thead>
+<tr>
+<th style="text-align:center;">
+Feature
+</th>
+<th style="text-align:center;">
+Rank
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+Measuring steps
+</td>
+<td style="text-align:center;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Measuring steps
+</td>
+<td style="text-align:center;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Measuring steps
+</td>
+<td style="text-align:center;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Measuring steps
+</td>
+<td style="text-align:center;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Measuring steps
+</td>
+<td style="text-align:center;">
+5
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Measuring steps
+</td>
+<td style="text-align:center;">
+4
+</td>
+</tr>
+</tbody>
+</table>
+<p>Simple way to depict ranks is a chart of box plots:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="part-2-collecting-data-and-analysis.html#cb62-1"></a><span class="co"># Rank order question - box plots</span></span>
+<span id="cb62-2"><a href="part-2-collecting-data-and-analysis.html#cb62-2"></a>p &lt;-<span class="kw">ggplot</span>(rank.data.long, <span class="kw">aes</span>(<span class="dt">x=</span>Feature, <span class="dt">y=</span>Rank, <span class="dt">fill=</span> Feature)) <span class="op">+</span></span>
+<span id="cb62-3"><a href="part-2-collecting-data-and-analysis.html#cb62-3"></a><span class="st">    </span><span class="kw">geom_boxplot</span>()  <span class="op">+</span></span>
+<span id="cb62-4"><a href="part-2-collecting-data-and-analysis.html#cb62-4"></a><span class="st">    </span><span class="kw">theme_minimal</span>() <span class="op">+</span></span>
+<span id="cb62-5"><a href="part-2-collecting-data-and-analysis.html#cb62-5"></a><span class="st">    </span><span class="kw">ggtitle</span>(<span class="dt">label=</span><span class="st">&quot;Perceived importance of features&quot;</span>)<span class="op">+</span></span>
+<span id="cb62-6"><a href="part-2-collecting-data-and-analysis.html#cb62-6"></a><span class="st">    </span><span class="kw">theme</span>(<span class="dt">axis.text =</span> <span class="kw">element_blank</span>())</span>
+<span id="cb62-7"><a href="part-2-collecting-data-and-analysis.html#cb62-7"></a>p</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-123-1.png" width="672" />
+Package <code>ggstatsplot()</code> provides a great feature, which enables creation of a plot and conducting a statistical test at the same time.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="part-2-collecting-data-and-analysis.html#cb63-1"></a><span class="co"># Rank order question - ggstatsplot</span></span>
+<span id="cb63-2"><a href="part-2-collecting-data-and-analysis.html#cb63-2"></a>ggstatsplot<span class="op">::</span><span class="kw">ggwithinstats</span>(</span>
+<span id="cb63-3"><a href="part-2-collecting-data-and-analysis.html#cb63-3"></a>  <span class="dt">data =</span> rank.data.long,</span>
+<span id="cb63-4"><a href="part-2-collecting-data-and-analysis.html#cb63-4"></a>  <span class="dt">x =</span> Feature,</span>
+<span id="cb63-5"><a href="part-2-collecting-data-and-analysis.html#cb63-5"></a>  <span class="dt">y =</span> Rank,</span>
+<span id="cb63-6"><a href="part-2-collecting-data-and-analysis.html#cb63-6"></a>  <span class="dt">type =</span> <span class="st">&quot;np&quot;</span>,</span>
+<span id="cb63-7"><a href="part-2-collecting-data-and-analysis.html#cb63-7"></a>  <span class="dt">pairwise.comparisons =</span> <span class="ot">TRUE</span>, <span class="co"># show pairwise comparison test results</span></span>
+<span id="cb63-8"><a href="part-2-collecting-data-and-analysis.html#cb63-8"></a>  <span class="dt">title =</span> <span class="st">&quot;What features are important to you when evualting fitness trackers?&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-124-1.png" width="672" /></p>
 </div>
 <div id="constant-sum-question-2" class="section level3 unnumbered">
 <h3>Constant Sum question</h3>
+<p>Required data format for a data obtained from constant sum question is similar to ranked data.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="part-2-collecting-data-and-analysis.html#cb64-1"></a><span class="co"># Data in long format</span></span>
+<span id="cb64-2"><a href="part-2-collecting-data-and-analysis.html#cb64-2"></a><span class="kw">head</span>(constant.sum.long) <span class="op">%&gt;%</span></span>
+<span id="cb64-3"><a href="part-2-collecting-data-and-analysis.html#cb64-3"></a>kableExtra<span class="op">::</span><span class="kw">kbl</span>(<span class="dt">align =</span> <span class="st">&quot;c&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb64-4"><a href="part-2-collecting-data-and-analysis.html#cb64-4"></a><span class="st">  </span><span class="kw">kable_paper</span>(<span class="st">&quot;hover&quot;</span>, <span class="dt">full_width =</span> F)</span></code></pre></div>
+<table class=" lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;'>
+<thead>
+<tr>
+<th style="text-align:center;">
+Factor
+</th>
+<th style="text-align:center;">
+Points
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+Location
+</td>
+<td style="text-align:center;">
+32
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Location
+</td>
+<td style="text-align:center;">
+25
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Location
+</td>
+<td style="text-align:center;">
+19
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Location
+</td>
+<td style="text-align:center;">
+20
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Location
+</td>
+<td style="text-align:center;">
+30
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+Location
+</td>
+<td style="text-align:center;">
+0
+</td>
+</tr>
+</tbody>
+</table>
 <p>Here is one way to visualize data obtained from constant sum question.</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="part-2-collecting-data-and-analysis.html#cb60-1"></a><span class="co"># Boxplot ggplot2</span></span>
-<span id="cb60-2"><a href="part-2-collecting-data-and-analysis.html#cb60-2"></a><span class="kw">library</span>(plotly)</span>
-<span id="cb60-3"><a href="part-2-collecting-data-and-analysis.html#cb60-3"></a>p&lt;-constant.sum.long <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb60-4"><a href="part-2-collecting-data-and-analysis.html#cb60-4"></a><span class="st">  </span><span class="kw">filter</span>(Factor<span class="op">!=</span><span class="st">&quot;id&quot;</span>) <span class="op">%&gt;%</span></span>
-<span id="cb60-5"><a href="part-2-collecting-data-and-analysis.html#cb60-5"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Factor, <span class="dt">y=</span>Points, <span class="dt">fill=</span> Factor)) <span class="op">+</span></span>
-<span id="cb60-6"><a href="part-2-collecting-data-and-analysis.html#cb60-6"></a><span class="st">    </span><span class="kw">geom_boxplot</span>()  <span class="op">+</span></span>
-<span id="cb60-7"><a href="part-2-collecting-data-and-analysis.html#cb60-7"></a><span class="st">    </span><span class="kw">theme_minimal</span>() <span class="op">+</span></span>
-<span id="cb60-8"><a href="part-2-collecting-data-and-analysis.html#cb60-8"></a><span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;What factors do you consider when choosing a place to go for a dinner?&quot;</span>) <span class="op">+</span></span>
-<span id="cb60-9"><a href="part-2-collecting-data-and-analysis.html#cb60-9"></a><span class="st">    </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>)</span>
-<span id="cb60-10"><a href="part-2-collecting-data-and-analysis.html#cb60-10"></a><span class="kw">ggplotly</span>(p)</span></code></pre></div>
-<div id="htmlwidget-e052a1b9101a13fd5413" style="width:672px;height:480px;" class="plotly html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e052a1b9101a13fd5413">{"x":{"data":[{"x":[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],"y":[32,25,19,20,30,0,0,20,0,20,20,0,0,0,20,10,20,20,30,20,20,10,20,20,0,0,10,10,10,30,0,0,20,20,10,0,20,10,10,0,20,0,10,0,0,0,10,0,40,10,20,0,0,0,10,0,20,0,0,0,0,0,0,10,10,0,30,20,10,0,10,30,20,20,20,10,20,0,20,20,10,10,0,30,20,20,20,10,0,20,10,0,30,15,0,30,20,10,0,20,20,0,0,20,30,10,0,40,0,20,0,10,20,0,20,30,10],"hoverinfo":"y","type":"box","fillcolor":"rgba(248,118,109,1)","marker":{"opacity":null,"outliercolor":"rgba(0,0,0,1)","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"},"size":5.66929133858268},"line":{"color":"rgba(51,51,51,1)","width":1.88976377952756},"name":" Location","legendgroup":" Location","showlegend":true,"xaxis":"x","yaxis":"y","frame":null},{"x":[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],"y":[23,30,21,20,30,20,30,40,40,20,20,30,40,40,30,40,20,30,30,20,10,20,30,30,60,20,30,30,20,20,20,80,40,20,30,50,60,30,30,20,20,50,30,0,40,30,20,50,40,30,20,50,30,100,30,50,30,60,60,40,50,50,10,20,30,50,30,25,30,10,20,20,30,60,20,30,10,40,30,20,20,40,50,20,20,20,30,20,50,20,20,30,30,25,30,30,20,20,100,20,20,30,50,30,40,10,40,30,50,20,30,30,20,0,30,40,10],"hoverinfo":"y","type":"box","fillcolor":"rgba(124,174,0,1)","marker":{"opacity":null,"outliercolor":"rgba(0,0,0,1)","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"},"size":5.66929133858268},"line":{"color":"rgba(51,51,51,1)","width":1.88976377952756},"name":" Price","legendgroup":" Price","showlegend":true,"xaxis":"x","yaxis":"y","frame":null},{"x":[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],"y":[32,22,30,20,10,20,40,0,30,40,20,50,60,20,20,30,30,10,20,20,40,20,10,10,30,50,30,30,30,10,40,20,20,30,20,40,10,30,40,30,10,30,10,60,40,50,20,10,20,20,10,20,20,0,40,30,30,20,20,0,20,30,50,10,20,30,10,20,20,40,10,10,20,20,20,10,30,60,10,20,30,30,50,20,20,30,30,40,0,20,30,30,20,20,50,10,10,30,0,50,20,40,30,30,20,50,40,10,50,20,40,20,40,0,30,20,50],"hoverinfo":"y","type":"box","fillcolor":"rgba(0,191,196,1)","marker":{"opacity":null,"outliercolor":"rgba(0,0,0,1)","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"},"size":5.66929133858268},"line":{"color":"rgba(51,51,51,1)","width":1.88976377952756},"name":" Ambience","legendgroup":" Ambience","showlegend":true,"xaxis":"x","yaxis":"y","frame":null},{"x":[4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4],"y":[13,23,30,40,30,60,30,40,30,20,40,20,0,40,30,20,30,40,20,40,30,50,40,40,10,30,30,30,40,40,40,0,20,30,40,10,10,30,20,50,50,20,50,40,20,20,50,40,0,40,50,30,50,0,20,20,20,20,20,60,30,20,40,60,40,20,30,35,40,50,60,40,30,0,40,50,40,0,40,40,40,20,0,30,40,30,20,30,50,40,40,40,20,40,20,30,50,40,0,10,40,30,20,20,10,30,20,20,0,40,30,40,20,100,20,10,30],"hoverinfo":"y","type":"box","fillcolor":"rgba(199,124,255,1)","marker":{"opacity":null,"outliercolor":"rgba(0,0,0,1)","line":{"width":1.88976377952756,"color":"rgba(0,0,0,1)"},"size":5.66929133858268},"line":{"color":"rgba(51,51,51,1)","width":1.88976377952756},"name":" Customer Service","legendgroup":" Customer Service","showlegend":true,"xaxis":"x","yaxis":"y","frame":null}],"layout":{"margin":{"t":43.7625570776256,"r":7.30593607305936,"b":25.5707762557078,"l":43.1050228310502},"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"title":{"text":"What factors do you consider when choosing a place to go for a dinner?","font":{"color":"rgba(0,0,0,1)","family":"","size":17.5342465753425},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.4,4.6],"tickmode":"array","ticktext":[" Location"," Price"," Ambience"," Customer Service"],"tickvals":[1,2,3,4],"categoryorder":"array","categoryarray":[" Location"," Price"," Ambience"," Customer Service"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-5,105],"tickmode":"array","ticktext":["0","25","50","75","100"],"tickvals":[0,25,50,75,100],"categoryorder":"array","categoryarray":["0","25","50","75","100"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.65296803652968,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":11.689497716895},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.66417600664176,"zeroline":false,"anchor":"x","title":{"text":"Points","font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187}},"hoverformat":".2f"},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":11.689497716895},"y":0.96751968503937},"annotations":[{"text":"Factor","x":1.02,"y":1,"showarrow":false,"ax":0,"ay":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":14.6118721461187},"xref":"paper","yref":"paper","textangle":-0,"xanchor":"left","yanchor":"bottom","legendTitle":true}],"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","showSendToCloud":false},"source":"A","attrs":{"69dc6b9333db":{"x":{},"y":{},"fill":{},"type":"box"}},"cur_data":"69dc6b9333db","visdat":{"69dc6b9333db":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="part-2-collecting-data-and-analysis.html#cb65-1"></a><span class="co"># Constant sum question</span></span>
+<span id="cb65-2"><a href="part-2-collecting-data-and-analysis.html#cb65-2"></a>p&lt;-constant.sum.long <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb65-3"><a href="part-2-collecting-data-and-analysis.html#cb65-3"></a><span class="st">  </span><span class="kw">filter</span>(Factor<span class="op">!=</span><span class="st">&quot;id&quot;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb65-4"><a href="part-2-collecting-data-and-analysis.html#cb65-4"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>Factor, <span class="dt">y=</span>Points, <span class="dt">fill=</span> Factor)) <span class="op">+</span></span>
+<span id="cb65-5"><a href="part-2-collecting-data-and-analysis.html#cb65-5"></a><span class="st">    </span><span class="kw">geom_boxplot</span>()  <span class="op">+</span></span>
+<span id="cb65-6"><a href="part-2-collecting-data-and-analysis.html#cb65-6"></a><span class="st">    </span><span class="kw">theme_minimal</span>() <span class="op">+</span></span>
+<span id="cb65-7"><a href="part-2-collecting-data-and-analysis.html#cb65-7"></a><span class="st">    </span><span class="kw">ggtitle</span>(<span class="st">&quot;What factors do you consider when choosing a place to go for a dinner?&quot;</span>) </span>
+<span id="cb65-8"><a href="part-2-collecting-data-and-analysis.html#cb65-8"></a>p</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-126-1.png" width="672" /></p>
 <p>The following type of visualisation includes statistical test as well:</p>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="part-2-collecting-data-and-analysis.html#cb61-1"></a>ggstatsplot<span class="op">::</span><span class="kw">ggwithinstats</span>(</span>
-<span id="cb61-2"><a href="part-2-collecting-data-and-analysis.html#cb61-2"></a>  <span class="dt">data =</span> constant.sum.long <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Factor<span class="op">!=</span><span class="st">&quot;id&quot;</span>), <span class="co"># excluding &quot;id&quot; column from the data</span></span>
-<span id="cb61-3"><a href="part-2-collecting-data-and-analysis.html#cb61-3"></a>  <span class="dt">x =</span> Factor,</span>
-<span id="cb61-4"><a href="part-2-collecting-data-and-analysis.html#cb61-4"></a>  <span class="dt">y =</span> Points,</span>
-<span id="cb61-5"><a href="part-2-collecting-data-and-analysis.html#cb61-5"></a>  <span class="dt">type =</span> <span class="st">&quot;p&quot;</span>,</span>
-<span id="cb61-6"><a href="part-2-collecting-data-and-analysis.html#cb61-6"></a>  <span class="dt">pairwise.comparisons =</span> <span class="ot">TRUE</span>, <span class="co"># show pairwise comparison test results</span></span>
-<span id="cb61-7"><a href="part-2-collecting-data-and-analysis.html#cb61-7"></a>  <span class="dt">title =</span> <span class="st">&quot;What factors do you consider when choosing a place to go for a dinner?&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-123-1.png" width="672" /></p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="part-2-collecting-data-and-analysis.html#cb66-1"></a>ggstatsplot<span class="op">::</span><span class="kw">ggwithinstats</span>(</span>
+<span id="cb66-2"><a href="part-2-collecting-data-and-analysis.html#cb66-2"></a>  <span class="dt">data =</span> constant.sum.long <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(Factor<span class="op">!=</span><span class="st">&quot;id&quot;</span>), <span class="co"># excluding &quot;id&quot; column from the data</span></span>
+<span id="cb66-3"><a href="part-2-collecting-data-and-analysis.html#cb66-3"></a>  <span class="dt">x =</span> Factor,</span>
+<span id="cb66-4"><a href="part-2-collecting-data-and-analysis.html#cb66-4"></a>  <span class="dt">y =</span> Points,</span>
+<span id="cb66-5"><a href="part-2-collecting-data-and-analysis.html#cb66-5"></a>  <span class="dt">type =</span> <span class="st">&quot;p&quot;</span>,</span>
+<span id="cb66-6"><a href="part-2-collecting-data-and-analysis.html#cb66-6"></a>  <span class="dt">pairwise.comparisons =</span> <span class="ot">TRUE</span>, <span class="co"># show pairwise comparison test results</span></span>
+<span id="cb66-7"><a href="part-2-collecting-data-and-analysis.html#cb66-7"></a>  <span class="dt">title =</span> <span class="st">&quot;What factors do you consider when choosing a place to go for a dinner?&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-127-1.png" width="672" /></p>
 </div>
 </div>
 <div id="presentation-guidelines-grading" class="section level2 unnumbered">

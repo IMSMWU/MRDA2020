@@ -32,7 +32,13 @@ Here you will find all important points related to the group project. In the fol
 knitr::include_graphics("images/group_project.PNG")
 ```
 
-### Groups
+
+::: {.infobox_red .caution data-latex="{caution}"}
+Note that this assignment may require you to deal with and integrate
+knowledge that has not yet been covered in class! Students are
+expected to read ahead and collect additional information to the
+extent to which their project requires this.
+:::
 
 ### Topics for the group project
 
@@ -152,7 +158,7 @@ In the second part of your project, after you distribute your questionnaire and 
 library(dplyr)
 library(kableExtra)
 mytable_sub = data.frame(
-    D = c("Nov. 16*",
+    Date_A = c("Nov. 16*",
              "Nov. 23*",
              "Dec. 7"
              ),
@@ -203,13 +209,6 @@ In a research process, conducting a survey is a part of (primary) data collectio
 ```{r,echo=FALSE,out.width = '70%',fig.align='center'}
 knitr::include_graphics("research-process.PNG")
 ```
-
-::: {.infobox_red .caution data-latex="{caution}"}
-Note that this assignment may require you to deal with and integrate
-knowledge that has not yet been covered in class! Students are
-expected to read ahead and collect additional information to the
-extent to which their project requires this.
-:::
 
 
 ### Research design
@@ -821,6 +820,48 @@ For instance, we would like to test the effect of two advertisements on purchase
 knitr::include_graphics('between-subject-design.png')
 ```
 
+::: {.infobox_red .caution data-latex="{caution}"}
+
+Qualtrics is a great tool to conduct an appropriate survey in between-subject design. In order to randomly assign your respondents to a test group or a control group, and to know to which condition each respondent belongs, **a randomizer** needs to be set up in advance in the survey flow. Below you can find detailed explanation how to add it to your survey.
+
+:::
+
+
+###### How to set up a randomizer in Qualtrics {-}
+
+Here is how to set up a randomizer in Qualtrics, so that your participants are going to be assigned either to A or B condition.
+
+First, navigate to the Survey tab and open your Survey Flow.
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('images/surveyflow1.png')
+```
+
+Then click Add Below or Add a New Element Here, depending to where you want to place a randomizer. 
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('images/surveyflow2.png')
+```
+Then choose Randomizer.
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('images/surveyflow3.png')
+```
+
+Finally, you set the number (the one between - and +) to 1 and check the option "Evenly Present Elements". Next you edit embedded data fields by naming it (e.g., "Group" and "Control","Test Group 1","Test Group 2".)
+
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('images/surveyflow4.png')
+```
+
+It is very imporant to think about the place to set a randomizer in a survey workflow. You want to place it always before you branch your survey flow, so that you can keep track of which respondent was exposed to which condition. If you do not set a randomizer before branching, it would remain unknown what condition each respondent was exposed to. Here is how it was done in our example of Qualtrics survey.
+
+```{r, echo=F, fig.align='center',out.width='72%'}
+knitr::include_graphics('images/surveyflow7.png')
+```
+
+After respondents are randomly assigned either to A or B condition, this was used as a criterion for branching, i.e., asking respondents in a condition A and B different block of questions.
 
 ##### Questionnaire structure for a within-subjects design
 

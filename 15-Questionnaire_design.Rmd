@@ -1119,6 +1119,12 @@ colnames(qualtrics)<- new.colnames
 head(qualtrics,3)
 ```
 
+::: {.infobox_orange .hint data-latex="{hint}"}
+In this [link](https://cran.csiro.au/web/packages/qualtRics/vignettes/qualtRics.html
+) you can find a brief, but insightful Introduction to qualtRics package and how to combine Qualtrics and R
+:::
+
+
 #### Multiple choice with a single answer {-}
 
 Type of data you obtain is **categorical**, and the output comes in the following form:  
@@ -1577,12 +1583,17 @@ The format (e.g., data frame, matrix, list or similar) in which you have your da
 
 :::
 
+::: {.infobox_red .caution data-latex="{caution}"}
+
+The focus of the reporting section is on data visualisation, but do not forget to make correct interpretations and add them to your final report. How to communicate results of respective statistical test is a part of chapters before, so consult corresponding chapters if you are not sure how to report results of certain statistical test.
+
+:::
 
 ##### Multiple choice question visualisation {-}
 
 In order to visualize a survey data obtained from multiple choice question with single answer, a data format needs to be in the appropriate format. Here we proceed with data format adaptation from the point where we stopped:
 
-```{r, eval=TRUE, warning=FALSE, message=FALSE,echo=FALSE}
+```{r, eval=TRUE, warning=FALSE, message=FALSE}
 # Converting long format to the visualisation-friendly format
 mlc_visualisation <- as.data.frame(table(qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`))
 

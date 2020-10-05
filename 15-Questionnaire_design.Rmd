@@ -15,7 +15,9 @@ knitr::opts_chunk$set(echo = TRUE, error = FALSE, warning = FALSE, message = FAL
 
 # (PART) Group project {-}
 
-# Intro {-}
+# Survey design & analysis
+
+## Your task
 
 Welcome to the introduction to the group project!
 
@@ -30,9 +32,9 @@ Here you will find all important points related to the group project. In the fol
 knitr::include_graphics("images/group_project.PNG")
 ```
 
-## Groups {-}
+### Groups
 
-## Topics for the group project {-}
+### Topics for the group project
 
 ```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
 library(dplyr)
@@ -74,7 +76,118 @@ mytable_sub %>% kable(escape = T) %>%
 ```
 
 
-# Part 1: Before collecting data {-}
+### Presentation guidelines & grading
+
+Your performance in this part will be evaluated based on the following criteria:
+
+* **Individual Responsibility:**
+
+    + Group members should plan to share presentation responsibilities and field questions equally.
+    + All members of the group must contribute to the presentation.
+    + Individual grade for presentation and oral participation during the class.
+    + To ensure an equal contribution of group members, a peer assessment will be conducted, which enters into the computation of the individual grades for the group project. 
+
+* **Quality of questionnaire design:**
+
+    + Survey method
+    + Question structure / wording
+
+* **Data Analysis:**
+
+    + Clarity / appropriateness
+    + Completeness / accuracy
+    
+* **Presentation:**
+
+    + Introduction/problem, approach, solution/inclusion
+
+
+
+### Timeline
+
+Here are important touchpoints for the first part of your group project:
+
+```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
+library(dplyr)
+library(kableExtra)
+mytable_sub = data.frame(
+    Date_A = c("Oct. 21", 
+             "Oct. 23*", 
+             "Nov. 1"
+             ),
+    Time_A = c(
+      "11:59PM","09:00AM - 02:30PM","11:59PM"
+    ),Date_B = c("Oct. 25", 
+             "Oct. 27*", 
+             "Nov. 4"
+             ),
+    Time_B = c(
+      "11:59PM","02:00PM - 08:00PM","11:59PM"
+    ),
+    Task = c(  "* Submit questionnaire draft", 
+               "* Coaching: Questionnaire design (live video coaching)", 
+               "* Submit revised questionnaire"
+               ),
+    Chapters = c("10","10","10"),
+    Link = c("",
+                 "TBC", 
+                 ""
+                 )
+    )
+
+#pander::pander(mytable_sub, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
+mytable_sub %>% kable(escape = T) %>%
+  kable_paper(c("hover"), full_width = F) %>%
+  footnote(general = "Dates and times are indicated for groups A and B respectively.
+           Sessions indicated with '*' are group coaching sessions. Slots of 45 min. are assigned to each group within the indicated times.",
+           general_title = "Note: ", 
+           footnote_as_chunk = T, title_format = c("italic")
+           ) 
+#%>%   row_spec(c(1,3,6), background = "#E0E0E0")
+```
+
+In the second part of your project, after you distribute your questionnaire and start collecting data, the following touchpoints are important to remember:
+
+```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
+library(dplyr)
+library(kableExtra)
+mytable_sub = data.frame(
+    D = c("Nov. 16*",
+             "Nov. 23*",
+             "Dec. 7"
+             ),
+    Time_A = c(
+      "01:30PM - 04:30PM","01:30PM - 06:30PM","11:59PM"
+    ),Date_B = c("Nov. 18*",
+             "Nov. 25*",
+             "Dec. 9"
+             ),
+    Time_B = c(
+      "02:00PM - 05:00PM","03:00PM - 08:00PM","11:59PM"
+    ),
+    Task = c(  "* Coaching: Data handling (live video coaching)",
+               "* Coaching: Data analysis (live video coaching)",
+               "* Submit video recording of presentation (pre-recorded)"
+               ),
+    Chapters = c("","",""),
+    Link = c(    "TBC",
+                 "TBC",
+                 ""
+                 )
+    )
+
+#pander::pander(mytable_sub, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
+mytable_sub %>% kable(escape = T) %>%
+  kable_paper(c("hover"), full_width = F) %>%
+  footnote(general = "Dates and times are indicated for groups A and B respectively.
+           Sessions indicated with '*' are group coaching sessions. Slots of 45 min. are assigned to each group within the indicated times.",
+           general_title = "Note: ", 
+           footnote_as_chunk = T, title_format = c("italic")
+           ) 
+#%>%   row_spec(c(1,3,6), background = "#E0E0E0")
+```
+
+## Part 1: Before collecting data
 
 <div style="text-align: justify">
 
@@ -99,7 +212,7 @@ extent to which their project requires this.
 :::
 
 
-## Research design
+### Research design
 
 <div style="text-align: justify">
 
@@ -142,7 +255,7 @@ If you would like to analyze the effects of multiple categorical or continuous (
 knitr::include_graphics("mlp-regression.png")
 ```
 
-## Survey method  
+### Survey method  
 
 In the next step you should review the type of survey method you will use.
 
@@ -213,7 +326,7 @@ Some useful tips when creating a questionnaire in Qualtrics:
 * Check the usability on mobile devices using the preview option (make sure the "Mobile friendly" option is checked).
 :::
 
-## Questionnaire
+### Questionnaire
 
 After you set up everything, you should develop 20 - 25 questions. However, there are some important objectives to keep in mind while developing a questionnaire:
 
@@ -230,7 +343,7 @@ If you have sorted out all answers on the previous questions, you are ready to s
 * Ask questions in a logical order & use the right type of questions
 * Aim for brevity & use simple language
 
-### Questionnaire and research design {-}
+#### Questionnaire and research design
 
 The questionnaire design should be aligned with the research design! Therefore, in the following sections we will explain some suggested steps on how to approach questionnaire creation.
 
@@ -242,7 +355,7 @@ An objective of a questionnaire is threefold:
 * to motivate, and encourage respondents to become involved, to cooperate, and to complete the questionnaire,
 * to minimize response error.
 
-### Content in a questionnaire {-}
+#### Content in a questionnaire
 
 In this step you are starting to work on the content of you questions.
 
@@ -287,7 +400,7 @@ Do you think Nike Town offers better prices than other Nike stores?
 \vspace{-0.10in}
 ```
            
-### Inability and unwillingness to answer {-}  
+#### Inability and unwillingness to answer  
 
 The quality of collected data you highly depends on your ability to address correct participants. Therefore, you need to make sure that your respondents are able to meaningfully answer your questions.   
 
@@ -407,7 +520,7 @@ What is your household’s exact annual income?
 \vspace{-0.10in}
 ```
 
-### Decide on measurement scales and scaling techniques {-}
+#### Decide on measurement scales and scaling techniques
 
 Every statistical analysis requires that variables have a specific levels of measurement. Measurement scales you choose for your questions in a survey will affect the answers you get and eventually statistical test you can apply.
 For instance, it would not make sense to compute an average of genders. An average of a categorical variable does not make much sense. Moreover, if you tried to compute the average of genders defined in numeric values (e.g. male=0, female=1), the output would be interpretable.
@@ -429,14 +542,15 @@ knitr::include_graphics("overview-statistical-test.jpg")
 ```
 
 ::: {.infobox_red .caution data-latex="{caution}"}
+
 It is highly recommended to think about what type of data you want to collect and what test to use, before you form a question and add to the survey. We highly recommend you NOT to add questions without thinking what type of data you are going to collect with it. If you do so, you may end up with data you did not want to collect, and moreover, with data unsuitable for the test you intended to use.
 
-Here you can find extremely nice overview of statistical test associated with different types of variables: [CHOOSING THE CORRECT STATISTICAL TEST - UCLA](https://stats.idre.ucla.edu/other/mult-pkg/whatstat/)
+Here you can find extremely nice overview of statistical test associated with different types of variables:[LINK](https://stats.idre.ucla.edu/other/mult-pkg/whatstat/)
 
 :::
 
 
-### The most frequent types of questions {-}
+#### The most frequent types of questions
 
 Here we want to show you the most frequent types of questions students use and what type of data can be collected by using them.
 
@@ -459,7 +573,7 @@ colnames(qualtrics)<- new.colnames
 
 ```
 
-#### Number entry question {-}
+##### Number entry question
 
 ```{r, echo=F, fig.align='center',out.width='72%', fig.cap="Text or number entry question"}
 knitr::include_graphics('images/text-entry.PNG')
@@ -468,7 +582,7 @@ knitr::include_graphics('images/text-entry.PNG')
 A number entry question is a recommended type of question if you are interested in obtaining **ratio data type**. Ratio data type gives you flexibility to apply a broad range of statistical analyses such as regression analysis, correlation computation, t-test (or ANOVA), or factor analysis. Data collected by number entry question is handy to use with data collected by slider questions or with a constant sum question. Note that in this case we treat constant sum data as ratio data and therefore assume that 0 means complete absence.
 
 
-#### Multiple choice question {-}
+##### Multiple choice question
 
 Multiple Choice with a single answer is a type of closed-ended question that lets respondents select **one answer** from a defined list of choices.Type of data you obtain is **categorical.** 
 
@@ -515,7 +629,7 @@ The Cochran’s Q test and associated multiple comparisons require the following
   3. The sample size is sufficiently “large”. (As a rule of thumb, the number of subjects for which the responses are not all 0’s or 1’s, n, should be ≥ 4 and nk should be ≥ 24)
 :::
 
-#### Rank order question {-}
+##### Rank order question
 
 ```{r, echo=F, fig.align='center',out.width='72%', fig.cap="Rank order question"}
 knitr::include_graphics('rank-order-question.png')
@@ -529,7 +643,7 @@ In order to analyze results from a rank order question, we use **Friedman rank s
 Friedman rank sum test is used to identify whether there are any statistically significant differences between the distributions of 3 or more paired groups. It is used when the normality assumptions for using one-way repeated measures ANOVA are not met. Another case when Friedman rank rum test is used is when the dependent variable is measured on an ordinal scale, as in our case.
 :::
 
-#### Constant Sum question {-}
+##### Constant Sum question
 
 ```{r, echo=F, fig.align='center',out.width='72%', fig.cap="Constant sum question"}
 knitr::include_graphics('constant-sum-question.png')
@@ -547,7 +661,7 @@ This type of ANOVA is used for analyzing data where the same subjects are measur
 
 
 
-### Scaling techniques {-}
+#### Scaling techniques
 
 When it comes to scaling techniques, they are meant to study the relationship between objects. The basic scaling techniques classification is on **comparative** and **non-comparative scales**. 
 
@@ -560,7 +674,7 @@ knitr::include_graphics("scales.png")
 **Comparative scales (or nonmetric scaling)** compare direclty the stimulus object. For example, the respondent might be asked directly about his preference between domestic and foreign beer brands. As a result, the comparative data collected can only be interpreted in relative terms. In the following sections we will walk through both types of comparative scales and briefly introduce them.
 
 
-#### Comparative scale: Paired Comparison {-}    
+##### Comparative scale: Paired Comparison    
 
 * Respondent is presented with two objects and asked to select one according to some criterion.
 * The nature of resulting data is ordinal
@@ -572,7 +686,7 @@ For each pair, please indicate which of the two brands of beer in the pair you p
 knitr::include_graphics('paired comparison.png')
 ```
 
-#### Comparative scale: Rank Order {-}  
+##### Comparative scale: Rank Order  
 
 * Allow a certain set of brands or products to be simultaneously ranked based upon a specific attribute or characteristic.
 * The rank order scaling is a good proxy for to the shopping setting as there are simultaneous comparisons of objects.
@@ -585,7 +699,7 @@ No two brands should received the same rank number.
 knitr::include_graphics('rank-order-scale.png')
 ```
 
-#### Comparative scale: Constant sum {-}  
+##### Comparative scale: Constant sum  
 
 * Respondents allocate a constant sum of units (e.g., points, dollars) among a set of stimulus objects with respect to some criterion.  
 * Constant sum is similar to rank order, but it carries specific units.  
@@ -601,7 +715,7 @@ knitr:: include_graphics('constant-sum-scale.png')
 * Basic analysis of constant-sum data involves tabulation of responses and presenting them as either quantities (e.g., "on average, 7 points were allocated to "high alcohol level"), or, as proportions ("On average, 7% of points were allocated to "high alcohol level").  
 
 
-#### Non-Comparative Scales: Continuous Rating Scales {-}  
+##### Non-Comparative Scales: Continuous Rating Scales  
 
 * Participants rate the objects by placing a mark at the appropriate position on a line that runs from one extreme of the criterion variable to the other.  
 * One of the advantages of the continuous rating scale is that it is easy to administer.  
@@ -613,13 +727,13 @@ knitr::include_graphics('continuous-rating-scale.png')
 * Once the ratings are collected, you can splits up the obtained ratings into categories and then assign those depending on the category in which the ratings fall.
 
 
-#### Non-Comparative Scales: Itemized Rating Scales {-} 
+##### Non-Comparative Scales: Itemized Rating Scales 
 
 * The respondents are provided with a scale that has a number or brief description associated with each category.  
 * The categories are ordered in terms of scale position, and the respondents are required to select the specified category that best describes the object being rated.  
 * The commonly used itemized rating scales are **the Likert, semantic differential and Stapel scales.**
 
-##### Itemized Rating Scales: Likert scale {-}
+##### Itemized Rating Scales: Likert scale
 
 * Requires respondents to indicate their attitude towards the given object through the degree of agreement or disagreement with each of a series of statements within typically five or seven categories.  
 * Reversed code of some items increases validity.  
@@ -636,7 +750,7 @@ knitr::include_graphics('likert-marketing-reserach.png')
 ```
 
 
-##### Itemized Rating Scales: Semantic Differential {-}
+##### Itemized Rating Scales: Semantic Differential
 
 * Typically, participants rate objects on a number of itemized, seven-point rating scales bounded at each end by one of two bipolar adjectives.  
 
@@ -684,7 +798,7 @@ knitr::include_graphics('semantic-differential-5.png')
 
 
 
-### Questionnaire structure {-}
+#### Questionnaire structure
 
 The sequence of questions in a questionnaire could play important role. For instance, more sensitive questions (such as demographic-related questions) are usually placed at the end as they can trigger change in respondent's behavior. 
 
@@ -697,7 +811,7 @@ Consider that the most of people usually use their phones to fill it out. Think 
 
 In the end, the questionnaire structure has to be aligned with the research design. For example, if your research design features an experiment, this needs to be reflected in the questionnaire (e.g., you need to assign the respondents randomly to the experimental conditions in case of a between-subjects comparison).
 
-#### Questionnaire structure for a between-subjects design {-}
+##### Questionnaire structure for a between-subjects design
 
 In a between-subject design you randomly assign each respondent to different experimental conditions. They would then complete tasks only in the condition to which they are assigned.
 
@@ -708,7 +822,7 @@ knitr::include_graphics('between-subject-design.png')
 ```
 
 
-#### Questionnaire structure for a within-subjects design {-}
+##### Questionnaire structure for a within-subjects design
 
 This type of experimental design involves exposing each respondent to all of the user experimental conditions you’re testing. This way, each respondent will test all of the conditions.
 
@@ -719,7 +833,7 @@ knitr::include_graphics('within-subject-design.png')
 ```
 
 
-### Question wording {-}
+#### Question wording
 
 Generally, question wording should enable each respondent to understand  questions and to be able to answer them with reliability. Reliability means that, if a respondent was asked the same question again, he/she would give the same answer again. A number of common problems regarding the question wording have been identified, so we will address the most important ones. 
 
@@ -877,7 +991,7 @@ d) More than 4 times
 \vspace{-0.1in}
 ```
 
-### Choose adequate order {-}
+#### Choose adequate order
 
 One of the last steps in a process of designing a questionnaire is choosing adequate order of questions and instructions for respondents. 
 
@@ -893,7 +1007,7 @@ As respondents are moving towards the end of the questionnaire, they are likely 
 
 Finally, you should pay particular attention to provide all prescribed definitions and explanations before you ask a question. This ensures that the questions are understood in consistent way by every respondent.
 
-### Test your questionnaire {-}
+#### Test your questionnaire
 
 Finally, before you distribute the final questionnaire, there are some things to consider. First, you should always pretest your questionnaire before sharing it!
 Test all aspects of the questionnaire (content, wording, sequence, form & layout, etc.). If possible, use respondents in the pretest that are similar to those who will be included in the actual survey. Ideally, the pretest sample size should be small (in a real scenario this could vary from 15 to 30 respondents; for the group project, a lower number will be sufficient). After each significant revision of the questionnaire, conduct another pretest, using a different sample of respondents. Eventually, code and analyze the responses obtained from the pretest so that you make sure that you collected information you intended to collect.
@@ -906,58 +1020,15 @@ After testing your questionnaire you should be able to determine whether:
 * The questions are understandable  
 * Specifying questions are needed or some need to be eliminated  
 
-## Pitch, revision & submission
 
-At this stage, you should be ready for pitching your questionnaire. Please keep in mind the timetable.
+## Part 2: Collecting data and analysis
 
-```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
-library(dplyr)
-library(kableExtra)
-mytable_sub = data.frame(
-    Date_A = c("Oct. 21", 
-             "Oct. 23*", 
-             "Nov. 1"
-             ),
-    Time_A = c(
-      "11:59PM","09:00AM - 02:30PM","11:59PM"
-    ),Date_B = c("Oct. 25", 
-             "Oct. 27*", 
-             "Nov. 4"
-             ),
-    Time_B = c(
-      "11:59PM","02:00PM - 08:00PM","11:59PM"
-    ),
-    Task = c(  "* Submit questionnaire draft", 
-               "* Coaching: Questionnaire design (live video coaching)", 
-               "* Submit revised questionnaire"
-               ),
-    Chapters = c("10","10","10"),
-    Link = c("",
-                 "TBC", 
-                 ""
-                 )
-    )
-
-#pander::pander(mytable_sub, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
-mytable_sub %>% kable(escape = T) %>%
-  kable_paper(c("hover"), full_width = F) %>%
-  footnote(general = "Dates and times are indicated for groups A and B respectively.
-           Sessions indicated with '*' are group coaching sessions. Slots of 45 min. are assigned to each group within the indicated times.",
-           general_title = "Note: ", 
-           footnote_as_chunk = T, title_format = c("italic")
-           ) 
-#%>%   row_spec(c(1,3,6), background = "#E0E0E0")
-```
-
-
-# Part 2: Collecting data and analysis {-}
-
-## Collecting data {-}
+### Collecting data
 
 Your task in this part is to collect real data from real people. More specifically, 
 each group member is supposed to administer the questionnaire to 20 persons, i.e. a group of 6 = 120 people per group project.
 
-## Data analysis {-}
+### Data analysis
 
 ```{r, echo = FALSE, message=FALSE, warning=FALSE, error=FALSE}
 library(janitor)
@@ -970,7 +1041,7 @@ In this chapter we will encounter the nature of data you collect when conducting
 The purpose of this chapter is primary to help you handle and determine data types from your Qualtrics survey. For more information in regards to what statistical tests to use, assumptions or other details, please consult relevant chapters. 
 :::
 
-### Load in a Qualtrics survey data via package "qualtRics" {-}
+#### Load in a Qualtrics survey data via package "qualtRics" {-}
 
 After downloading your survey in CSV format, you need to install `qualtRics` and load it in.
 
@@ -1007,7 +1078,7 @@ colnames(qualtrics)<- new.colnames
 head(qualtrics,3)
 ```
 
-### Multiple choice with a single answer {-}
+#### Multiple choice with a single answer {-}
 
 Type of data you obtain is **categorical**, and the output comes in the following form:  
 
@@ -1030,7 +1101,7 @@ qualtrics$`During a typical day, in what period of the day you prefer watching m
 table(qualtrics$`During a typical day, in what period of the day you prefer watching movies or TV series on Netflix?`)
 ```
 
-#### Fischer's exact {-}
+##### Fischer's exact
 
 Fisher's exact test is used to test a hypothesis with data obtained from multiple choice questions with single answer. Results from multiple choice questions with multiple answers are treated with different test.
 <ul><li> <B> Application: </B> when you have <B> 1 dependent variable and  1 independent variable with 2 or more levels/factors </B></ul></li>
@@ -1063,7 +1134,7 @@ From the output and from `test$p.value` we see that the p-value is higher than t
 
 In our case, not rejecting the null hypothesis for the Fisher’s exact test of independence means that there is no significant relationship between the two categorical variables. Therefore, knowing the value of one variable does not help to predict the value of the other variable.
 
-#### Chi-square test: Goodness of fit & Independence test {-}
+##### Chi-square test: Goodness of fit & Independence test {-}
 
 1) Goodness of fit
 <div><ul><li><B> Application: </B>when you only have <B> 1 dependent variable and none independent variables </B></ul></li>
@@ -1117,7 +1188,7 @@ chisq.test(chi_square_table)
 
 Since the p-value (0.8135) is higher than the significance level (0.05), we cannot reject the null hypothesis. Thus, we conclude that there is no association relationship between gender and the preferred period of a day for watching Netflix. Therefore, we can say that the hours spent is independent from the gender of participant.
 
-### Multiple choice with multiple answers {-}
+#### Multiple choice with multiple answers {-}
 
 In Qualtrics, multiple answers on multiple choice questions are captured in separate columns. For instance, the second respondents chose "Ja!Natürlich" and "Clever" as answers, thus, the rest of alternatives have none value in this row.
 
@@ -1188,7 +1259,7 @@ DunnTest(list.cochran, method="bonferroni")
 
 From the results of the Dunn Test, we can see that there is a big difference between 1 ("ja!Natürlich") and 4("..."), as well as between 4("...") and 3("Spar Vital"). 
 
-### Rank order question {-}
+#### Rank order question
 
 Intuitive question to ask when it comes to this type of question is the following: which feature is the most important for respondents?
 
@@ -1258,7 +1329,7 @@ ggcorrplot(cor.matrix)
 
 From the correlation matrix we can confirm that almost all features negatively correlate to each other. An exception is the relationship between feature "Measuring steps" and "Exercise tracking", which correlates positively. This matrix can be useful for digging deeper in relationship between preferences for features. For instance, we can assume that feature "Measuring steps" and "Exercise tracking" correlate positively because users see them as complementary features. Moreover, if we say that walking is a type of exercise (in case of longer walking routes), we can assume that users, who ranked "Exercise tracking" high, ranked "Measuring steps" high as well, because they perceive it as another type of "Exercise tracking".
 
-### Constant Sum question {-}
+#### Constant Sum question
 
 If you wish to obtain information about how much one attribute is preferred over another one, you may use a constant sum scale. The total box should always be displayed at the bottom to make it easier for respondents. A constant sum question permits collection of ratio data type. With data obtained we would be able to express the relative importance of the options.
 
@@ -1323,7 +1394,7 @@ pairwise.t.test(constant.sum.long$Points,constant.sum.long$Factor, paired = T, p
 
 Now we can clearly see that difference between perceived importance of price and location, or price and ambiance, are significant. On the other hand, the difference in perceived importance between customer service and price is not significant.
 
-### Number entry question {-}
+#### Number entry question
 
 ```{r,echo=FALSE}
 set.seed(1234567)
@@ -1350,6 +1421,7 @@ head(dinner)%>%
   kableExtra::kbl(align = "c") %>%
   kable_paper("hover", full_width = T)
 ```
+
 Before we conduct a linear regression analysis, we need to take a look at correlation matrix:  
 
 ```{r}
@@ -1454,7 +1526,7 @@ correlation
 
 By observing our correlation matrix, we can see that non of the coefficients suggest values close to 0.8 or 0.9. Consequently, we conclude that there are no concerns regarding the multicolinearity between independent variables.
 
-## Reporting {-}
+### Reporting
 
 After you are done with statistical analysis, you are ready to create visually appealing and understandable graphs for your final report. In the following sections you can get certain ideas (and R code) for visualization of data obtained by frequently asked types of questions.
 
@@ -1465,7 +1537,7 @@ The format (e.g., data frame, matrix, list or similar) in which you have your da
 :::
 
 
-### Multiple choice question visualisation {-}
+##### Multiple choice question visualisation {-}
 
 In order to visualize a survey data obtained from multiple choice question with single answer, a data format needs to be in the appropriate format. Here we proceed with data format adaptation from the point where we stopped:
 
@@ -1517,7 +1589,7 @@ p<-ggplot(mlc_visualisation, aes(x="", y=Count, fill=Time))+
 p
 ```
 
-### Multiple choice question with multiple answers {-}
+#### Multiple choice question with multiple answers
 
 If our multiple choice question has more possible answers, we would need first to calculate share of cases when each possible answer was selected.
 
@@ -1546,7 +1618,7 @@ p
 
 ```
 
-### Rank order question {-}
+##### Rank order question
 
 In case of ranked data, one need to transform data from wide format to long format first.
 
@@ -1592,7 +1664,7 @@ ggstatsplot::ggwithinstats(
 ```
 
 
-### Constant Sum question {-}
+#### Constant Sum question
 
 Required data format for a data obtained from constant sum question is similar to ranked data.
 
@@ -1628,74 +1700,6 @@ ggstatsplot::ggwithinstats(
   title = "What factors do you consider when choosing a place to go for a dinner?")
 ```
 
-## Presentation guidelines & grading {-}
-
-Your performance in this part will be evaluated based on the following criteria:
-
-* **Individual Responsibility:**
-
-    + Group members should plan to share presentation responsibilities and field questions equally.
-    + All members of the group must contribute to the presentation.
-    + Individual grade for presentation and oral participation during the class.
-    + To ensure an equal contribution of group members, a peer assessment will be conducted, which enters into the computation of the individual grades for the group project. 
-
-* **Quality of questionnaire design:**
-
-    + Survey method
-    + Question structure / wording
-
-* **Data Analysis:**
-
-    + Clarity / appropriateness
-    + Completeness / accuracy
-    
-* **Presentation:**
-
-    + Introduction/problem, approach, solution/inclusion
-
-
-
-### Final presentation and submission {-}
-
-
-```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
-library(dplyr)
-library(kableExtra)
-mytable_sub = data.frame(
-    D = c("Nov. 16*",
-             "Nov. 23*",
-             "Dec. 7"
-             ),
-    Time_A = c(
-      "01:30PM - 04:30PM","01:30PM - 06:30PM","11:59PM"
-    ),Date_B = c("Nov. 18*",
-             "Nov. 25*",
-             "Dec. 9"
-             ),
-    Time_B = c(
-      "02:00PM - 05:00PM","03:00PM - 08:00PM","11:59PM"
-    ),
-    Task = c(  "* Coaching: Data handling (live video coaching)",
-               "* Coaching: Data analysis (live video coaching)",
-               "* Submit video recording of presentation (pre-recorded)"
-               ),
-    Chapters = c("","",""),
-    Link = c(    "TBC",
-                 "TBC",
-                 ""
-                 )
-    )
-
-#pander::pander(mytable_sub, keep.line.breaks = TRUE, style = 'grid', justify = 'left')
-mytable_sub %>% kable(escape = T) %>%
-  kable_paper(c("hover"), full_width = F) %>%
-  footnote(general = "Dates and times are indicated for groups A and B respectively.
-           Sessions indicated with '*' are group coaching sessions. Slots of 45 min. are assigned to each group within the indicated times.",
-           general_title = "Note: ", 
-           footnote_as_chunk = T, title_format = c("italic")
-           ) 
-#%>%   row_spec(c(1,3,6), background = "#E0E0E0")
-```
 
 
 

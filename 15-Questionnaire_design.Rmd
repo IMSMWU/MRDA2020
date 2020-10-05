@@ -152,7 +152,7 @@ mytable_sub %>% kable(escape = T) %>%
 #%>%   row_spec(c(1,3,6), background = "#E0E0E0")
 ```
 
-In the second part of your project, after you distribute your questionnaire and start collecting data, the following touchpoints are important to remember:
+In the second part of your project, after you distribute your questionnaire,start collecting and analyzing data, the following touchpoints are important to remember:
 
 ```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
 library(dplyr)
@@ -260,9 +260,28 @@ In the next step you should review the type of survey method you will use.
 
 At this point you need to think in which setting you aim to conduct your survey. For instance, should you do it in a face-to-face setting or rather online. Here you can find some advantages and disadvantages of online surveys:
 
-```{r, echo=F, fig.align='center',out.width='50%'}
-knitr::include_graphics("adv-disadv-online-questionnaire.png")
+```{r eval = TRUE, echo = FALSE, warning=FALSE, message = FALSE}
+library(dplyr)
+library(kableExtra)
+mytable_sub = data.frame(
+    Advantages = c("Speed",
+             "Cost",
+             "Quality of response",
+             "No interviewer bias",
+             "Access to unique populations"
+             ),
+    Disadvantages = c(
+      "Sampling issues",
+      "Access issues",
+      "Technical problems",
+      "",
+      ""
+    ))
+
+mytable_sub %>% kable(escape = T) %>%
+  kable_paper(c("hover"), full_width = F) 
 ```
+
 
 Here is the list of the online tools you can use to conduct an online survey (usually for free):  
 
@@ -314,16 +333,6 @@ If there is a questionnaire in the Qualtrics Library you would like to use, then
 knitr::include_graphics('library-survey.png')
 ```
 
-::: {.infobox_orange .hint data-latex="{hint}"}
-
-Some useful tips when creating a questionnaire in Qualtrics:
-
-* Add a progress bar so that respondents know how many pages are left (see "Look & Feel" menu in Qualtrics).
-
-* Remember to activate the "Force Response" field under "Validation Options" if you don't want to allow respondents to skip questions.
-
-* Check the usability on mobile devices using the preview option (make sure the "Mobile friendly" option is checked).
-:::
 
 ### Questionnaire
 
@@ -534,7 +543,7 @@ In the following table you can get a quick overview of possibilities per each me
 knitr::include_graphics("measurement-scale.png")
 ```
 
-In the table below you can find general procedure for choosing a correct analysis based on the measurement scale of your data and number of variables. It shows statistical analyses we covered during the course and aims to help you choose among them based on the nature of dependent variables on the side, and the nature and the number of your independent variables on the other side: 
+In the figure below you can find general procedure for choosing a correct analysis based on the measurement scale of your data and number of variables. It shows statistical analyses we covered during the course and aims to help you choose among them based on the nature of dependent variables on the side, and the nature and the number of your independent variables on the other side: 
 
 ```{r, echo=FALSE, out.width = '90%',fig.align='center'}
 knitr::include_graphics("overview-statistical-test.jpg")
@@ -1060,6 +1069,17 @@ After testing your questionnaire you should be able to determine whether:
 * The questions are placed in the optimal order  
 * The questions are understandable  
 * Specifying questions are needed or some need to be eliminated  
+
+::: {.infobox_orange .hint data-latex="{hint}"}
+
+Some useful tips:
+
+* Add a progress bar so that respondents know how many pages are left (see "Look & Feel" menu in Qualtrics).
+
+* Remember to activate the "Force Response" field under "Validation Options" if you don't want to allow respondents to skip questions.
+
+* Check the usability on mobile devices using the preview option (make sure the "Mobile friendly" option is checked).
+:::
 
 
 ## Part 2: Collecting data and analysis

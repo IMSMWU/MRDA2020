@@ -148,5 +148,84 @@ In the end, to save generated plot, we can use `ggsave()` function. The plot wil
 ggsave("bar_chart.jpg", height = 5, width = 8.5)  
 ```
 
+## How to create a radar plot?
+
+**Issue:** How can I create a radar plot and compare numeric values across different categories or groups?
+
+**Solution:**
+
+```{r, include=FALSE}
+Radar_chart <- readRDS("data/radar_plot_df.RDS")
+```
+
+To explain this issue, we will use a data frame with two categories and several numeric variables. 
+
+```{r}
+head(Radar_chart)
+```
+
+In this data frame we merged two information from a survey:
+
+* Ranking(R) - how participants ranked stability, education, health care and culture in Vienna.
+* Importance(I) - how important for each participant stability, education, health care and culture in Vienna.
+
+We wish to create a radar plot to directly compare ranking and importance of each variable.
+
+First, we create to separate data frames; one for "Ranking" 
+
+```{r,message=FALSE,warning=FALSE}
+library(dplyr)
+library(ggplot2)
+library(ggiraph)
+library(ggiraphExtra)
+
+# Creation of Ranking table
+Ranking <- Radar_chart[,1:4]
+# Assigning the corresponding row name
+Ranking<-Ranking %>%
+  mutate(Name="Ranking")
+
+head(Ranking)
+```
+
+...and one for "Importance"
+
+```{r}
+# Creation of Importance table
+Importance <- Radar_chart[,5:8]
+# Assigning the corresponding row name
+Importance <- Importance %>% 
+  mutate(Name="Importance")
+
+head(Importance)
+```
+
+
+Now we want to bind these two data frames (Ranking and Importance), but beforehand we need to make sure that they have the same names of columns.
+
+```{r}
+colnames(Ranking) <- c("Stability","Education","Healthcare","Culture","Name")  
+colnames(Importance) <- c("Stability","Education","Healthcare","Culture","Name")
+```
+
+Our data frames are now prepared to be combined in one:
+
+```{r}
+# Connecting two data frames by rows
+Radar_chart_new <- rbind(Ranking,Importance)
+```
+
+Now we can run `ggRadar()` to create a radar plot:
+
+```{r, fig.align='center',out.width='50%'}
+# Radar plot
+ggRadar(data=Radar_chart_new,
+        aes(color=Name), # Each category in the column "Name" will be assigned to different color
+        interactive = TRUE, # When hover over the graph values appear
+        rescale = FALSE, # If TRUE, all continuous variables in the data.frame are rescaled.
+        ylim = 0.1, # y coordinates ranges.
+        alpha = 0.55) # Transparency of colors in the graph
+```
+
 
 

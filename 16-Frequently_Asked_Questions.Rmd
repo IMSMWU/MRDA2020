@@ -144,7 +144,7 @@ ggplot(shares, aes(x =reorder(response,share), y = share)) +
 
 In the end, to save generated plot, we can use `ggsave()` function. The plot will be saved in your working directory.
 
-```{r}
+```{r,eval=FALSE}
 ggsave("bar_chart.jpg", height = 5, width = 8.5)  
 ```
 
@@ -223,9 +223,101 @@ ggRadar(data=Radar_chart_new,
         aes(color=Name), # Each category in the column "Name" will be assigned to different color
         interactive = TRUE, # When hover over the graph values appear
         rescale = FALSE, # If TRUE, all continuous variables in the data.frame are rescaled.
-        ylim = 0.1, # y coordinates ranges.
+        ylim = 2, # y coordinates ranges.
         alpha = 0.55) # Transparency of colors in the graph
 ```
+
+
+Additionally, we can caluclate mean values and compare them with `ggParir()`:
+
+```{r,warning=FALSE,message=FALSE}
+(Ranking_mean <-Radar_chart_new %>%
+  filter(Name=="Ranking")%>% # Addressing only rows with "Ranking" in column "Name" 
+  summarize(Avg.Stability=mean(Stability), # computing mean for every column
+            Avg.Education=mean(Education),
+            Avg.Healthcare=mean(Healthcare),
+            Avg.Culture=mean(Culture)) %>% 
+  add_rownames(var = "Name") %>% # adding a row name
+  mutate(Name=as.factor("Ranking"))) # Changing the name value from 1 to "Ranking" and turning it to factor
+```
+
+```{r,warning=FALSE,message=FALSE}
+(Importance_mean <-Radar_chart_new %>%
+  filter(Name=="Importance")%>% # Addressing only rows with "Importance" in column "Name" 
+  summarize(Avg.Stability=mean(Stability), # computing mean for every column
+            Avg.Education=mean(Education),
+            Avg.Healthcare=mean(Healthcare),
+            Avg.Culture=mean(Culture)) %>% 
+  add_rownames(var = "Name") %>% # adding a row name
+  mutate(Name=as.factor("Importance"))) # Changing the name value from 1 to "Importance" and turning it to factor
+```
+
+Before plotting we need to bind two data frames by rows:
+
+```{r}
+Pair_chart <- rbind(Ranking_mean,Importance_mean)
+```
+
+Finally, we can create a pair plot:
+
+```{r}
+# Pair plot
+ggPair(Pair_chart,
+       aes(color=Name),
+       horizontal=TRUE,
+       interactive=TRUE,
+       includeFactor = FALSE)
+```
+
+
+## How to collapse/recode categories?
+
+**Issue:** If you have certain number of categories (e.g. countries) and you would like to aggregate them by specific criteria (e.g. continents), how can you do it?
+
+**Solution:** 
+
+There are several ways to do it, but we will show you the most intuitive.
+For this purpose we will create a data frame at the spot:
+
+```{r}
+#generate random data
+df <- data.frame(country_id = round(runif(n = 100, min = 1, max = 7),0))
+#code factor variable for country
+df$country <- factor(df$country_id, levels = 1:7, labels = c("Bangladesh","Japan", "Austria", "Germany","Italy", "USA", "Taiwan"))
+str(df)
+```
+
+In our data frame we have two columns, "country_id" and "country". 
+Now we will create a third column, "region", and assign each country to corresponding continent. For that purpose, we use `recode` function to assign region by country and create new variable for region:
+ 
+```{r,message=FALSE,warning=FALSE}
+library(car)
+df$region = recode(df$country, "'Bangladesh'='Asia'; 'Japan'='Asia'; 'Austria'='Europe'; 'Germany'='Europe'; 'Italy'='Europe'; 'Taiwan'='Asia'; 'USA'='other'")
+head(df)
+```
+
+This also works with numeric values:
+
+```{r,message=FALSE,warning=FALSE}
+df$region_1 = as.factor(recode(df$country_id, "1='Asia'; 2='Asia'; 3='Europe'; 3='Europe'; 4='Europe'; 5='Asia'; 6='other'; 7 = 'Asia'"))
+head(df)
+```
+
+Alternatively, you can use `gsub()` function to replace each category individually:
+
+```{r}
+df$region_2 = gsub("Bangladesh","Asia",df$country)
+df$region_2 = gsub("Japan","Asia",df$region_2)
+df$region_2 = gsub("Austria","Europe",df$region_2)
+df$region_2 = gsub("Germany","Europe",df$region_2)
+df$region_2 = gsub("Italy","Europe",df$region_2)
+df$region_2 = gsub("Taiwan","Asia",df$region_2)
+df$region_2 = gsub("USA","other",df$region_2)
+df$region_2 <- as.factor(df$region_2)
+head(df)
+```
+
+
 
 
 
